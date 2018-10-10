@@ -1,0 +1,15 @@
+
+
+import "UnityEngine"
+
+
+local pb = require("pb")
+local pb1 = require "pb"
+local t = require 'test'
+
+function main()
+
+    print(pb)
+    print(pb1)
+    print(t)
+end

@@ -1,0 +1,7 @@
+
+local T = {}
+function T.Add(a, b)
+    return a + b
+end
+
+return T
