@@ -1,15 +1,27 @@
 
 
 import "UnityEngine"
-
-
-local pb = require("pb")
-local pb1 = require "pb"
-local t = require 'test'
+local pb = require "pb"
+local person_pb =  require 'Protol.person_pb'
 
 function main()
 
-    print(pb)
-    print(pb1)
-    print(t)
+    print(pb.signed_varint_size(10))
+    print(pb.varint_size(10))
+    --[[
+    local msg = person_pb.Person()
+    msg.id = 10
+	msg.age = 30
+	msg.name = "aaaaa"
+	msg.email = "bbbbbb"
+
+	msg.header.cmd = 11
+	msg.header.seq = 1000
+
+	msg.array:append(1)                              
+	msg.array:append(2)   
+
+	local pb_data = msg:SerializeToString()   
+
+    --]]
 end

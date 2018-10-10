@@ -63,15 +63,6 @@ copy /Y lua51.dll ..\..\..\jit\win\x64\lua51.dll
 copy /Y luajit.exe ..\..\..\jit\win\x64\luajit.exe
 cd ..\..
 
-call "%ENV64%"
-echo Swtich to x64 build env(%VS_TOOL_VER%)
-cd %USE_LUA_PATH%\src
-call msvcbuild.bat gc64
-copy /Y lua51.dll ..\..\..\jit\win\gc64\lua51.dll
-copy /Y luajit.exe ..\..\..\jit\win\gc64\luajit.exe
-cd ..\..
-
-
 goto :eof
 
 :missing
