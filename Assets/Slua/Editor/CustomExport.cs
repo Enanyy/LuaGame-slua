@@ -57,6 +57,7 @@ namespace SLua
         {
             add(typeof(UIRoot), null);
             add(typeof(UIRoot.Scaling), null);
+            add(typeof(UIRect), null);
             add(typeof(UICamera), null);
             add(typeof(UIViewport), null);
             add(typeof(UIPanel), null);
@@ -154,6 +155,7 @@ namespace SLua
                 "UnityEngine.KeyCode",
                 "UnityEngine.BoxCollider",
                 "UnityEngine.CapsuleCollider",
+                "UnityEngine.Mathf",
             };
         }
 

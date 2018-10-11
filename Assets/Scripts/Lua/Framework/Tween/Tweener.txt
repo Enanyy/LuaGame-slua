@@ -1,6 +1,5 @@
 require("Class")
-require("Mathf")
-
+--require("Mathf")
 Tweener = Class("Tweener")
 TweenerMethod = 
 {

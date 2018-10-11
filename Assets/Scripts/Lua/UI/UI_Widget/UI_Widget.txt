@@ -1,8 +1,8 @@
-require("Class")
-require("BaseWindow")
 
---UI_Widget继承于BaseWindow
-UI_Widget = Class("UI_Widget",BaseWindow)
+require("Window")
+
+--UI_Widget继承于Window
+UI_Widget = Class("UI_Widget",Window)
 
 
 local this = UI_Widget
@@ -15,36 +15,34 @@ function this:ctor( path)
 
 end
 
-function this:Awake()
-    -- body
-    print(self.behaviour.name..".Awake ")
-end 
-
 function this:Start()
-
-    print(self.behaviour.name..".Start ")
 
     local mainWindow = self.transform:Find("MainWindow")
 
-    self.behaviour:AddClick(mainWindow.gameObject, function() 
-        print("Click MainWindow")
-
-        WindowManager:Open(UI_Main)
-    end)
+    local mainButton = mainWindow:GetComponent(UIButton) 
+    if mainButton then
+        mainButton.onClick:Add(EventDelegate(function() 
+            print("Click MainWindow")
+            WindowManager:Open(UI_Main)
+        end))
+    end
 
     
 
     local close = self.transform:Find("Close")
-    self.behaviour:AddClick(close.gameObject, function() 
-        print("Click Close")        
-       self:Close()
-    end)
-   
+    local closeButton = close:GetComponent(UIButton) 
+
+    if closeButton then
+        closeButton.onClick:Add(EventDelegate(function() 
+            print("Click Close")        
+            self:Close()
+        end))
+    end
 end
 
 function this:OnEnter()
 
-    self.panel = self.transform:GetComponent(typeof(UIPanel))
+    self.panel = self.transform:GetComponent(UIPanel)
 
     self.base.useMask = self.useMask
     self.base:OnEnter()

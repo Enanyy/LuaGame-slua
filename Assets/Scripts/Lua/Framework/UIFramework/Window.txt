@@ -17,7 +17,16 @@ function Window:ctor(path, wondowType)
     self.useMask = true
   
 end 
+-----------------------------用户接口 开始------------------------------------
+function Window:Start()
+    
+end
 
+function Window:OnDestroy()
+
+end
+
+-----------------------------用户接口 结束------------------------------------
 
 function Window:OnEnter()
 
@@ -25,6 +34,8 @@ function Window:OnEnter()
         self:CreateMask()
     end
     self.panel = GetComponent(self.gameObject, UIPanel)
+
+    self:Start()
 end
 
 function Window:CreateMask()
@@ -88,6 +99,7 @@ function Window:OnExit()
         GameObject.Destroy(self.gameObject)
     end
     WindowManager:SetBlur()
+    self:OnDestroy()
 end
 
 function Window:Close()

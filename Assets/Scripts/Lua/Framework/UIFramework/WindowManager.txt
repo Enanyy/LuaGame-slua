@@ -160,17 +160,12 @@ function WindowManager:Open(class, callback)
                 tran.localRotation = Quaternion.identity
                 tran.localScale = Vector3.one
 
-                --local reference = AssetReference.new(tmpAssetBundleName, path)
-
-                -- local behaviour = AddLuaBehaviour(tran.gameObject, reference)
-
                 tran.gameObject:SetActive(true)
 
-                
                 t = class.new(path)
                 t:_init(tran.gameObject)
 
-                -- behaviour:AddLuaTable(name, t)
+              
 
                 if  t.windowType == WindowType.Root then
                 

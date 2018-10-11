@@ -1,9 +1,8 @@
-require("Class")
-require("BaseWindow")
-require("WindowFade")
+
+require("Window")
 
 --UI_FadeWindow继承于BaseWindow
-UI_FadeWindow = Class("UI_FadeWindow",BaseWindow)
+UI_FadeWindow = Class("UI_FadeWindow",Window)
 
 local this = UI_FadeWindow
 
@@ -13,86 +12,57 @@ function this:ctor(path)
 
 end
 
-function this:Awake()
-    -- body
-    print(self.behaviour.name..".Awake ")
-end 
+
 
 function this:Start()
 
-    print(self.behaviour.name..".Start ")
-
     local mainWindow = self.transform:Find("MainWindow")
 
-    self.behaviour:AddClick(mainWindow.gameObject, function() 
-        print("Click MainWindow")
-        WindowManager:Open(UI_Main)
-    end)
+    local mainButton = mainWindow:GetComponent(UIButton) 
+    if mainButton then
+        mainButton.onClick:Add(EventDelegate(function() 
+            print("Click MainWindow")
+            WindowManager:Open(UI_Main)
+        end))
+    end
 
     local scaleWindow = self.transform:Find("ScaleWindow")
-    self.behaviour:AddClick(scaleWindow.gameObject, function() 
-        print("Click ScaleWindow")
-        WindowManager:Open(UI_ScaleWindow)
-    end)
+    local scaleButton = scaleWindow:GetComponent(UIButton) 
+    if scaleButton then
+        scaleButton.onClick:Add(EventDelegate(function() 
+            print("Click ScaleWindow")
+            WindowManager:Open(UI_ScaleWindow)
+        end))
+    end
+
+
     local moveWindow = self.transform:Find("MoveWindow")
-    self.behaviour:AddClick(moveWindow.gameObject, function() 
-        print("Click MoveWindow")
-        WindowManager:Open(UI_MoveWindow)
-    end)
+    local moveButton = moveWindow:GetComponent(UIButton) 
+
+    if moveButton then
+        moveButton.onClick:Add(EventDelegate(function() 
+            print("Click MoveWindow")
+            WindowManager:Open(UI_MoveWindow)
+        end))
+    end
+
     local popWindow = self.transform:Find("PopWindow")
-    self.behaviour:AddClick(popWindow.gameObject, function() 
-        print("Click PopWindow")
-        WindowManager:Open(UI_PopWindow)
-    end)
-   
+    local popButton = popWindow:GetComponent(UIButton) 
+
+    if popButton then
+        popButton.onClick:Add(EventDelegate(function() 
+            print("Click PopWindow")
+            WindowManager:Open(UI_PopWindow)
+        end))
+    end
+
     local close = self.transform:Find("Close")
-    self.behaviour:AddClick(close.gameObject, function() 
-        print("Click Close")        
-       self:Close()
-    end)
-    
-end
+    local closeButton = close:GetComponent(UIButton) 
 
-
-function this:OnEnter()
-    self.panel = self.transform:GetComponent(typeof(UIPanel))
-
-    --self.base = BaseWindow.new(self.path, self.windowType)
-    --self.base:Init(self.behaviour)
-    self.base:OnEnter()
-end
-
-function this:OnPause()
-    self.isPause = true
-    
-    WindowFade.Begin(self, 0.4, false, function() self.base:OnPause() end)
-    --[[ 
-    if self.base then
-        self.base:OnPause()
+    if closeButton then
+        closeButton.onClick:Add(EventDelegate(function() 
+            print("Click Close")        
+            self:Close()
+        end))
     end
-    --]]
-end
-
-function this:OnResume()
-    self.isPause = false
-    WindowFade.Begin(self, 0.4, true, function() self.base:OnResume() end)
-    --[[ 
-    
-    if self.base then
-        self.base:OnResume()
-    end
-    --]]
-    
-end
-
-function this:OnExit()
-
-    WindowFade.Begin(self, 0.4, false, function() self.base:OnExit() end)
-    --[[ 
-    
-    if self.base then
-        self.base:OnExit()
-    end
-    --]]
-    
 end

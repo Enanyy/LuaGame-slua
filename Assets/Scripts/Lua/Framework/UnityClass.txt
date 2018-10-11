@@ -35,6 +35,7 @@ Physics                         = UnityEngine.Physics
 LayerMask                       = UnityEngine.LayerMask
 KeyCode                         = UnityEngine.KeyCode
 
+Mathf                           = UnityEngine.Mathf
 
 ------------------------------------------function Begin -------------------------------------
 Instantiate                     = GameObject.Instantiate
@@ -67,7 +68,7 @@ local _GetComponent             = LuaHelper.GetComponent
 local _SetActive                = LuaHelper.SetActive
 
 function GetPosition(go, position)
-    local pos = position or  Vector3.New(0,0,0)
+    local pos = position or  Vector3.zero
     local x, y, z = _GetPosition(go, nil, nil, nil)
     pos:Set(x, y, z)
     return pos
@@ -80,7 +81,7 @@ function SetPosition(go, position)
 end
 
 function GetLocalPosition(go, position)
-    local pos = position or Vector3.New(0,0,0)
+    local pos = position or Vector3.zero
     local x, y, z = _GetLocalPosition(go, nil, nil, nil)
     pos:Set(x, y, z)
     return pos
@@ -99,14 +100,14 @@ function SetScale(go, scale)
 end
 
 function GetScale(go, scale)
-    local pos = scale or  Vector3.New(0,0,0)
+    local pos = scale or  Vector3.zero
     local x, y, z = _GetScale(go, nil, nil, nil)
     pos:Set(x, y, z)
     return pos
 end
 
 function GetForward(go, forward)
-    local pos = forward or  Vector3.New(0,0,0)
+    local pos = forward or  Vector3.zero
     local x, y, z = _GetForward(go, nil, nil, nil)
     pos:Set(x, y, z)
     return pos
@@ -145,7 +146,7 @@ function GetRotation(go, rotation)
 end
 
 function GetLocalEuler(go, euler)
-    local pos = euler or  Vector3.New(0,0,0)
+    local pos = euler or  Vector3.zero
     local x, y, z = _GetLocalEuler(go, nil, nil, nil)
     pos:Set(x, y, z)
     return pos
@@ -158,7 +159,7 @@ function SetLocalEuler(go, euler)
 end
 
 function GetEuler(go, euler)
-    local pos = euler or  Vector3.New(0,0,0)
+    local pos = euler or  Vector3.zero
     local x, y, z = _GetEuler(go, nil, nil, nil)
     pos:Set(x, y, z)
     return pos
