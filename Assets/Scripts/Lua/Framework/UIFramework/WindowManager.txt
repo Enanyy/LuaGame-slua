@@ -60,8 +60,12 @@ function  WindowManager:Initialize()
         local blurGo = GameObject.Instantiate(self.uiCamera.gameObject)
         blurGo.name = "BlurCamera"
         blurGo.transform:SetParent(self.uiRoot.transform)
-        Object.Destroy(blurGo:GetComponent(AudioListener))
-
+        local listener = blurGo:GetComponent(AudioListener)
+        if listener ~= nil then
+            Object.Destroy(listener)
+        else
+            print("AudioListener is nil")
+        end
         self.blurCamera = blurGo:GetComponent(UICamera)  
         local camera = self.blurCamera:GetComponent(Camera)
         camera.clearFlags = CameraClearFlags.Depth 
@@ -138,60 +142,60 @@ function WindowManager:Open(class, callback)
 
         if  path ~= nil then
         
-            local tmpAssetBundleName = "assetbundle.unity3d"
-            AssetManager:Load(tmpAssetBundleName, path, function (varGo)  
-                if varGo then
+            local varGo = LuaHelper.LoadAsset(path)
+           
+            if varGo then
+            
+                local go = GameObject.Instantiate(varGo)
+
+                NGUITools.SetLayer(go,  self.uiLayer)
+
+                local tran = go.transform:Find(name)
+
+                tran:SetParent(self.uiRoot.transform)
+
+                GameObject.Destroy(go)
+
+                tran.localPosition = Vector3.zero
+                tran.localRotation = Quaternion.identity
+                tran.localScale = Vector3.one
+
+                --local reference = AssetReference.new(tmpAssetBundleName, path)
+
+                -- local behaviour = AddLuaBehaviour(tran.gameObject, reference)
+
+                tran.gameObject:SetActive(true)
+
                 
-                    local go = GameObject.Instantiate(varGo)
+                t = class.new(path)
+                t:_init(tran.gameObject)
 
-                    NGUITools.SetLayer(go,  self.uiLayer)
+                -- behaviour:AddLuaTable(name, t)
 
-                    local tran = go.transform:Find(name)
+                if  t.windowType == WindowType.Root then
+                
+                    --查找看看是否已经有 root window
+                    local window = self:Find(0)
 
-                    tran:SetParent(self.uiRoot.transform)
-
-                    GameObject.Destroy(go)
-
-                    tran.localPosition = Vector3.zero
-                    tran.localRotation = Quaternion.identity
-                    tran.localScale = Vector3.one
-
-                    --local reference = AssetReference.new(tmpAssetBundleName, path)
-
-                   -- local behaviour = AddLuaBehaviour(tran.gameObject, reference)
-
-                    tran.gameObject:SetActive(true)
-
-                 
-                    t = class.new(path)
-                    t:_init(tran.gameObject)
-
-                   -- behaviour:AddLuaTable(name, t)
-
-                    if  t.windowType == WindowType.Root then
+                    if  window ~= nil then
                     
-                        --查找看看是否已经有 root window
-                        local window = self:Find(0)
+                        error("已经存在一个 windowType = 0 的界面，本界面将销毁.")
+                        GameObject.Destroy(tran.gameObject)
+                        self:SetTouchable(true)
 
-                        if  window ~= nil then
-                        
-                            error("已经存在一个 windowType = 0 的界面，本界面将销毁.")
-                            GameObject.Destroy(tran.gameObject)
-                            self:SetTouchable(true)
-
-                            return
-                        end
+                        return
                     end
-
-                    t.path = path
-
-                    t:OnEnter()
-
-                    self:Push(t, callback)
-                else
-                    self:SetTouchable(true)
                 end
-            end)
+
+                t.path = path
+
+                t:OnEnter()
+
+                self:Push(t, callback)
+            else
+                self:SetTouchable(true)
+            end
+        
             
         else
         

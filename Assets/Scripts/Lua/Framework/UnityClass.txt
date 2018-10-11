@@ -9,6 +9,8 @@ Application = UnityEngine.Application
 
 GameObject                      = UnityEngine.GameObject
 Object                          = UnityEngine.Object
+Vector3                         = UnityEngine.Vector3
+Quaternion                      = UnityEngine.Quaternion
 BoxCollider                     = UnityEngine.BoxCollider
 CapsuleCollider                 = UnityEngine.CapsuleCollider
 Camera                          = UnityEngine.Camera

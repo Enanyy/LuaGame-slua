@@ -6,6 +6,7 @@ function main()
 	TestProtobuf()
 
 	WindowManager:Initialize()
+	WindowManager:Open(UI_Main)
 end
 
 function TestProtobuf()

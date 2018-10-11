@@ -126,10 +126,12 @@ namespace SLua
             {
                 "UnityEngine.Camera",
                 "UnityEngine.CameraClearFlags",
+                "UnityEngine.AudioListener",
                 "UnityEngine.Component",
                 "UnityEngine.Behaviour",
                 "UnityEngine.Transform",
                 "UnityEngine.Vector3",
+                "UnityEngine.Quaternion",
                 "UnityEngine.MonoBehaviour",
                 "UnityEngine.Object",
                 "UnityEngine.GameObject",
