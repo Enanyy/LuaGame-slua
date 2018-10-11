@@ -10,6 +10,8 @@ public partial class LuaGame : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        LuaFile.AddSearchPath(LuaFile.luaDir,true);
+
         Application.logMessageReceived += OnLog;
         l = new LuaSvr();
 
@@ -47,12 +49,12 @@ public partial class LuaGame : MonoBehaviour
 
     byte[] OnLoad(string fn, ref string absoluteFn)
     {
-        string path = string.Format("Assets/Scripts/Lua/{0}.txt", fn.Replace('.','/'));
-        TextAsset asset=  UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>(path);
-
-        if (asset!=null)
+        string path = LuaFile.FindFile(fn.Replace('.', '/'));
+   
+        if(System.IO.File.Exists(path))
         {
-            return asset.bytes;
+            byte[] bytes = System.IO.File.ReadAllBytes(path);
+            return bytes;
         }
 
         return null;

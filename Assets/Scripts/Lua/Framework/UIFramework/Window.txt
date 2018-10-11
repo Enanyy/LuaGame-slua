@@ -1,0 +1,95 @@
+require("LuaBehaviour")
+require("UnityClass")
+require("WindowType")
+
+
+Window = Class("Window",LuaBehaviour)
+
+
+function Window:ctor(path, wondowType)
+  
+    self.path = path
+    --window类型
+  
+    self.wondowType = wondowType  
+    self.isPause = false
+  
+    self.useMask = true
+  
+end 
+
+
+function Window:OnEnter()
+
+    if self.useMask then
+        self:CreateMask()
+    end
+    self.panel = GetComponent(self.gameObject, typeof(UIPanel))
+end
+
+function Window:CreateMask()
+
+    local go = GameObject("Mask")
+    SetParent(go, self.transform)
+    SetLocalPosition(go, Vector3.zero)
+    SetScale(go, Vector3.one)
+    SetLocalRotation(go, Quaternion.identity)
+  
+    go.transform:SetAsFirstSibling()
+  
+    self.mask = go
+
+    local box = AddComponent(go,typeof(BoxCollider))
+    box.center = Vector3.zero
+
+    local widget = AddComponent(go,typeof(UIWidget))
+    widget.depth = -1
+
+    local root = WindowManager.uiRoot
+
+    widget.width = root.manualWidth
+    widget.height = root.manualHeight
+    widget.autoResizeBoxCollider = true
+    widget:SetAnchor(gameObject,0,0,0,0)
+  
+    widget:ResizeCollider()
+
+end
+
+function Window:OnPause()
+    self.isPause = true
+
+    if self.panel == nil then
+        self.panel = GetComponent(self.gameObject,typeof(UIPanel))
+    end
+    if self.panel then
+        self.panel.alpha = 0
+    end
+end
+
+
+function Window:OnResume()
+    self.isPause = false
+
+    if self.panel == nil then
+        self.panel = GetComponent(self.gameObject, typeof(UIPanel))
+    end
+    if self.panel then
+        self.panel.alpha = 1
+    end
+
+    self.transform:SetAsLastSibling()
+    WindowManager:SetBlur()
+    
+end
+
+function Window:OnExit()
+    if self.gameObject then
+        GameObject.Destroy(self.gameObject)
+    end
+    WindowManager:SetBlur()
+end
+
+function Window:Close()
+    WindowManager:Close(self)
+end

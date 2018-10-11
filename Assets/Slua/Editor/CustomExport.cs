@@ -44,7 +44,9 @@ namespace SLua
             // .net 4.6 export class not match used class on runtime, so skip it
             //add(typeof(Dictionary<int, string>), "DictIntStr");
             add(typeof(string), "String");
-            
+            add(typeof(LuaHelper), null);
+            add(typeof(BlurEffect), null);
+
             // add your custom class here
             // add( type, typename)
             // type is what you want to export
@@ -53,21 +55,47 @@ namespace SLua
 
         public static void OnAddNGUIClass(LuaCodeGen.ExportGenericDelegate add)
         {
-            add(typeof(UIWidget), null);
+            add(typeof(UIRoot), null);
+            add(typeof(UIRoot.Scaling), null);
+            add(typeof(UICamera), null);
+            add(typeof(UIViewport), null);
+            add(typeof(UIPanel), null);
             add(typeof(UILabel), null);
-            add(typeof(UIButton), null);
-            add(typeof(UISprite), null);
-            add(typeof(UIToggle), null);
+            add(typeof(UIWidget), null);
+            add(typeof(UIWidget.Pivot), null);
             add(typeof(UIAnchor), null);
             add(typeof(UIAtlas), null);
-            add(typeof(UICamera), null);
-            add(typeof(UIRoot), null);
             add(typeof(UIFont), null);
-            add(typeof(UIPanel), null);
             add(typeof(UITexture), null);
-            add(typeof(UIFont), null);
+            add(typeof(UISprite), null);
+            add(typeof(UIGrid), null);
+            add(typeof(UITable), null);
             add(typeof(UIInput), null);
-
+            add(typeof(UIEventListener), null);
+            add(typeof(UIScrollBar), null);
+            add(typeof(UICenterOnChild), null);
+            add(typeof(UIScrollView), null);
+            add(typeof(UIButton), null);
+            add(typeof(UITextList), null);
+            add(typeof(UIPlayTween), null);
+            add(typeof(UIDragScrollView), null);
+            add(typeof(UISpriteAnimation), null);
+            add(typeof(UIWrapContent), null);
+            add(typeof(TweenWidth), null);
+            add(typeof(TweenAlpha), null);
+            add(typeof(TweenColor), null);
+            add(typeof(TweenRotation), null);
+            add(typeof(TweenPosition), null);
+            add(typeof(TweenScale), null);
+            add(typeof(TweenHeight), null);
+            add(typeof(TypewriterEffect), null);
+            add(typeof(UIToggle), null);
+            add(typeof(Localization), null);
+            add(typeof(NGUITools), null);
+            add(typeof(NGUIText), null);
+            add(typeof(EventDelegate), null);
+            add(typeof(UITweener.Method), null);
+            add(typeof(UITweener.Style), null);
 
             // add ngui class here
             // add( type, typename)
@@ -96,18 +124,34 @@ namespace SLua
         {
             list = new List<string>
             {
-                // "UnityEngine.Font",
+                "UnityEngine.Camera",
+                "UnityEngine.CameraClearFlags",
                 "UnityEngine.Component",
                 "UnityEngine.Behaviour",
                 "UnityEngine.Transform",
-                "UnityEngine.RectTransform",
                 "UnityEngine.Vector3",
-                //"UnityEngine.Vector2",
                 "UnityEngine.MonoBehaviour",
                 "UnityEngine.Object",
                 "UnityEngine.GameObject",
                 "UnityEngine.Color",
-                "UnityEngine.UI.Button",
+                "UnityEngine.SceneManagement.SceneManager",
+                "UnityEngine.SceneManagement.Scene",
+                "UnityEngine.AI.NavMeshAgent",
+                "UnityEngine.AI.NavMesh",
+                "UnityEngine.AI.NavMeshHit",
+                "UnityEngine.AI.NavMeshPathStatus",
+                "UnityEngine.Time",
+                "UnityEngine.AssetBundle",
+                "UnityEngine.Animation",
+                "UnityEngine.AnimationState",
+                "UnityEngine.WrapMode",
+                "UnityEngine.Screen",
+                "UnityEngine.Input",
+                "UnityEngine.Physics",
+                "UnityEngine.LayerMask",
+                "UnityEngine.KeyCode",
+                "UnityEngine.BoxCollider",
+                "UnityEngine.CapsuleCollider",
             };
         }
 

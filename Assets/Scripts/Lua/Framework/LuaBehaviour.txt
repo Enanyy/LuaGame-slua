@@ -1,0 +1,24 @@
+require("Class")
+---基类
+---需要控制LuaBehaviour对象的都从BehaviourBase派生
+---
+---创建一个基类
+LuaBehaviour = Class( "LuaBehaviour")
+
+
+---构造函数 Class函数构造调用
+function LuaBehaviour:ctor()
+   
+
+end
+
+---初始化函数，
+function LuaBehaviour:_init(gameObject)
+   
+    self.gameObject = gameObject 
+    self.transform = gameObject.transform
+   
+    if self.base then
+        self.base:_init(gameObject)
+    end
+end

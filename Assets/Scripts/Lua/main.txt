@@ -1,14 +1,17 @@
-
-
-import "UnityEngine"
-local pb = require "pb"
-local person_pb =  require 'Protol.person_pb'
+require "UnityClass"
+require "WindowManager"
 
 function main()
 
-    print(pb.signed_varint_size(10))
-    print(pb.varint_size(10))
-    --[[
+	TestProtobuf()
+
+	WindowManager:Initialize()
+end
+
+function TestProtobuf()
+
+	local person_pb =  require 'Protol.person_pb'
+  
     local msg = person_pb.Person()
     msg.id = 10
 	msg.age = 30
@@ -23,5 +26,8 @@ function main()
 
 	local pb_data = msg:SerializeToString()   
 
-    --]]
+    local msg1 = person_pb.Person()
+	msg1:ParseFromString(pb_data)
+	--tostring 不会打印默认值
+	print('person_pb decoder: age: '..msg1.age..'\nemail: '..msg1.email)
 end
