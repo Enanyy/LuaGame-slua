@@ -272,4 +272,16 @@ public static class LuaHelper
     {
         return UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);
     }
+
+    public static void ProtobufString(SLua.ByteArray data)
+    {
+
+
+        var table = SLua.LuaSvr.mainState.getFunction("TestParseProtobuf");
+        if(table!=null)
+        {
+            table.call( data);
+        }
+    }
+   
 }

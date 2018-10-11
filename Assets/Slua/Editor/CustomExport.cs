@@ -46,6 +46,7 @@ namespace SLua
             add(typeof(string), "String");
             add(typeof(LuaHelper), null);
             add(typeof(BlurEffect), null);
+          
 
             // add your custom class here
             // add( type, typename)

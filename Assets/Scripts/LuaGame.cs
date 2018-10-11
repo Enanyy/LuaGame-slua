@@ -28,7 +28,7 @@ public partial class LuaGame : MonoBehaviour
 
     void OnLog(string cond, string trace, LogType lt)
     {
-        Debug.Log(trace);
+        //Debug.Log(trace);
     }
 
     void OnTick(int p)

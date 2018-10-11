@@ -39,33 +39,3 @@ function this:Start()
         end))
     end
 end
-
-function this:OnEnter()
-
-    self.panel = self.transform:GetComponent(UIPanel)
-
-    self.base.useMask = self.useMask
-    self.base:OnEnter()
-    
-end
-
-function this:OnPause()
-    self.isPause = true
-    
-    if self.base then
-        self.base:OnPause()
-    end
-end
-
-function this:OnResume()
-    self.isPause = false
-    if self.base then
-        self.base:OnResume()
-    end
-end
-
-function this:OnExit()
-    if self.base then
-        self.base:OnExit()
-    end
-end
