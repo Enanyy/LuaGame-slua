@@ -6,12 +6,12 @@ require("WindowType")
 Window = Class("Window",LuaBehaviour)
 
 
-function Window:ctor(path, wondowType)
+function Window:ctor(path)
   
     self.path = path
     --window类型
   
-    self.wondowType = wondowType  
+    self.wondowType = WindowType.Normal
     self.isPause = false
   
     self.useMask = true

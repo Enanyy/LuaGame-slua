@@ -3,7 +3,7 @@ require "WindowManager"
 
 function main()
 	TestProtobuf()
-
+	TestOverWrite()
 	WindowManager:Initialize()
 	WindowManager:Open(UI_Main)
 end
@@ -50,4 +50,59 @@ function TestParseProtobuf(buffer)
 	--tostring 不会打印默认值
 	print('person_pb decoder: '..tostring(msg)..'age: '..msg.age..'\nemail: '..msg.email)
 
+end
+
+
+--测试继承和重写
+A = Class("A")
+function A:print()
+	print("A:print")
+end
+function A:init(a)
+	print("Class A a =" ..a)
+end
+
+B = Class("B",A)
+
+function B:ctor()
+	
+end
+
+function B:init(b)
+
+	self.base:init(b)
+	print("Class B b =" ..b)
+
+end
+
+C = Class("C",B)
+function C:ctor()
+
+end
+
+function C:init(c)
+
+	self.base:init(c)
+	print("Class C c =" ..c)
+
+end
+
+function TestOverWrite()
+
+	local a = A.new()
+	a:print()
+
+	--没有重写 调用A的print
+	local b = B.new()
+	b:init(111)
+
+	local c = C.new()
+	c:init(222)
+
+end
+--[[
+本文件由UIEditor工具自动生成，DO NOT EDIT!!!	
+--]]
+function UI_TestBase(self)
+	self.mSprite = self.transform:Find():GetComponent()
 end

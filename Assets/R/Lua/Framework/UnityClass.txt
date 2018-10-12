@@ -3,9 +3,7 @@ require("Utility")
 require("Stack")
 require("Queue")
 --应用System、Unity的类
-Application = UnityEngine.Application
-
-
+Application                     = UnityEngine.Application
 
 GameObject                      = UnityEngine.GameObject
 Object                          = UnityEngine.Object
