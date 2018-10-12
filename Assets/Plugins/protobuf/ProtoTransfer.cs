@@ -19,7 +19,6 @@ public static class ProtoTransfer
         }
     }
 
-
     public static T DeserializeProtoBuf<T>(byte[] data) where T : class, ProtoBuf.IExtensible
     {
         if (data == null)
@@ -47,8 +46,19 @@ public static class ProtoTransfer
 
         using (MemoryStream ms = new MemoryStream(data))
         {
-            return ProtoBuf.Meta.RuntimeTypeModel.Default.Deserialize(ms, null, type);
+            return DeserializeProtoBuf(ms,type);
         }
+    }
+    public static object DeserializeProtoBuf(MemoryStream ms, Type type)
+    {
+        if (ms == null)
+        {
+            return null;
+        }
+
+        object o = ProtoBuf.Meta.RuntimeTypeModel.Default.Deserialize(ms, null, type);
+        ms.Dispose();
+        return o;
     }
 }
 

@@ -69,7 +69,10 @@ local _SetActive                = LuaHelper.SetActive
 
 function GetPosition(go, position)
     local pos = position or  Vector3.zero
-    local x, y, z = _GetPosition(go, nil, nil, nil)
+    local x = 0
+    local y = 0
+    local z = 0
+    x, y, z = _GetPosition(go, x, y, z)
     pos:Set(x, y, z)
     return pos
 end
@@ -82,7 +85,10 @@ end
 
 function GetLocalPosition(go, position)
     local pos = position or Vector3.zero
-    local x, y, z = _GetLocalPosition(go, nil, nil, nil)
+    local x = 0
+    local y = 0
+    local z = 0
+    x, y, z = _GetLocalPosition(go, x, y, z)
     pos:Set(x, y, z)
     return pos
 end
@@ -101,14 +107,20 @@ end
 
 function GetScale(go, scale)
     local pos = scale or  Vector3.zero
-    local x, y, z = _GetScale(go, nil, nil, nil)
+    local x = 0
+    local y = 0
+    local z = 0
+    x, y, z = _GetScale(go, x, y, z)
     pos:Set(x, y, z)
     return pos
 end
 
 function GetForward(go, forward)
     local pos = forward or  Vector3.zero
-    local x, y, z = _GetForward(go, nil, nil, nil)
+    local x = 0
+    local y = 0
+    local z = 0
+    x, y, z = _GetForward(go, x, y, z)
     pos:Set(x, y, z)
     return pos
 end
@@ -127,7 +139,11 @@ end
 
 function GetLocalRotation(go, rotation)
     local r = rotation or  Quaternion.identity
-    local x, y, z, w = _GetLocalRotation(go, nil, nil, nil, nil)
+    local x = 0
+    local y = 0
+    local z = 0
+    local w = 0
+    x, y, z, w = _GetLocalRotation(go, x, y, z, w)
     r:Set(x, y, z, w)
     return r
 end
@@ -140,14 +156,21 @@ end
 
 function GetRotation(go, rotation)
     local r = rotation or  Quaternion.identity
-    local x, y, z, w = _GetRotation(go, nil, nil, nil, nil)
+    local x = 0
+    local y = 0
+    local z = 0
+    local w = 0
+    x, y, z, w  = _GetRotation(go, x, y, z, w)
     r:Set(x, y, z, w)
     return r
 end
 
 function GetLocalEuler(go, euler)
     local pos = euler or  Vector3.zero
-    local x, y, z = _GetLocalEuler(go, nil, nil, nil)
+    local x = 0
+    local y = 0
+    local z = 0
+    x, y, z = _GetLocalEuler(go, x, y, z)
     pos:Set(x, y, z)
     return pos
 end
@@ -160,7 +183,10 @@ end
 
 function GetEuler(go, euler)
     local pos = euler or  Vector3.zero
-    local x, y, z = _GetEuler(go, nil, nil, nil)
+    local x = 0
+    local y = 0
+    local z = 0
+    x, y, z = _GetEuler(go, x, y, z)
     pos:Set(x, y, z)
     return pos
 end

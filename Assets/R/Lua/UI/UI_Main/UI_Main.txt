@@ -22,7 +22,6 @@ function this:Start()
             WindowManager:Open(UI_FadeWindow)
         end))
     end
-
     local scaleWindow = self.transform:Find("ScaleWindow")
     local scaleButton = scaleWindow:GetComponent(UIButton) 
     if scaleButton then

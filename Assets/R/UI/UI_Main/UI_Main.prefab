@@ -10,7 +10,6 @@ GameObject:
   - component: {fileID: 462044}
   - component: {fileID: 11443074}
   - component: {fileID: 5466854}
-  - component: {fileID: 11428920}
   m_Layer: 5
   m_Name: UI_Main
   m_TagString: Untagged
@@ -813,18 +812,6 @@ MonoBehaviour:
   disabledSprite2D: {fileID: 0}
   pixelSnap: 0
   onClick: []
---- !u!114 &11428920
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 104720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d7449fe4600cb04291ceafd3ad9e9a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LuaTables: []
 --- !u!114 &11441164
 MonoBehaviour:
   m_ObjectHideFlags: 1
