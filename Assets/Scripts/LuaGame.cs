@@ -7,11 +7,40 @@ public partial class LuaGame : MonoBehaviour
 {
     LuaSvr l;
     int progress = 0;
+    AssetBundle luabundle;
+
+    private int mAssetmode = -1;
+    public int assetmode
+    {
+        get
+        {
+            if(mAssetmode == -1)
+            {
+                if(PlayerPrefs.HasKey("assetmode"))
+                {
+                    mAssetmode = PlayerPrefs.GetInt("assetmode");
+                }
+                else
+                {
+                    mAssetmode = 0;
+                }
+            }
+            return mAssetmode;
+        }
+    } 
     // Use this for initialization
     void Start()
     {
-        LuaFile.AddSearchPath(LuaFile.luaDir,true);
+        if (assetmode == 1)
+        {
+            luabundle = AssetBundle.LoadFromFile(Application.dataPath + "/../StreamingAssets/lua.unity3d");
+            LuaFile.AddSearchPath(luabundle.GetAllAssetNames());
+        }
+        else
+        {
+            LuaFile.AddSearchPath(Application.dataPath + "/R/Lua",true); //lua逻辑代码目录
 
+        }
         Application.logMessageReceived += OnLog;
         l = new LuaSvr();
 
@@ -50,11 +79,25 @@ public partial class LuaGame : MonoBehaviour
     byte[] OnLoad(string fn, ref string absoluteFn)
     {
         string path = LuaFile.FindFile(fn.Replace('.', '/'));
-   
-        if(System.IO.File.Exists(path))
+
+        if (assetmode == 1)
         {
-            byte[] bytes = System.IO.File.ReadAllBytes(path);
-            return bytes;
+            if(luabundle!=null)
+            {
+                TextAsset asset = luabundle.LoadAsset<TextAsset>(path);
+                if(asset)
+                {
+                    return asset.bytes;
+                }
+            }
+        }
+        else
+        {
+            if (System.IO.File.Exists(path))
+            {
+                byte[] bytes = System.IO.File.ReadAllBytes(path);
+                return bytes;
+            }
         }
 
         return null;

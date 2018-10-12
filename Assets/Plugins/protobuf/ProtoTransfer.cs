@@ -28,11 +28,16 @@ public static class ProtoTransfer
         }
         using (MemoryStream ms = new MemoryStream(data))
         {
-            T t = ProtoBuf.Serializer.Deserialize<T>(ms);
+            T t = DeserializeProtoBuf<T>(ms);
             return t;
         }
     }
-
+    public static T DeserializeProtoBuf<T>(MemoryStream ms) where T : class, ProtoBuf.IExtensible
+    {
+        T t = ProtoBuf.Serializer.Deserialize<T>(ms);
+        ms.Dispose();
+        return t;
+    }
     public static object DeserializeProtoBuf(byte[] data, Type type)
     {
         if (data == null)

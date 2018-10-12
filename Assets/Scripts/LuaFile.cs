@@ -5,15 +5,30 @@ using UnityEngine;
 
 public class LuaFile
 {
-    public static string luaDir = Application.dataPath + "/Scripts/Lua";                //lua逻辑代码目录
+   
+    private static List<string> searchPaths = new List<string>();
+    private static List<string> assetNames = new List<string>();
 
-    protected static List<string> searchPaths = new List<string>();
 
+    public static void AddSearchPath(string[] assetnames)
+    {
+        assetNames.AddRange(assetnames);
+
+        for (int i = 0; i < assetNames.Count; ++i)
+        {
+            string path = assetNames[i].Substring(0, assetNames[i].LastIndexOf('/') + 1);
+            path += "?.txt";
+            if (searchPaths.Contains(path) == false)
+            {
+                searchPaths.Add(path);
+            }
+        }
+    }
     /// <summary>
     /// 添加搜索目录，包括所有子目录
     /// </summary>
     /// <param name="path"></param>
-   public static void AddSearchPath(string path,bool includeSubdirectory)
+    public static void AddSearchPath(string path,bool includeSubdirectory)
     {
         AddSearchPath(path);
         if (includeSubdirectory)
@@ -26,7 +41,6 @@ public class LuaFile
         }
     }
 
-    //格式: 路径/?.lua
     public static bool AddSearchPath(string path)
     {
         path = ToPackagePath(path);
@@ -77,7 +91,7 @@ public class LuaFile
 
     public static string FindFile(string fileName)
     {
-        if (fileName == string.Empty)
+        if ( string.IsNullOrEmpty(fileName))
         {
             return string.Empty;
         }
@@ -102,8 +116,11 @@ public class LuaFile
         for (int i = 0; i < searchPaths.Count; i++)
         {
             fullPath = searchPaths[i].Replace("?", fileName);
-
-            if (File.Exists(fullPath))
+            if(assetNames.Contains(fullPath))
+            {
+                return fullPath;
+            }
+            else if (File.Exists(fullPath))
             {
                 return fullPath;
             }
@@ -111,5 +128,7 @@ public class LuaFile
 
         return null;
     }
+
+   
 }
 

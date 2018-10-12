@@ -270,13 +270,23 @@ public static class LuaHelper
 
     public static UnityEngine.Object LoadAsset(string path)
     {
+#if UNITY_EDITOR
         return UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);
+#else
+        return null;
+#endif
+        
     }
 
     public static void ProtobufString(SLua.ByteArray data)
     {
-
-
+        System.IO.MemoryStream ms = new System.IO.MemoryStream(data.GetData(), 0, data.Position);
+       
+        PBMessage.Person person = ProtoTransfer.DeserializeProtoBuf<PBMessage.Person>(ms);
+        Debug.Log("age=" + person.age);
+        Debug.Log("email=" + person.email);
+        Debug.Log("name=" + person.name);
+        Debug.Log("id=" + person.id);
         var table = SLua.LuaSvr.mainState.getFunction("TestParseProtobuf");
         if(table!=null)
         {
