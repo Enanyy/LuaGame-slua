@@ -31,6 +31,7 @@ function  WindowManager:Initialize()
         camera.cullingMask =  UnityLayer.MakeMask(self.uiLayer)
        
         NGUITools.SetLayer(self.uiCamera.gameObject, self.uiLayer)
+        Object.Destroy(self.uiCamera:GetComponent(AudioListener))
         camera.depth = 2
 
 
@@ -60,12 +61,8 @@ function  WindowManager:Initialize()
         local blurGo = GameObject.Instantiate(self.uiCamera.gameObject)
         blurGo.name = "BlurCamera"
         blurGo.transform:SetParent(self.uiRoot.transform)
-        local listener = blurGo:GetComponent(AudioListener)
-        if listener ~= nil then
-            Object.Destroy(listener)
-        else
-            print("AudioListener is nil")
-        end
+        Object.Destroy(blurGo:GetComponent(AudioListener))
+       
         self.blurCamera = blurGo:GetComponent(UICamera)  
         local camera = self.blurCamera:GetComponent(Camera)
         camera.clearFlags = CameraClearFlags.Depth 
@@ -506,8 +503,8 @@ function WindowManager:SetBlur()
     self.blurEffect.enabled = self.mWindowStack:Count() > 1
     
     if Camera.main then 
-        local blurEffect = Camera.main:GetComponent(typeof(BlurEffect))
-        if blurEffect == nil then blurEffect = Camera.main.gameObject:AddComponent(typeof(BlurEffect)) end
+        local blurEffect = Camera.main:GetComponent(BlurEffect)
+        if blurEffect == nil then blurEffect = Camera.main.gameObject:AddComponent(BlurEffect) end
 
         blurEffect.enabled = self.blurEffect.enabled
     end
