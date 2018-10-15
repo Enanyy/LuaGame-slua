@@ -1,15 +1,18 @@
 require "UnityClass"
 require "WindowManager"
-
+local pb = require "protobuf.c"
 function main()
-	TestProtobuf()
 	
+	print(type(pb))
 	TestOverWrite()
 	
 	WindowManager:Initialize()
 	WindowManager:Open(UI_Main)
 end
 
+--[[
+use protoc-gen-lua
+--]]
 function TestProtobuf()
 
 	local person_pb =  require 'Protol.person_pb'
