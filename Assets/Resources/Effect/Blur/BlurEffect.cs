@@ -184,13 +184,12 @@ public class BlurEffect : MonoBehaviour
         if(renderBuffer)
         {
             renderBuffer.Release();
-
-            RenderTexture.ReleaseTemporary(renderBuffer);
+            renderBuffer = null;
         }
         if (tempBuffer)
         {
             tempBuffer.Release();
-            RenderTexture.ReleaseTemporary(tempBuffer);
+            renderBuffer = null;
         }
     }
 

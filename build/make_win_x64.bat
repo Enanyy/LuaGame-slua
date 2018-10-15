@@ -10,45 +10,15 @@ set USE_LUA_PATH=%LUAJIT_PATH%
 :: if "%USE_STANDARD_LUA%"=="YES" (set USE_LUA_PATH=%STANDARD_LUA_PATH%)
 
 :: get visual studio tools path
-:check2015
-if exist "%VS130COMNTOOLS%" (
-    set VS_TOOL_VER=vs130
-    set VCVARS="%VS130COMNTOOLS%..\..\VC\bin\"
-    goto build
-)
-:check2013
-if exist "%VS120COMNTOOLS%" (
-    set VS_TOOL_VER=vs120
-    set VCVARS="%VS120COMNTOOLS%..\..\VC\bin\"
-    goto build
-)
-:check2012
-if exist "%VS110COMNTOOLS%" (
-    set VS_TOOL_VER=vs110
-    set VCVARS="%VS110COMNTOOLS%..\..\VC\bin\"
-    goto build
-)
-:check2010
-if exist "%VS100COMNTOOLS%" (
-    set VS_TOOL_VER=vs100
-    set VCVARS="%VS100COMNTOOLS%..\..\VC\bin\"
-    goto build
-)
-:check2008
-if exist "%VS90COMNTOOLS%" (
-    set VS_TOOL_VER=vs90
-    set VCVARS="%VS90COMNTOOLS%..\..\VC\bin\"
-    goto build
-)
-else (
-    set VS_TOOL_VER=vs130
-    set VCVARS="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin"
-    goto build
-)
+
+set VS_TOOL_VER=vs140
+set VCVARS="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\"
+goto build
+
 
 :build
 set ENV32="%VCVARS%vcvars32.bat"
-set ENV64="%VCVARS%amd64\vcvars64.bat"
+set ENV64="%VCVARS%vcvars64.bat"
 
 copy /Y slua.c "%USE_LUA_PATH%\src\"
 copy /Y luasocket-mini\*.* "%USE_LUA_PATH%\src\"

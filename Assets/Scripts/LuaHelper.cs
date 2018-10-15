@@ -269,6 +269,8 @@ public static class LuaHelper
     }
 
     #region NGUI
+
+    #region AddClick
     public static void AddClick(UIButton button, SLua.LuaFunction function)
     {
         if(button)
@@ -290,27 +292,104 @@ public static class LuaHelper
        
         AddClick(go.transform, function);
     }
-    public static void AddClick(Transform go, SLua.LuaFunction function)
+    public static void AddClick(Transform transform, SLua.LuaFunction function)
     {
-        if(go == null)
+        if(transform == null)
         {
             return;
         }
-        var button = go.GetComponent<UIButton>();
+        var button = transform.GetComponent<UIButton>();
 
         AddClick(button, function);
     
     }
 
-    public static void AddClick(Transform go, string path, SLua.LuaFunction function)
+    public static void AddClick(Transform transform, string path, SLua.LuaFunction function)
     {
-        Transform child = GetComponent(go.gameObject, typeof(Transform), path) as Transform;
+        Transform child = GetComponent(transform.gameObject, typeof(Transform), path) as Transform;
         if(child)
         {
             AddClick(child, function);
         }
 
     }
+    #endregion
+    #region SetText
+    public static void SetText(UILabel label, string text)
+    {
+        if(label)
+        {
+            label.text = text;
+        }
+    }
+    public static void SetText(Transform transform,string text)
+    {
+        if(transform)
+        {
+            UILabel label = transform.GetComponent<UILabel>();
+            SetText(label, text);
+        }
+    }
+    public static void SetText(GameObject go, string text)
+    {
+        if (go)
+        {
+            UILabel label = go.GetComponent<UILabel>();
+            SetText(label, text);
+        }
+    }
+    public static void SetText(Transform transform, string path, string text)
+    {
+        Transform child = GetComponent(transform.gameObject, typeof(Transform), path) as Transform;
+        if (child)
+        {
+            SetText(child, text);
+        }
+    }
+    #endregion
+
+    #region SetSprite
+    public static void SetSprite(UISprite sprite, string spriteName, bool native)
+    {
+        if(sprite)
+        {
+            sprite.spriteName = spriteName;
+
+            if(native)
+            {
+                sprite.MakePixelPerfect();
+            }
+        }
+    }
+
+    public static void SetSprite(Transform transform, string spriteName, bool native)
+    {
+        if(transform)
+        {
+            UISprite sprite = transform.GetComponent<UISprite>();
+            SetSprite(sprite, spriteName, native);
+        }
+    }
+
+    public static void SetSprite(Transform transform, string path, string spriteName, bool native)
+    {
+        Transform child = GetComponent(transform.gameObject, typeof(Transform), path) as Transform;
+        if (child)
+        {
+            SetSprite(child, spriteName, native);
+        }
+    }
+    public static void SetSprite(GameObject go, string spriteName, bool native)
+    {
+        if (go)
+        {
+            SetSprite(go.transform, spriteName, native);
+        }
+    }
+
+    #endregion
+
+
     #endregion
 
     public static UnityEngine.Object LoadAsset(string path)

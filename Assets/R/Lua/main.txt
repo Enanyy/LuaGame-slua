@@ -2,8 +2,10 @@ require "UnityClass"
 require "WindowManager"
 
 function main()
-	TestProtobuf()
+	--TestProtobuf()
+	
 	TestOverWrite()
+	
 	WindowManager:Initialize()
 	WindowManager:Open(UI_Main)
 end
