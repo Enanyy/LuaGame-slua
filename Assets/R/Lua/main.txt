@@ -2,7 +2,7 @@ require "UnityClass"
 require "WindowManager"
 
 function main()
-	--TestProtobuf()
+	TestProtobuf()
 	
 	TestOverWrite()
 	

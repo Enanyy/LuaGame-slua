@@ -22,7 +22,10 @@ set ENV64="%VCVARS%vcvars64.bat"
 
 copy /Y slua.c "%USE_LUA_PATH%\src\"
 copy /Y luasocket-mini\*.* "%USE_LUA_PATH%\src\"
-copy /Y protoc-gen-lua\protobuf\pb.c "%USE_LUA_PATH%\src\"
+::copy /Y protoc-gen-lua\protobuf\pb.c "%USE_LUA_PATH%\src\"
+copy /Y pbc\pbc.h "%USE_LUA_PATH%\src\"
+copy /Y pbc\binding\lua\pbc-lua.c "%USE_LUA_PATH%\src\"
+copy /Y pbc\src\*.* "%USE_LUA_PATH%\src\"
 
 call "%ENV64%"
 echo Swtich to x64 build env(%VS_TOOL_VER%)

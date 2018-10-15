@@ -48,11 +48,13 @@
 #include <math.h>
 #endif
 
-extern int luaopen_pb (lua_State *L);
-
+//extern int luaopen_pb (lua_State *L);
+extern int luaopen_protobuf_c (lua_State *L);
 static const luaL_Reg s_lib_preload[] = {
+	// any 3rd lualibs added here
 	{ "socket.core", luaopen_socket_core },
-    { "pb",    luaopen_pb }, // any 3rd lualibs added here
+    //{ "pb",    luaopen_pb },
+	{ "protobuf.c",    luaopen_protobuf_c }, 
 	{ NULL, NULL }
 };
 

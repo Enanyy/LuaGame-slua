@@ -78,9 +78,9 @@ buildvm -m folddef -o lj_folddef.h lj_opt_fold.c
 @if "%1"=="amalg" goto :AMALGDLL
 @if "%1"=="static" goto :STATIC
 %LJCOMPILE% /MT /DLUA_BUILD_AS_DLL lj_*.c lib_*.c
-%LJCOMPILE% /MT /DLUA_BUILD_AS_DLL /DLUA_LIB slua.c pb.c tcp.c auxiliar.c options.c io.c timeout.c wsocket.c buffer.c inet.c luasocket.c except.c udp.c select.c
+%LJCOMPILE% /MT /DLUA_BUILD_AS_DLL /DLUA_LIB slua.c context.c varint.c array.c pattern.c register.c proto.c map.c alloc.c rmessage.c wmessage.c bootstrap.c stringpool.c decode.c pbc-lua.c tcp.c auxiliar.c options.c io.c timeout.c wsocket.c buffer.c inet.c luasocket.c except.c udp.c select.c
 @if errorlevel 1 goto :BAD
-%LJLINK% /DLL /out:%LJDLLNAME% lj_*.obj lib_*.obj slua.obj pb.obj tcp.obj auxiliar.obj options.obj io.obj timeout.obj wsocket.obj buffer.obj inet.obj luasocket.obj except.obj udp.obj select.obj ws2_32.lib
+%LJLINK% /DLL /out:%LJDLLNAME% lj_*.obj lib_*.obj slua.obj context.obj varint.obj array.obj pattern.obj register.obj proto.obj map.obj alloc.obj rmessage.obj wmessage.obj bootstrap.obj stringpool.obj decode.obj pbc-lua.obj tcp.obj auxiliar.obj options.obj io.obj timeout.obj wsocket.obj buffer.obj inet.obj luasocket.obj except.obj udp.obj select.obj ws2_32.lib
 @if errorlevel 1 goto :BAD
 @goto :MTDLL
 :STATIC
