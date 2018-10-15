@@ -2,7 +2,7 @@
 本文件由UIEditor工具自动生成，DO NOT EDIT!!!
 --]]
 
-function UI_WidgetBase(self)
+function UI_WidgetGen(self)
 	self.mSprite = self.transform:Find("@Sprite.mSprite"):GetComponent(UISprite)
 	self.mClose = self.transform:Find("@mClose"):GetComponent(UnityEngine.Transform)
 	self.mMainWindow = self.transform:Find("@Button.mMainWindow"):GetComponent(UIButton)

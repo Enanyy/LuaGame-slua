@@ -6,6 +6,7 @@ require("UI_WidgetBase")
 UI_Widget = Class("UI_Widget",Window)
 
 
+
 local this = UI_Widget
 
 function this:ctor( path)
@@ -18,7 +19,7 @@ end
 
 function this:Start()
 
-    UI_WidgetBase(self)
+    UI_WidgetGen(self)
 
     if self.mMainWindow then
         self.mMainWindow.onClick:Add(EventDelegate(function() 

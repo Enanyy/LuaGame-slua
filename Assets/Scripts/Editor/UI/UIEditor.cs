@@ -85,7 +85,7 @@ public class UIEditor
     {
         StringBuilder builder = new StringBuilder();
         builder.Append("--[[\n本文件由UIEditor工具自动生成，DO NOT EDIT!!!\n--]]\n\n");
-        builder.Append(string.Format("function {0}Base(self)\n",className));
+        builder.Append(string.Format("function {0}Gen(self)\n",className));
         
         foreach (var v in variableDir)
         {
