@@ -268,6 +268,51 @@ public static class LuaHelper
         }
     }
 
+    #region NGUI
+    public static void AddClick(UIButton button, SLua.LuaFunction function)
+    {
+        if(button)
+        {
+            button.onClick.Add(new EventDelegate(delegate () {
+                if(function!=null)
+                {
+                    function.call();
+                }
+            }));
+        }
+    }
+    public static void AddClick(GameObject go, SLua.LuaFunction function)
+    {
+        if (go == null)
+        {
+            return;
+        }
+       
+        AddClick(go.transform, function);
+    }
+    public static void AddClick(Transform go, SLua.LuaFunction function)
+    {
+        if(go == null)
+        {
+            return;
+        }
+        var button = go.GetComponent<UIButton>();
+
+        AddClick(button, function);
+    
+    }
+
+    public static void AddClick(Transform go, string path, SLua.LuaFunction function)
+    {
+        Transform child = GetComponent(go.gameObject, typeof(Transform), path) as Transform;
+        if(child)
+        {
+            AddClick(child, function);
+        }
+
+    }
+    #endregion
+
     public static UnityEngine.Object LoadAsset(string path)
     {
 #if UNITY_EDITOR

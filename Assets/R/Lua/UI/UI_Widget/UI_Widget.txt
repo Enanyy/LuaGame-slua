@@ -21,12 +21,14 @@ function this:Start()
 
     UI_WidgetGen(self)
 
-    if self.mMainWindow then
-        self.mMainWindow.onClick:Add(EventDelegate(function() 
-            print("Click MainWindow")
-            WindowManager:Open(UI_Main)
-        end))
-    end
+   
+
+    LuaHelper.AddClick(self.mMainWindow,function()
+    
+        print("Click MainWindow")
+        WindowManager:Open(UI_Main)
+
+    end)
 
     
 
