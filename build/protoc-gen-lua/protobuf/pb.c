@@ -25,11 +25,11 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#include <lua.h>
-#include <lualib.h>
-#include <lauxlib.h>
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
 
-#ifdef _WIN32_WCE
+#ifdef _WIN32
 #define PACKED_DECL 
 #pragma pack(1)
 #else
