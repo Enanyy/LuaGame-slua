@@ -208,5 +208,12 @@ public class LuaFile
         }
         return null;
     }
+    public static void Clear()
+    {
+        searchPaths.Clear();
+        assetNames.Clear();
+        luabundle.Unload(true);
+        luabundle = null;
+    }
 }
 

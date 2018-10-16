@@ -1,6 +1,6 @@
 require("Class")
 ---基类
----需要控制LuaBehaviour对象的都从BehaviourBase派生
+---需要控制gameObject对象的都从LuaBehaviour派生
 ---
 ---创建一个基类
 LuaBehaviour = Class( "LuaBehaviour")
