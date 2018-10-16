@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from: common.proto
+// Generated from: person.proto
 namespace PBMessage
 {
   [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"Header")]
@@ -34,11 +34,6 @@ namespace PBMessage
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
   }
   
-}
-// Generated from: person.proto
-// Note: requires additional types generated from: common.proto
-namespace PBMessage
-{
   [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"Person")]
   public partial class Person : global::ProtoBuf.IExtensible
   {

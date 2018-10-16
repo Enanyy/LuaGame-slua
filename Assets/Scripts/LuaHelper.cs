@@ -418,4 +418,17 @@ public static class LuaHelper
         }
     }
    
+    public static SLua.ByteArray LoadLuaAsset(string name)
+    {
+        string file = LuaFile.FindFile(name);
+        if(string.IsNullOrEmpty(file)==false)
+        {
+            byte[] bytes = LuaFile.ReadBytes(file);
+            SLua.ByteArray array = new SLua.ByteArray();
+            array.Write(bytes);
+
+            return array;
+        }
+        return null;
+    }
 }

@@ -5,12 +5,44 @@ using UnityEngine;
 
 public class LuaFile
 {
-   
+    private static int mAssetmode = -1;
+    public static int assetmode
+    {
+        get
+        {
+            if (mAssetmode == -1)
+            {
+                if (PlayerPrefs.HasKey("assetmode"))
+                {
+                    mAssetmode = PlayerPrefs.GetInt("assetmode");
+                }
+                else
+                {
+                    mAssetmode = 0;
+                }
+            }
+            return mAssetmode;
+        }
+    }
+
     private static List<string> searchPaths = new List<string>();
     private static List<string> assetNames = new List<string>();
 
+    /// <summary>
+    /// lua脚本bundle
+    /// </summary>
+    private static AssetBundle luabundle;
 
-    public static void AddSearchPath(string[] assetnames)
+    public static void AddLuaBundle(AssetBundle bundle )
+    {
+        luabundle = bundle;
+        if(luabundle)
+        {
+            AddSearchPath(bundle.GetAllAssetNames());
+        }
+    }
+
+    private static void AddSearchPath(string[] assetnames)
     {
         assetNames.AddRange(assetnames);
 
@@ -116,7 +148,7 @@ public class LuaFile
         for (int i = 0; i < searchPaths.Count; i++)
         {
             fullPath = searchPaths[i].Replace("?", fileName);
-            if(assetNames.Contains(fullPath))
+            if(assetmode == 1&& assetNames.Contains(fullPath))
             {
                 return fullPath;
             }
@@ -129,6 +161,52 @@ public class LuaFile
         return null;
     }
 
+    public static byte[] ReadBytes(string file)
+    {
+        if (assetmode == 1)
+        {
+            if (luabundle != null)
+            {
+                TextAsset asset = luabundle.LoadAsset<TextAsset>(file);
+                if (asset)
+                {
+                    return asset.bytes;
+                }
+            }
+        }
+        else
+        {
+            if (File.Exists(file))
+            {
+                byte[] bytes = File.ReadAllBytes(file);
+                return bytes;
+            }
+        }
+        return null;
+    }
    
+    public static string ReadString(string file)
+    {
+        if (assetmode == 1)
+        {
+            if (luabundle != null)
+            {
+                TextAsset asset = luabundle.LoadAsset<TextAsset>(file);
+                if (asset)
+                {
+                    return asset.text;
+                }
+            }
+        }
+        else
+        {
+            if (File.Exists(file))
+            {
+                var text = File.ReadAllText(file);
+                return text;
+            }
+        }
+        return null;
+    }
 }
 

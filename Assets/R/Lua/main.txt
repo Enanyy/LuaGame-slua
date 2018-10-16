@@ -1,6 +1,6 @@
 require "UnityClass"
 require "WindowManager"
-local pb = require "protobuf"
+require "protobuf"
 function main()
 	
 	TestPBC()
@@ -13,22 +13,51 @@ end
 
 function TestPBC()
 --[[
-	
 message Header 
 {
   required int64 cmd = 1;
   required int32 seq = 2;
 }
+
+message Person 
+{  
+  required Header header = 1;
+  required int64 id = 2;
+  required string name = 3;    
+  optional int32 age = 4 [default = 18];
+  optional string email = 5 [default = "topameng@qq.com"];
+  repeated int32 array = 6;  
+
+  extensions 10 to max;
+}
+
+message Phone 
+{
+    extend Person { repeated Phone phones = 10;}
+
+    enum PHONE_TYPE
+    {
+        MOBILE = 1;
+        HOME = 2;
+    }
+    optional string num = 1;
+    optional PHONE_TYPE type = 2;
+}
+
 --]]
-	local addr = io.open("Assets/R/Lua/proto/person.txt","rb")
-	local buffer = addr:read "*a"
-	addr:close()
+	
+	-- local addr = io.open("Assets/R/Lua/proto/person.txt","rb")
+	-- local buffer = addr:read "*a"
+	-- addr:close()
+	local array = LuaHelper.LoadLuaAsset("person")
  
-	pb.register(buffer)
+	local buffer = Slua.ToString(array:GetData())
 
-	local pb_data = pb.encode("Header",{cmd = 100,seq= 223})
+	protobuf.register(buffer)
 
-	local data = pb.decode("Header",pb_data)
+	local pb_data = protobuf.encode("Header",{cmd = 100,seq= 223})
+
+	local data = protobuf.decode("Header",pb_data)
 
 	print("cmd="..data.cmd .."seq=".. data.seq)
 end
@@ -128,10 +157,4 @@ function TestOverWrite()
 	local c = C.new()
 	c:init(222)
 
-end
---[[
-本文件由UIEditor工具自动生成，DO NOT EDIT!!!	
---]]
-function UI_TestBase(self)
-	self.mSprite = self.transform:Find():GetComponent()
 end

@@ -7,34 +7,16 @@ public partial class LuaGame : MonoBehaviour
 {
     LuaSvr l;
     int progress = 0;
-    AssetBundle luabundle;
+   
 
-    private int mAssetmode = -1;
-    public int assetmode
-    {
-        get
-        {
-            if(mAssetmode == -1)
-            {
-                if(PlayerPrefs.HasKey("assetmode"))
-                {
-                    mAssetmode = PlayerPrefs.GetInt("assetmode");
-                }
-                else
-                {
-                    mAssetmode = 0;
-                }
-            }
-            return mAssetmode;
-        }
-    } 
+   
     // Use this for initialization
     void Start()
     {
-        if (assetmode == 1)
+        if (LuaFile.assetmode == 1)
         {
-            luabundle = AssetBundle.LoadFromFile(Application.dataPath + "/../StreamingAssets/lua.unity3d");
-            LuaFile.AddSearchPath(luabundle.GetAllAssetNames());
+            var luabundle = AssetBundle.LoadFromFile(Application.dataPath + "/../StreamingAssets/lua.unity3d");
+            LuaFile.AddLuaBundle(luabundle);
         }
         else
         {
@@ -69,38 +51,21 @@ public partial class LuaGame : MonoBehaviour
     {
         l.start("main");
     }
-
+#if UNITY_EDITOR
     void OnGUI()
     {
         if (progress != 100)
             GUI.Label(new Rect(0, 0, 100, 50), string.Format("Loading {0}%", progress));
     }
+#endif
 
     byte[] OnLoad(string fn, ref string absoluteFn)
     {
         string path = LuaFile.FindFile(fn.Replace('.', '/'));
 
-        if (assetmode == 1)
-        {
-            if(luabundle!=null)
-            {
-                TextAsset asset = luabundle.LoadAsset<TextAsset>(path);
-                if(asset)
-                {
-                    return asset.bytes;
-                }
-            }
-        }
-        else
-        {
-            if (System.IO.File.Exists(path))
-            {
-                byte[] bytes = System.IO.File.ReadAllBytes(path);
-                return bytes;
-            }
-        }
+        byte[] bytes = LuaFile.ReadBytes(path);
 
-        return null;
+        return bytes;
     }
 
 }

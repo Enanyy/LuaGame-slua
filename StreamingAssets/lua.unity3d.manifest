@@ -1,0 +1,38 @@
+ManifestFileVersion: 0
+CRC: 592689681
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 697b6d670b7c736d66ea71af2b700098
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/R/Lua/main.txt
+- Assets/R/Lua/UI/UI_MoveWindow/UI_MoveWindow.txt
+- Assets/R/Lua/Framework/UnityLayer.txt
+- Assets/R/Lua/Framework/Class.txt
+- Assets/R/Lua/Framework/pbc/protobuf.txt
+- Assets/R/Lua/Framework/Utility.txt
+- Assets/R/Lua/proto/person.txt
+- Assets/R/Lua/Framework/Stack.txt
+- Assets/R/Lua/Framework/UIFramework/WindowPath.txt
+- Assets/R/Lua/Framework/UIFramework/WindowManager.txt
+- Assets/R/Lua/Framework/UIFramework/WindowType.txt
+- Assets/R/Lua/Framework/LuaBehaviour.txt
+- Assets/R/Lua/Framework/Tween/Tweener.txt
+- Assets/R/Lua/Framework/Queue.txt
+- Assets/R/Lua/UI/UI_Widget/UI_Widget.txt
+- Assets/R/Lua/UI/UI_Widget/Base/UI_WidgetBase.txt
+- Assets/R/Lua/UI/UI_Dialog/UI_Dialog.txt
+- Assets/R/Lua/UI/UI_FadeWindow/UI_FadeWindow.txt
+- Assets/R/Lua/Framework/UnityClass.txt
+- Assets/R/Lua/Framework/UIFramework/Window.txt
+- Assets/R/Lua/UI/UI_Main/UI_Main.txt
+- Assets/R/Lua/UI/UI_ScaleWindow/UI_ScaleWindow.txt
+- Assets/R/Lua/UI/UI_PopWindow/UI_PopWindow.txt
+Dependencies: []
