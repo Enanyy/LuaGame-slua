@@ -55,11 +55,26 @@ message Phone
 
 	protobuf.register(buffer)
 
-	local pb_data = protobuf.encode("Header",{cmd = 100,seq= 223})
+	local pb_data = protobuf.encode("Person",{
+		header = {
+			cmd = 132,
+			seq = 291
+		},
+		id = 546430015121,
+		name = "Enanyy",
+		age = 26,
+		email = "742216502@qq.com",
+		array = {
+			2,
+			5,
+			8
+		}
 
-	local data = protobuf.decode("Header",pb_data)
+	})
 
-	print("cmd="..data.cmd .."seq=".. data.seq)
+	local data = protobuf.decode("Person",pb_data)
+
+	printf(data)
 end
 
 
