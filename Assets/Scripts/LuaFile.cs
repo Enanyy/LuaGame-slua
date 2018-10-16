@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class LuaFile
 {
+    private const string extension = ".txt";
+
     private static int mAssetmode = -1;
     public static int assetmode
     {
@@ -49,7 +51,7 @@ public class LuaFile
         for (int i = 0; i < assetNames.Count; ++i)
         {
             string path = assetNames[i].Substring(0, assetNames[i].LastIndexOf('/') + 1);
-            path += "?.txt";
+            path += "?" + extension;
             if (searchPaths.Contains(path) == false)
             {
                 searchPaths.Add(path);
@@ -102,7 +104,8 @@ public class LuaFile
                 sb.Append('/');
             }
 
-            sb.Append("?.txt");
+            sb.Append("?");
+            sb.Append(extension);
             return sb.ToString();
         }
     }
@@ -130,15 +133,15 @@ public class LuaFile
 
         if (Path.IsPathRooted(fileName))
         {
-            if (!fileName.EndsWith(".txt"))
+            if (!fileName.EndsWith(extension))
             {
-                fileName += ".txt";
+                fileName += extension;
             }
 
             return fileName;
         }
 
-        if (fileName.EndsWith(".txt"))
+        if (fileName.EndsWith(extension))
         {
             fileName = fileName.Substring(0, fileName.Length - 4);
         }
