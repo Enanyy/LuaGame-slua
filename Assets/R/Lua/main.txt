@@ -20,7 +20,7 @@ message Header
   required int32 seq = 2;
 }
 --]]
-	local addr = io.open("E:/workspace/LuaGame-slua/Assets/R/Lua/Framework/pb/common.pb","rb")
+	local addr = io.open("Assets/R/Lua/proto/person.txt","rb")
 	local buffer = addr:read "*a"
 	addr:close()
  

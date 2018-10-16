@@ -1,6 +1,9 @@
 
- 
-person.protocommon.proto"…
+¶
+person.proto""
+Header
+cmd (
+seq ("…
 Person
 header (2.Header
 
