@@ -8,7 +8,7 @@ namespace Network
 {
     public delegate void OnConnectionHandler(Connection c);
     public delegate void OnReceiveHandler(byte[] data);
-
+    public delegate void OnDebugHandler(string msg);
     public class Connection
     {
         // 客户端接收缓存大小
@@ -49,6 +49,7 @@ namespace Network
         public event OnConnectionHandler onConnect;
         public event OnConnectionHandler onDisconnect;
         public event OnReceiveHandler onReceive;
+        public event OnDebugHandler onDebug;
 
         public Connection(ConnectID id)
         {
@@ -83,7 +84,7 @@ namespace Network
             IP = ip;
             Port = nPort;
 
-            UnityEngine.Debug.Log(string.Format("Send Connect start ...................., ip={0}, port={1}", ip, nPort));
+            Debug(string.Format("Send Connect start ...................., ip={0}, port={1}", ip, nPort));
 
             // 如果已经连接或者正在连接，直接返回
             if (IsConnecting || IsConnected)
@@ -99,17 +100,17 @@ namespace Network
 
                 for (int i = 0; i < address.Length; ++i)
                 {
-                    UnityEngine.Debug.LogWarning("address=" + address[i]);
+                    Debug("address=" + address[i]);
                 }
 
                 if (address[0].AddressFamily == AddressFamily.InterNetworkV6)
                 {
-                    UnityEngine.Debug.Log("LTTcpConnection::Connect InterNetworkV6");
+                    Debug("LTTcpConnection::Connect InterNetworkV6");
 
                 }
                 else
                 {
-                    UnityEngine.Debug.Log("LTTcpConnection::Connect InterNetwork");
+                    Debug("LTTcpConnection::Connect InterNetwork");
                 }
 
                 mSocket = new Socket(address[0].AddressFamily, SocketType.Stream, ProtocolType.Tcp);
@@ -118,7 +119,7 @@ namespace Network
             }
             catch (Exception e)
             {
-                UnityEngine.Debug.LogWarning(string.Format("LTConnection::Connect catch a exception, msg={0}", e.Message));
+                Debug(string.Format("LTConnection::Connect catch a exception, msg={0}", e.Message));
 
                 Close();
 
@@ -126,7 +127,7 @@ namespace Network
                 return false;
             }
 
-            UnityEngine.Debug.Log("Send Connect done ....................");
+            Debug("Send Connect done ....................");
 
             return true;
         }
@@ -158,18 +159,18 @@ namespace Network
             {
                 if (e.ErrorCode == (int)SocketError.WouldBlock)
                 {
-                    UnityEngine.Debug.LogWarning("LTConnection::SendData SocketException SocketError.WouldBlock ...");
+                    Debug("LTConnection::SendData SocketException SocketError.WouldBlock ...");
                     return true;
                 }
 
-                UnityEngine.Debug.LogWarning(string.Format("LTConnection::SendData SocketException catch a exception, msg={0}", e.Message));
+                Debug(string.Format("LTConnection::SendData SocketException catch a exception, msg={0}", e.Message));
 
                 Close();
 
             }
             catch (Exception e)
             {
-                UnityEngine.Debug.LogWarning(string.Format("LTConnection::SendData catch a exception, msg={0}", e.Message));
+                Debug(string.Format("LTConnection::SendData catch a exception, msg={0}", e.Message));
 
                 Close();
 
@@ -192,11 +193,11 @@ namespace Network
             {
                 if (e.ErrorCode == (int)SocketError.WouldBlock)
                 {
-                    UnityEngine.Debug.LogWarning("LTConnection::Receive SocketException SocketError.WouldBlock ...");
+                    Debug("LTConnection::Receive SocketException SocketError.WouldBlock ...");
                     return;
                 }
 
-                UnityEngine.Debug.LogWarning(string.Format("LTConnection::Receive SocketException catch a exception, msg={0}", e.Message));
+                Debug(string.Format("LTConnection::Receive SocketException catch a exception, msg={0}", e.Message));
 
                 Close();
 
@@ -204,7 +205,7 @@ namespace Network
             }
             catch (Exception e)
             {
-                UnityEngine.Debug.LogWarning("LTConnection::Receive catch exception, msg=" + e.Message);
+                Debug("LTConnection::Receive catch exception, msg=" + e.Message);
 
                 Close();
 
@@ -242,7 +243,7 @@ namespace Network
             IsConnected = false;
             IsConnecting = false;
 
-            UnityEngine.Debug.Log("Socket Close !");
+            Debug("Socket Close !");
             if (initiatively == false)
             {
                 if (onDisconnect != null)
@@ -279,7 +280,7 @@ namespace Network
             }
             catch (Exception e)     // 该try catch不能去掉，因为异步操作，有可能会返回异常
             {
-                UnityEngine.Debug.LogWarning("LTConnection::OnConnected catch a exception " + e.Message);
+                Debug("LTConnection::OnConnected catch a exception " + e.Message);
 
                 Close();
            
@@ -298,11 +299,11 @@ namespace Network
             {
                 if (e.ErrorCode == (int)SocketError.WouldBlock)
                 {
-                    UnityEngine.Debug.LogWarning("LTConnection::OnSendData SocketException SocketError.WouldBlock ...");
+                    Debug("LTConnection::OnSendData SocketException SocketError.WouldBlock ...");
                     return;
                 }
 
-                UnityEngine.Debug.LogWarning(string.Format("LTConnection::OnSendData SocketException catch a exception, msg={0}", e.Message));
+                Debug(string.Format("LTConnection::OnSendData SocketException catch a exception, msg={0}", e.Message));
 
                 Close();
 
@@ -310,7 +311,7 @@ namespace Network
             }
             catch (Exception e)     // 该try catch不能去掉，因为异步操作，有可能会返回异常
             {
-                UnityEngine.Debug.LogWarning(string.Format("LTConnection::OnSendData catch a exception msg={0}", e.Message));
+                Debug(string.Format("LTConnection::OnSendData catch a exception msg={0}", e.Message));
                 Close();
 
               
@@ -333,11 +334,11 @@ namespace Network
             {
                 if (e.ErrorCode == (int)SocketError.WouldBlock)
                 {
-                    UnityEngine.Debug.LogWarning("LTConnection::OnEndReceive SocketException SocketError.WouldBlock ...");
+                    Debug("LTConnection::OnEndReceive SocketException SocketError.WouldBlock ...");
                     return;
                 }
 
-                UnityEngine.Debug.LogWarning(string.Format("LTConnection::OnEndReceive SocketException catch a exception, msg={0}", e.Message));
+                Debug(string.Format("LTConnection::OnEndReceive SocketException catch a exception, msg={0}", e.Message));
 
                 Close();
 
@@ -345,7 +346,7 @@ namespace Network
             }
             catch (Exception e)     // 该try catch不能去掉，因为异步操作，有可能会返回异常
             {
-                UnityEngine.Debug.LogWarning(string.Format("LTConnection::OnEndReceive catch a exception msg={0}", e.Message));
+                Debug(string.Format("LTConnection::OnEndReceive catch a exception msg={0}", e.Message));
                 Close();             
             }
         }
@@ -424,6 +425,14 @@ namespace Network
                         }
                     }
                 }
+            }
+        }
+
+        private void Debug(string msg)
+        {
+            if(onDebug!=null)
+            {
+                onDebug(msg);
             }
         }
     }

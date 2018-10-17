@@ -43,7 +43,7 @@ namespace Network
 
             c.onConnect += onConnect;
             c.onDisconnect += onDisconnect;
-           
+            c.onDebug += OnDebug;
 
             c.onReceive += OnMessage;
 
