@@ -84,7 +84,7 @@ namespace Network
             IP = ip;
             Port = nPort;
 
-            Debug(string.Format("Send Connect start ...................., ip={0}, port={1}", ip, nPort));
+            Log(string.Format("Send Connect start ...................., ip={0}, port={1}", ip, nPort));
 
             // 如果已经连接或者正在连接，直接返回
             if (IsConnecting || IsConnected)
@@ -100,17 +100,17 @@ namespace Network
 
                 for (int i = 0; i < address.Length; ++i)
                 {
-                    Debug("address=" + address[i]);
+                    Log("address=" + address[i]);
                 }
 
                 if (address[0].AddressFamily == AddressFamily.InterNetworkV6)
                 {
-                    Debug("LTTcpConnection::Connect InterNetworkV6");
+                    Log("LTTcpConnection::Connect InterNetworkV6");
 
                 }
                 else
                 {
-                    Debug("LTTcpConnection::Connect InterNetwork");
+                    Log("LTTcpConnection::Connect InterNetwork");
                 }
 
                 mSocket = new Socket(address[0].AddressFamily, SocketType.Stream, ProtocolType.Tcp);
@@ -119,7 +119,7 @@ namespace Network
             }
             catch (Exception e)
             {
-                Debug(string.Format("LTConnection::Connect catch a exception, msg={0}", e.Message));
+                Log(string.Format("LTConnection::Connect catch a exception, msg={0}", e.Message));
 
                 Close();
 
@@ -127,7 +127,7 @@ namespace Network
                 return false;
             }
 
-            Debug("Send Connect done ....................");
+            Log("Send Connect done ....................");
 
             return true;
         }
@@ -159,18 +159,18 @@ namespace Network
             {
                 if (e.ErrorCode == (int)SocketError.WouldBlock)
                 {
-                    Debug("LTConnection::SendData SocketException SocketError.WouldBlock ...");
+                    Log("LTConnection::SendData SocketException SocketError.WouldBlock ...");
                     return true;
                 }
 
-                Debug(string.Format("LTConnection::SendData SocketException catch a exception, msg={0}", e.Message));
+                Log(string.Format("LTConnection::SendData SocketException catch a exception, msg={0}", e.Message));
 
                 Close();
 
             }
             catch (Exception e)
             {
-                Debug(string.Format("LTConnection::SendData catch a exception, msg={0}", e.Message));
+                Log(string.Format("LTConnection::SendData catch a exception, msg={0}", e.Message));
 
                 Close();
 
@@ -193,11 +193,11 @@ namespace Network
             {
                 if (e.ErrorCode == (int)SocketError.WouldBlock)
                 {
-                    Debug("LTConnection::Receive SocketException SocketError.WouldBlock ...");
+                    Log("LTConnection::Receive SocketException SocketError.WouldBlock ...");
                     return;
                 }
 
-                Debug(string.Format("LTConnection::Receive SocketException catch a exception, msg={0}", e.Message));
+                Log(string.Format("LTConnection::Receive SocketException catch a exception, msg={0}", e.Message));
 
                 Close();
 
@@ -205,7 +205,7 @@ namespace Network
             }
             catch (Exception e)
             {
-                Debug("LTConnection::Receive catch exception, msg=" + e.Message);
+                Log("LTConnection::Receive catch exception, msg=" + e.Message);
 
                 Close();
 
@@ -243,7 +243,7 @@ namespace Network
             IsConnected = false;
             IsConnecting = false;
 
-            Debug("Socket Close !");
+            Log("Socket Close !");
             if (initiatively == false)
             {
                 if (onDisconnect != null)
@@ -280,7 +280,7 @@ namespace Network
             }
             catch (Exception e)     // 该try catch不能去掉，因为异步操作，有可能会返回异常
             {
-                Debug("LTConnection::OnConnected catch a exception " + e.Message);
+                Log("LTConnection::OnConnected catch a exception " + e.Message);
 
                 Close();
            
@@ -299,11 +299,11 @@ namespace Network
             {
                 if (e.ErrorCode == (int)SocketError.WouldBlock)
                 {
-                    Debug("LTConnection::OnSendData SocketException SocketError.WouldBlock ...");
+                    Log("LTConnection::OnSendData SocketException SocketError.WouldBlock ...");
                     return;
                 }
 
-                Debug(string.Format("LTConnection::OnSendData SocketException catch a exception, msg={0}", e.Message));
+                Log(string.Format("LTConnection::OnSendData SocketException catch a exception, msg={0}", e.Message));
 
                 Close();
 
@@ -311,7 +311,7 @@ namespace Network
             }
             catch (Exception e)     // 该try catch不能去掉，因为异步操作，有可能会返回异常
             {
-                Debug(string.Format("LTConnection::OnSendData catch a exception msg={0}", e.Message));
+                Log(string.Format("LTConnection::OnSendData catch a exception msg={0}", e.Message));
                 Close();
 
               
@@ -334,11 +334,11 @@ namespace Network
             {
                 if (e.ErrorCode == (int)SocketError.WouldBlock)
                 {
-                    Debug("LTConnection::OnEndReceive SocketException SocketError.WouldBlock ...");
+                    Log("LTConnection::OnEndReceive SocketException SocketError.WouldBlock ...");
                     return;
                 }
 
-                Debug(string.Format("LTConnection::OnEndReceive SocketException catch a exception, msg={0}", e.Message));
+                Log(string.Format("LTConnection::OnEndReceive SocketException catch a exception, msg={0}", e.Message));
 
                 Close();
 
@@ -346,7 +346,7 @@ namespace Network
             }
             catch (Exception e)     // 该try catch不能去掉，因为异步操作，有可能会返回异常
             {
-                Debug(string.Format("LTConnection::OnEndReceive catch a exception msg={0}", e.Message));
+                Log(string.Format("LTConnection::OnEndReceive catch a exception msg={0}", e.Message));
                 Close();             
             }
         }
@@ -428,7 +428,7 @@ namespace Network
             }
         }
 
-        private void Debug(string msg)
+        private void Log(string msg)
         {
             if(onDebug!=null)
             {
