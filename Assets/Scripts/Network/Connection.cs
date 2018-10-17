@@ -34,7 +34,7 @@ namespace Network
         /// <summary>
         /// 是否正在连接
         /// </summary>
-        private bool mIsConnecting;
+        public bool IsConnecting { get; private set; }
 
         // 已连接
         public bool IsConnected { get; private set; }
@@ -43,6 +43,8 @@ namespace Network
         private MemoryStream mStream;
 
         public ConnectID ID { get; private set; }
+        public string IP { get; private set; }
+        public int Port { get;private set; }
 
         public event OnConnectionHandler onConnect;
         public event OnConnectionHandler onDisconnect;
@@ -51,7 +53,7 @@ namespace Network
         public Connection(ConnectID id)
         {
             ID = id;
-            mIsConnecting = false;
+            IsConnecting = false;
             IsConnected = false;
 
             mRecvData = new byte[MAX_NET_BUFFER];
@@ -65,11 +67,12 @@ namespace Network
 
      
 
-        public void Release()
+        public bool Reconnect()
         {
-            IsConnected = false;
-          
-            Close();
+           
+            Close(true);
+       
+            return Connect(IP, Port);
         }
 
         public void Update() { }
@@ -77,15 +80,18 @@ namespace Network
         // 连接到指定地址
         public bool Connect(string ip, int nPort)
         {
+            IP = ip;
+            Port = nPort;
+
             UnityEngine.Debug.Log(string.Format("Send Connect start ...................., ip={0}, port={1}", ip, nPort));
 
             // 如果已经连接或者正在连接，直接返回
-            if (mIsConnecting || IsConnected)
+            if (IsConnecting || IsConnected)
             {
                 return true;
             }
 
-            mIsConnecting = true;
+            IsConnecting = true;
 
             try
             {
@@ -206,8 +212,11 @@ namespace Network
             }
         }
 
-        // 关闭连接
-        public void Close()
+        /// <summary>
+        /// 关闭连接
+        /// </summary>
+        /// <param name="initiatively">主动关闭连接不会调用断开回调</param>
+        public void Close(bool initiatively = false)
         {
             if (mSocket != null)
             {
@@ -231,14 +240,15 @@ namespace Network
             
             mDataNowLength = 0;
             IsConnected = false;
-            mIsConnecting = false;
+            IsConnecting = false;
 
             UnityEngine.Debug.Log("Socket Close !");
-
-            if(onDisconnect!=null)
+            if (initiatively == false)
             {
-                onDisconnect(this);
-
+                if (onDisconnect != null)
+                {
+                    onDisconnect(this);
+                }
             }
         }
 
@@ -247,7 +257,7 @@ namespace Network
         // 已连接回调
         private void OnEndConnect(IAsyncResult iar)
         {
-            mIsConnecting = false;
+            IsConnecting = false;
 
             try
             {

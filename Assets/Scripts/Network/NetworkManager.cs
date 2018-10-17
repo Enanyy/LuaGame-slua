@@ -36,7 +36,7 @@ namespace Network
             {
                 Connection client = mConnectionDic[id];
                 mConnectionDic.Remove(id);
-                client.Close();
+                client.Close(true);
             }
 
             Connection c = new Connection(varConnectID);
@@ -103,24 +103,24 @@ namespace Network
         /// <summary>
         /// 断开连接
         /// </summary>
-        public void Disconnect(ConnectID connectID)
+        public void Close(ConnectID connectID)
         {
             if(mConnectionDic.ContainsKey((int)connectID))
             {
                 var c = mConnectionDic[(int)connectID];
                 mConnectionDic.Remove((int)connectID);
-                c.Close();
+                c.Close(true);
             }
         }
 
         /// <summary>
         /// 断开所有连接
         /// </summary>
-        public void Disconnect()
+        public void Close()
         {
             foreach(var  v in mConnectionDic.Values)
             {
-                v.Close();
+                v.Close(true);
             }
             mConnectionDic.Clear();
         }
