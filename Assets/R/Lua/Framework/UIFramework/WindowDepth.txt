@@ -1,0 +1,28 @@
+require("WindowType")
+---
+---统一控制某种窗口类型的depth区间
+---
+WindowDepth =
+{
+    depths={
+        [WindowType.Root]       = { min = 0,    max = 10  },
+        [WindowType.Normal]     = { min = 50,   max = 1000},
+        [WindowType.Pop]        = { min = 1050, max = 2000},
+        [WindowType.Widget]     = { min = 5000, max = 6000},
+    }
+}
+
+function WindowDepth:Clamp(windowType, depth)
+
+    local interval = self.depths[windowType]
+
+    if interval then
+        if depth < interval.min then
+            depth = interval.min
+        elseif depth > interval.max then
+            depth = interval.max
+        end
+    end
+
+    return depth
+end

@@ -1,6 +1,7 @@
 require("Window")
 require("WindowPath")
 require("WindowType")
+require("WindowDepth")
 require("UnityClass")
 require("UnityLayer")
 
@@ -76,8 +77,8 @@ function  WindowManager:Initialize()
         self.blurEffect.enabled = false
 
         --Window栈容器
-        self.mWindowStack = Stack.new()             --lua栈
-        self.mWidgetList = {}
+        self.mWindowStack = Stack.new()             --窗口
+        self.mWidgetList = {}                       --小组件
     end
 
     return self
@@ -127,7 +128,7 @@ function WindowManager:Open(class, callback)
             do
                 local window = stack:Pop()
 
-                self:SetLayer(window)
+                self:SetDepth(window)
 
                 self.mWindowStack:Push(window)
             end
@@ -258,7 +259,7 @@ function WindowManager:Push(t, callback)
 
         end
 
-        self:SetLayer(t)
+        self:SetDepth(t)
 
         t:OnResume()
     end
@@ -322,7 +323,7 @@ function WindowManager:Find(windowType)
     return nil
 end
 
-function WindowManager:SetLayer(window)
+function WindowManager:SetDepth(window)
 
     if window then
 
@@ -331,17 +332,36 @@ function WindowManager:SetLayer(window)
             window.panel.depth = window.depth
 
         else
-            if self.mWindowStack:Count() > 0 then
-
-                local  top = self.mWindowStack:Peek()
-
-                window.panel.depth = top.panel.depth + 50
-
-            else 
-                window.panel.depth = 100
-            end
+            local depth = self:GetMaxDepth(window.windowType)
+            depth = depth + 50
+            depth = WindowDepth:Clamp(window.windowType,depth)
+           
+            window.panel.depth = depth       
         end
     end
+end
+---
+---获取某个窗口类型当前最大的depth
+---
+function WindowManager:GetMaxDepth(windowType)
+
+    local depth = 0
+
+    if windowType == WindowType.Widget then
+        for i,v in ipairs(self.mWidgetList) do
+            if v.panel.depth > depth then
+                depth = v.panel.depth           
+            end
+        end
+    else
+        for i,v in ipairs(self.mWindowStack.items) do
+            if v.windowType == windowType and v.panel.depth > depth then
+                depth = v.panel.depth
+            end
+        end    
+    end
+
+    return depth
 end
 
 function WindowManager:Close(t)
