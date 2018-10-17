@@ -6,9 +6,9 @@ WindowDepth =
 {
     depths={
         [WindowType.Root]       = { min = 0,    max = 10  },
-        [WindowType.Normal]     = { min = 50,   max = 1000},
-        [WindowType.Pop]        = { min = 1050, max = 2000},
-        [WindowType.Widget]     = { min = 5000, max = 6000},
+        [WindowType.Normal]     = { min = 50,   max = 5000},
+        [WindowType.Pop]        = { min = 50,   max = 5000},
+        [WindowType.Widget]     = { min = 5050, max = 6000},
     }
 }
 
