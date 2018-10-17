@@ -65,6 +65,7 @@ namespace SLua
             add(typeof(UILabel), null);
             add(typeof(UIWidget), null);
             add(typeof(UIWidget.Pivot), null);
+            add(typeof(UIRect.AnchorUpdate), null);
             add(typeof(UIAnchor), null);
             add(typeof(UIAtlas), null);
             add(typeof(UIFont), null);

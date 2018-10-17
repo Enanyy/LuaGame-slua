@@ -8,6 +8,7 @@ local this = UI_PopWindow
 function this:ctor( path)
     self.path  = path
     self.windowType = WindowType.Pop --弹出行界面
+    self.useMask =true
 end
 
 
