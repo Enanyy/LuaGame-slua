@@ -93,21 +93,16 @@ public class LuaFile
 
     static string  ToPackagePath(string path)
     {
-        using (CString.Block())
+        path = path.Replace('\\', '/');
+        if (path.Length > 0 && path[path.Length - 1] != '/')
         {
-            CString sb = CString.Alloc(256);
-            sb.Append(path);
-            sb.Replace('\\', '/');
-
-            if (sb.Length > 0 && sb[sb.Length - 1] != '/')
-            {
-                sb.Append('/');
-            }
-
-            sb.Append("?");
-            sb.Append(extension);
-            return sb.ToString();
+            path = string.Format("{0}/?{1}", path, extension);
         }
+        else
+        {
+            path = string.Format("{0}?{1}", path, extension);
+        }
+        return path;
     }
 
     public static bool RemoveSearchPath(string path)
