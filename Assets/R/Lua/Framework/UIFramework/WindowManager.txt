@@ -333,6 +333,17 @@ function WindowManager:SetDepth(window)
 
         else
             local depth = self:GetMaxDepth(window.windowType)
+            if window.windowType == WindowType.Normal then
+                local d = self:GetMaxDepth(WindowType.Pop)
+                if d > depth then
+                    depth = d
+                end
+            elseif window.windowType == WindowType.Pop then
+                local d = self:GetMaxDepth(WindowType.Normal)
+                if d > depth then
+                    depth = d
+                end
+            end
             depth = depth + 50
             depth = WindowDepth:Clamp(window.windowType,depth)
            
