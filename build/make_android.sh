@@ -2,17 +2,19 @@
 cd "$( dirname "${BASH_SOURCE[0]}" )"
 
 # copy slua copy to luajit folder
-cp slua.c luasocket-mini/* luajit-2.1.0-beta3/src/
+cp slua.c luasocket-mini/* pbc/pbc.h pbc/src/* pbc/binding/lua/pbc-lua.c luajit-2.1.0-beta3/src/
 cd luajit-2.1.0-beta3
 SRCDIR=$(pwd)
 DIR=$(pwd)
+
+NDKPATH=E:/workspace/android-ndk-r10e
 
 ${NDKPATH?"Need to set NDKPATH"}
 
 NDK=$NDKPATH
 NDKABI=8
 NDKVER=$NDK/toolchains/arm-linux-androideabi-4.9
-NDKP=$NDKVER/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-
+NDKP=$NDKVER/prebuilt/windows-x86_64/bin/arm-linux-androideabi-
 NDKF="--sysroot $NDK/platforms/android-$NDKABI/arch-arm"
 
 
@@ -35,7 +37,7 @@ NDKABI=14
 DESTDIR=$DIR/android/x86
 mkdir -p $DESTDIR
 NDKVER=$NDK/toolchains/x86-4.9
-NDKP=$NDKVER/prebuilt/darwin-x86_64/bin/i686-linux-android-
+NDKP=$NDKVER/prebuilt/windows-x86_64/bin/i686-linux-android-
 NDKF="--sysroot $NDK/platforms/android-$NDKABI/arch-x86"
 rm -rf "$DESTDIR"/*.a
 make clean
@@ -46,3 +48,4 @@ if [ -f $SRCDIR/src/libluajit.so ]; then
 fi;
 
 # make clean
+read -n 1 -p "Press any key to continue..."

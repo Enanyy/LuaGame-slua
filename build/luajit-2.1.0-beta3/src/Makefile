@@ -483,7 +483,7 @@ LJLIB_O= lib_base.o lib_math.o lib_bit.o lib_string.o lib_table.o \
 	 lib_io.o lib_os.o lib_package.o lib_debug.o lib_jit.o lib_ffi.o
 LJLIB_C= $(LJLIB_O:.o=.c)
 
-SLUA_O = slua.o tcp.o compat.o auxiliar.o options.o io.o timeout.o usocket.o buffer.o inet.o luasocket.o except.o udp.o select.o
+SLUA_O = slua.o context.o varint.o array.o pattern.o register.o proto.o map.o alloc.o rmessage.o wmessage.o bootstrap.o stringpool.o decode.o pbc-lua.o tcp.o compat.o auxiliar.o options.o io.o timeout.o usocket.o buffer.o inet.o luasocket.o except.o udp.o select.o
 
 LJCORE_O= lj_gc.o lj_err.o lj_char.o lj_bc.o lj_obj.o lj_buf.o \
 	  lj_str.o lj_tab.o lj_func.o lj_udata.o lj_meta.o lj_debug.o \

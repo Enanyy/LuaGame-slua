@@ -168,7 +168,7 @@ function WindowManager:Open(class, callback)
                 if  t.windowType == WindowType.Root then
                 
                     --查找看看是否已经有 root window
-                    local window = self:Find(0)
+                    local window = self:Find(WindowType.Root)
 
                     if  window ~= nil then
                     
