@@ -47,5 +47,5 @@ if [ -f $SRCDIR/src/libluajit.so ]; then
     cp $SRCDIR/src/libluajit.so ../../Assets/Plugins/Android/libs/x86/libslua.so
 fi;
 
-# make clean
+make clean
 read -n 1 -p "Press any key to continue..."
