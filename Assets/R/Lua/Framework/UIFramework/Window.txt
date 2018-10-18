@@ -98,11 +98,15 @@ function Window:OnResume()
 end
 
 function Window:OnExit()
+    WindowManager:SetBlur()
+
+    self:OnDestroy()
+
     if self.gameObject then
         GameObject.Destroy(self.gameObject)
     end
-    WindowManager:SetBlur()
-    self:OnDestroy()
+    self.gameObject = nil
+    self.transform = nil
 end
 
 function Window:Close()

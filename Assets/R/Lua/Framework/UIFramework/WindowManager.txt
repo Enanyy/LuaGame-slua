@@ -418,6 +418,9 @@ function WindowManager:Close(t)
             self:SetTouchable(true)
         end
     end
+    
+    t = nil
+
 end
 
 -- <summary>
