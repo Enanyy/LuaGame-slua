@@ -50,8 +50,8 @@ public class LuaFile
 
         for (int i = 0; i < assetNames.Count; ++i)
         {
-            string path = assetNames[i].Substring(0, assetNames[i].LastIndexOf('/') + 1);
-            path += "?" + extension;
+            string path =string.Format("{0}?{1}", assetNames[i].Substring(0, assetNames[i].LastIndexOf('/') + 1), extension);
+     
             if (searchPaths.Contains(path) == false)
             {
                 searchPaths.Add(path);
