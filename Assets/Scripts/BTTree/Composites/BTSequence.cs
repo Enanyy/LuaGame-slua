@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-
+/// <summary>
+/// 序列（Sequence）节点：顺序执行所有子节点返回成功，如果某个子节点失败返回失败。
+/// </summary>
 public class BTSequence : BTComposite
 {
     public int index { get; private set; }
