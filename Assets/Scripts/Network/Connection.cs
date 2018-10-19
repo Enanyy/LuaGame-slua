@@ -7,7 +7,7 @@ using System.IO;
 namespace Network
 {
     public delegate void OnConnectionHandler(Connection c);
-    public delegate void OnReceiveHandler(byte[] data);
+    public delegate void OnReceiveHandler(ConnectID id, byte[] data);
     public delegate void OnDebugHandler(string msg);
     public class Connection
     {
@@ -381,7 +381,7 @@ namespace Network
                     Array.Copy(mRecvData, sizeof(ushort), packetData, 0, nPackageLen);
 
                     //TRACE.Log(string.Format("m_InfoList.Push(packetData) 1 nPackageLen={0}", nPackageLen));
-                    onReceive(packetData);
+                    onReceive(ID, packetData);
                 }
 
                 mDataNowLength = 0;
@@ -400,7 +400,7 @@ namespace Network
                         Array.Copy(mCopyData, nReadPos + sizeof(ushort), packetData, 0, nPackageLen);
 
 
-                        onReceive( packetData);
+                        onReceive(ID, packetData);
                     }
 
                     nReadPos += nPackageLen + sizeof(ushort);

@@ -125,7 +125,7 @@ namespace Network
             mConnectionDic.Clear();
         }
 
-        private void OnMessage(byte[] data)
+        private void OnMessage(ConnectID id, byte[] data)
         {
             if(data == null)
             {
