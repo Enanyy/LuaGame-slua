@@ -7,7 +7,7 @@
 #include "map.h"
 
 #include <stdint.h>
-#ifndef _MSC_VER
+#ifdef _WIN32
 #include <stdbool.h>
 #endif
 #include <stdlib.h>

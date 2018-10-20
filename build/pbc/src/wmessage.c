@@ -9,7 +9,7 @@
 #include <string.h>
 #include <assert.h>
 
-#ifndef _MSC_VER
+#ifdef _WIN32
 #include <stdbool.h>
 #endif
 
