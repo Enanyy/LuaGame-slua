@@ -1120,7 +1120,7 @@ luaopen_protobuf_c(lua_State *L) {
 	};
 
 	luaL_checkversion(L);
-	luaL_register(L,"protobuf.c",reg)
+	luaL_register(L,"protobuf.c",reg);
 
 	return 1;
 }
