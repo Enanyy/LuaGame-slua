@@ -12,9 +12,13 @@ namespace BTree.Editor
         public List<BTreeEditorTreeConfig> m_DetachedNode;
         public BTreeEditorConfig()
         {
-            m_RootNode = new BTreeEditorTreeConfig(BTSerialization.ReadXML("Btree"));
+           
+        }
+        public BTreeEditorConfig(string name)
+        {
+            m_RootNode = new BTreeEditorTreeConfig(BTSerialization.ReadXML(name));
             m_RootNode.m_IsEnterNode = true;
-            m_RootNode.m_EditorNodes = new BTreeEditorNodeConfig[m_RootNode.m_Nodes.Length]; 
+            m_RootNode.m_EditorNodes = new BTreeEditorNodeConfig[m_RootNode.m_Nodes.Length];
             for (int i = 0; i < m_RootNode.m_EditorNodes.Length; i++)
             {
                 m_RootNode.m_EditorNodes[i] = new BTreeEditorNodeConfig(m_RootNode.m_Nodes[i]);

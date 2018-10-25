@@ -89,6 +89,7 @@ namespace BTree
         }
         public static BTNode[] CreateBTreeFromConfig(TreeConfig _config)
         {
+            Init();
             BTNode[] _nodes = new BTNode[_config.m_Nodes.Length];
             for (int i = 0; i < _nodes.Length; i++)
             {
