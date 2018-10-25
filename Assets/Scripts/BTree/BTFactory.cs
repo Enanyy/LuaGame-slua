@@ -6,10 +6,7 @@ namespace BTree
 {
     public class BTFactory
     {
-        public delegate void BTTypeRegister(Action<Type> action);
-        public static event BTTypeRegister onRegisterAction;
-        public static event BTTypeRegister onRegisterPrecondition;
-
+       
 
         private static bool mInited = false;
 
@@ -70,14 +67,7 @@ namespace BTree
             mActionTypeDic = new Dictionary<string, Type>();
             mPreconditionTypeDic = new Dictionary<string, Type>();
 
-            if (onRegisterAction != null)
-            {
-                onRegisterAction(AddActionType);
-            }
-            if (onRegisterPrecondition != null)
-            {
-                onRegisterPrecondition(AddPreconditionType);
-            }
+            
         }
 
         #region 从配置生成行为树相关方法
