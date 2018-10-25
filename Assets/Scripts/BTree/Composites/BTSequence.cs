@@ -51,7 +51,7 @@ namespace BTree
             mCurrentIndex = INVALID_CHILD_NODE_INDEX;
         }
 
-        protected override BTResult OnTick(BTData _input, ref BTData _output)
+        protected override BTResult OnTick(ref BTData _input)
         {
             BTResult result = BTResult.Success;
             //First Time
@@ -60,7 +60,7 @@ namespace BTree
                 mCurrentIndex = 0;
             }
             BTNode node = mChildren[mCurrentIndex];
-            result = node.Tick(_input, ref _output);
+            result = node.Tick(ref _input);
             if (result == BTResult.Success)
             {
                 mCurrentIndex++;

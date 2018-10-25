@@ -47,7 +47,7 @@ namespace BTree
             }
         }
 
-        protected override BTResult OnTick(BTData _input, ref BTData _output)
+        protected override BTResult OnTick(ref BTData _input)
         {
             int finishedChildCount = 0;
             for (int i = 0; i < childCount; i++)
@@ -57,7 +57,7 @@ namespace BTree
                 {
                     if (mChildrenResults[i] == BTResult.Executing)
                     {
-                        mChildrenResults[i] = node.Tick(_input, ref _output);
+                        mChildrenResults[i] = node.Tick(ref _input);
                     }
                     if (mChildrenResults[i] != BTResult.Executing)
                     {
@@ -69,7 +69,7 @@ namespace BTree
                 {
                     if (mChildrenResults[i] == BTResult.Executing)
                     {
-                        mChildrenResults[i] = node.Tick(_input, ref _output);
+                        mChildrenResults[i] = node.Tick(ref _input);
                     }
                     if (mChildrenResults[i] != BTResult.Executing)
                     {

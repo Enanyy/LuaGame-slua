@@ -63,9 +63,9 @@ namespace BTree
             OnTransition(_input);
         }
 
-        public BTResult Tick(BTData _input, ref BTData _output)
+        public BTResult Tick(ref BTData _input)
         {
-            return OnTick(_input, ref _output);
+            return OnTick(ref _input);
         }
 
         public virtual void AddChild(BTNode _childNode)
@@ -114,7 +114,7 @@ namespace BTree
         protected virtual void OnTransition(BTData _input)
         {
         }
-        protected virtual BTResult OnTick(BTData _input, ref BTData _output)
+        protected virtual BTResult OnTick(ref BTData _input)
         {
             return BTResult.Success;
         }

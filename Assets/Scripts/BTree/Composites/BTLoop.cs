@@ -48,13 +48,13 @@ namespace BTree
             }
             mCurrentCount = 0;
         }
-        protected override BTResult OnTick(BTData _input, ref BTData _output)
+        protected override BTResult OnTick(ref BTData _input)
         {
             BTResult result = BTResult.Success;
             if (CheckIndex(0))
             {
                 BTNode node = mChildren[0];
-                result = node.Tick(_input, ref _output);
+                result = node.Tick(ref _input);
 
                 if (result == BTResult.Success)
                 {

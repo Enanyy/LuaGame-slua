@@ -42,7 +42,7 @@ namespace BTree
             }
             mLastSelectIndex = INVALID_CHILD_NODE_INDEX;
         }
-        protected override BTResult OnTick(BTData _input, ref BTData _output)
+        protected override BTResult OnTick(ref BTData _input)
         {
             BTResult result = BTResult.Success;
             if (CheckIndex(mCurrentSelectIndex))
@@ -60,7 +60,7 @@ namespace BTree
             if (CheckIndex(mLastSelectIndex))
             {
                 BTNode node = mChildren[mLastSelectIndex];
-                result = node.Tick(_input, ref _output);
+                result = node.Tick(ref _input);
                 if (result == BTResult.Success)
                 {
                     mLastSelectIndex = INVALID_CHILD_NODE_INDEX;

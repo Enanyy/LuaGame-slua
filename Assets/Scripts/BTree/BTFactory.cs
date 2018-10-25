@@ -1,5 +1,4 @@
 ﻿
-
 using System;
 using System.Collections.Generic;
 namespace BTree
@@ -7,7 +6,6 @@ namespace BTree
     public class BTFactory
     {
        
-
         private static bool mInited = false;
 
         private static Dictionary<string, Type> mPreconditionTypeDic = null;
@@ -58,7 +56,7 @@ namespace BTree
         }
         public static void Init()
         {
-            if(mInited)
+            if (mInited)
             {
                 return;
             }
@@ -67,7 +65,19 @@ namespace BTree
             mActionTypeDic = new Dictionary<string, Type>();
             mPreconditionTypeDic = new Dictionary<string, Type>();
 
-            
+            //自定义节点要在这里注册
+
+            /*
+            AddActionType(typeof(AttackActionNode));
+            AddActionType(typeof(FindTargetActionNode));
+            AddActionType(typeof(IdleActionNode));
+            AddActionType(typeof(MoveToActionNode));
+            AddActionType(typeof(StartActionNode));
+
+            AddPreconditionType(typeof(HasTargetCondition));
+            AddPreconditionType(typeof(HasReachedTargetCondition));
+            AddPreconditionType(typeof(IsInAttackRangeCondition));
+            */
         }
 
         #region 从配置生成行为树相关方法
@@ -79,7 +89,6 @@ namespace BTree
         }
         public static BTNode[] CreateBTreeFromConfig(TreeConfig _config)
         {
-            Init();
             BTNode[] _nodes = new BTNode[_config.m_Nodes.Length];
             for (int i = 0; i < _nodes.Length; i++)
             {

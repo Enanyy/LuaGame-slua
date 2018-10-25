@@ -20,7 +20,7 @@ namespace BTree
         }
 
         protected virtual void OnEnter(BTData _input) { }
-        protected virtual BTResult OnExecute(BTData _input, ref BTData _output) { return BTResult.Success; }
+        protected virtual BTResult OnExecute(ref BTData _input) { return BTResult.Success; }
         protected virtual void OnExit(BTData _input, BTResult _status) { }
 
 
@@ -35,7 +35,7 @@ namespace BTree
             mNeedExit = false;
         }
 
-        protected override BTResult OnTick(BTData _input, ref BTData _output)
+        protected override BTResult OnTick(ref BTData _input)
         {
             BTResult result = BTResult.Success;
             if (mStatus == BTStatus.Ready)
@@ -47,7 +47,7 @@ namespace BTree
             }
             if (mStatus == BTStatus.Running)
             {
-                result = OnExecute(_input, ref _output);
+                result = OnExecute(ref _input);
                 SetActiveNode(this);
                 if (result == BTResult.Success || result == BTResult.Failed)
                 {
