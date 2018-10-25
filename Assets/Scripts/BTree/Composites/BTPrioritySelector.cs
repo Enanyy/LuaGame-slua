@@ -20,7 +20,7 @@ namespace BTree
 
         }
 
-        protected override bool OnEvaluate(BTData _input)
+        protected override bool OnEvaluate(BTInput _input)
         {
             for (int i = 0; i < childCount; i++)
             {
@@ -33,7 +33,7 @@ namespace BTree
             }
             return false;
         }
-        protected override void OnTransition(BTData _input)
+        protected override void OnTransition(BTInput _input)
         {
             if (CheckIndex(mLastSelectIndex))
             {
@@ -42,7 +42,7 @@ namespace BTree
             }
             mLastSelectIndex = INVALID_CHILD_NODE_INDEX;
         }
-        protected override BTResult OnTick(ref BTData _input)
+        protected override BTResult OnTick(ref BTInput _input)
         {
             BTResult result = BTResult.Success;
             if (CheckIndex(mCurrentSelectIndex))

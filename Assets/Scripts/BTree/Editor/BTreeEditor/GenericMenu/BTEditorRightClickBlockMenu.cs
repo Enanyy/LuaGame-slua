@@ -8,9 +8,9 @@ using UnityEngine;
 
 namespace BTree.Editor
 {
-    public class BTreeEditorRightClickBlockMenu : BTreeEditorGenericMenuBase
+    public class BTEditorRightClickBlockMenu : BTEditorGenericMenuBase
     {
-        public BTreeEditorRightClickBlockMenu(BTreeEditorWindow _window)
+        public BTEditorRightClickBlockMenu(BTEditorWindow _window)
             : base(_window)
         {
             Init();
@@ -75,7 +75,7 @@ namespace BTree.Editor
 
         private void AddNodeCallback(object obj)
         {
-            m_Window.addNodeCallback(obj);
+            mWindow.AddNodeCallback(obj);
         }
         
     }

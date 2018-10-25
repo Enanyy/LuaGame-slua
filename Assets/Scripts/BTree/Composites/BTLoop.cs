@@ -8,7 +8,7 @@ namespace BTree
     /// </summary>
     public class BTLoop : BTComposite
     {
-        public int mLoopCount;
+        public int loopCount;
         private int mCurrentCount;
         private const int INFINITELOOP = -1;
         public BTLoop()
@@ -18,13 +18,13 @@ namespace BTree
         public BTLoop(BTNode _parentNode, BTPrecondition _precondition = null, int _loopCount = INFINITELOOP)
             : base(_parentNode, _precondition)
         {
-            mLoopCount = _loopCount;
+            loopCount = _loopCount;
             mCurrentCount = 0;
         }
 
-        protected override bool OnEvaluate(BTData _input)
+        protected override bool OnEvaluate(BTInput _input)
         {
-            bool checkLoopCount = mLoopCount == INFINITELOOP || mCurrentCount < mLoopCount;
+            bool checkLoopCount = loopCount == INFINITELOOP || mCurrentCount < loopCount;
             if (!checkLoopCount)
             {
                 return false;
@@ -39,7 +39,7 @@ namespace BTree
             }
             return false;
         }
-        protected override void OnTransition(BTData _input)
+        protected override void OnTransition(BTInput _input)
         {
             if (CheckIndex(0))
             {
@@ -48,7 +48,7 @@ namespace BTree
             }
             mCurrentCount = 0;
         }
-        protected override BTResult OnTick(ref BTData _input)
+        protected override BTResult OnTick(ref BTInput _input)
         {
             BTResult result = BTResult.Success;
             if (CheckIndex(0))
@@ -58,10 +58,10 @@ namespace BTree
 
                 if (result == BTResult.Success)
                 {
-                    if (mLoopCount != INFINITELOOP)
+                    if (loopCount != INFINITELOOP)
                     {
                         mCurrentCount++;
-                        if (mCurrentCount == mLoopCount)
+                        if (mCurrentCount == loopCount)
                         {
                             result = BTResult.Executing;
                         }
@@ -80,7 +80,7 @@ namespace BTree
         }
         public int GetLoopCount()
         {
-            return mLoopCount;
+            return loopCount;
         }
     }
 }

@@ -4,28 +4,28 @@ using System;
 
 namespace BTree.Editor
 {
-    public class BTreeEditorWindow : EditorWindow
+    public class BTEditorWindow : EditorWindow
     {
-        public static BTreeEditorWindow Instance;
+        public static BTEditorWindow Instance;
         
         [MenuItem("Window/BTree Editor %#_t")]
         public static void ShowWindow()
         {
-            BTreeEditorWindow bTreeEditorWindow = GetWindow(typeof(BTreeEditorWindow)) as BTreeEditorWindow;
+            BTEditorWindow bTreeEditorWindow = GetWindow(typeof(BTEditorWindow)) as BTEditorWindow;
             bTreeEditorWindow.titleContent = new GUIContent("行为树编辑器");
             bTreeEditorWindow.mIsFirst = true;
             bTreeEditorWindow.wantsMouseMove = true;
             bTreeEditorWindow.minSize = new Vector2(600f, 500f);
             DontDestroyOnLoad(bTreeEditorWindow);
         }
-        private BTreeGraphDesigner _mGraphDesigner;
-        private BTreeGraphDesigner mGraphDesigner
+        private BTGraphDesigner _mGraphDesigner;
+        private BTGraphDesigner mGraphDesigner
         {
             get
             {
                 if (_mGraphDesigner == null)
                 {
-                    _mGraphDesigner = new BTreeGraphDesigner();
+                    _mGraphDesigner = new BTGraphDesigner();
                 }
                 return _mGraphDesigner;
             }
@@ -57,14 +57,14 @@ namespace BTree.Editor
         //是否在连线状态
         private bool mIsConnectingLine;
         //当前鼠标位置的节点
-        private BTreeNodeDesigner mCurMousePosNode;
+        private BTNodeDesigner mCurMousePosNode;
 
         //右键菜单
-        private BTreeEditorRightClickBlockMenu mRightClickBlockMenu = null;
-        private BTreeEditorRightClickNodeMenu mRightClickNodeMenu = null;
+        private BTEditorRightClickBlockMenu mRightClickBlockMenu = null;
+        private BTEditorRightClickNodeMenu mRightClickNodeMenu = null;
 
         //属性栏
-        private BTreeEditorNodeInspector mNodeInspector = new BTreeEditorNodeInspector();
+        private BTEditorNodeInspector mNodeInspector = new BTEditorNodeInspector();
 
         private bool mIsFirst;
 
@@ -75,8 +75,8 @@ namespace BTree.Editor
                 mIsFirst = false;
             }
             mCurrentMousePosition = Event.current.mousePosition;
-            setupSizes();
-            handleEvents();
+            SetupSizes();
+            HandleEvents();
             if (Draw())
             {
                 Repaint();
@@ -90,9 +90,9 @@ namespace BTree.Editor
             Color backgroundColor = GUI.backgroundColor;
             GUI.color = (Color.white);
             GUI.backgroundColor = (Color.white);
-            drawFileToolbar();
-            drawPropertiesBox();
-            if (drawGraphArea())
+            DrawFileToolbar();
+            DrawPropertiesBox();
+            if (DrawGraphArea())
             {
                 result = true;
             }
@@ -100,24 +100,24 @@ namespace BTree.Editor
             GUI.backgroundColor = backgroundColor;
             return result;
         }
-        private void setupSizes()
+        private void SetupSizes()
         {
 
-            mFileToolBarRect = new Rect(BTreeEditorUtility.PropertyBoxWidth, 0f, (Screen.width - BTreeEditorUtility.PropertyBoxWidth), BTreeEditorUtility.ToolBarHeight);
-            mPropertyToolbarRect = new Rect(0f, 0f, BTreeEditorUtility.PropertyBoxWidth, BTreeEditorUtility.ToolBarHeight);
-            mPropertyBoxRect = new Rect(0f, mPropertyToolbarRect.height, BTreeEditorUtility.PropertyBoxWidth, Screen.height - mPropertyToolbarRect.height - BTreeEditorUtility.EditorWindowTabHeight);
-            mGraphRect = new Rect(BTreeEditorUtility.PropertyBoxWidth, BTreeEditorUtility.ToolBarHeight, (Screen.width - BTreeEditorUtility.PropertyBoxWidth - BTreeEditorUtility.ScrollBarSize), (Screen.height - BTreeEditorUtility.ToolBarHeight - BTreeEditorUtility.EditorWindowTabHeight - BTreeEditorUtility.ScrollBarSize));
-            mPreferencesPaneRect = new Rect(BTreeEditorUtility.PropertyBoxWidth + mGraphRect.width - BTreeEditorUtility.PreferencesPaneWidth, (BTreeEditorUtility.ToolBarHeight + (EditorGUIUtility.isProSkin ? 1 : 2)), BTreeEditorUtility.PreferencesPaneWidth, BTreeEditorUtility.PreferencesPaneHeight);
+            mFileToolBarRect = new Rect(BTEditorUtility.PropertyBoxWidth, 0f, (Screen.width - BTEditorUtility.PropertyBoxWidth), BTEditorUtility.ToolBarHeight);
+            mPropertyToolbarRect = new Rect(0f, 0f, BTEditorUtility.PropertyBoxWidth, BTEditorUtility.ToolBarHeight);
+            mPropertyBoxRect = new Rect(0f, mPropertyToolbarRect.height, BTEditorUtility.PropertyBoxWidth, Screen.height - mPropertyToolbarRect.height - BTEditorUtility.EditorWindowTabHeight);
+            mGraphRect = new Rect(BTEditorUtility.PropertyBoxWidth, BTEditorUtility.ToolBarHeight, (Screen.width - BTEditorUtility.PropertyBoxWidth - BTEditorUtility.ScrollBarSize), (Screen.height - BTEditorUtility.ToolBarHeight - BTEditorUtility.EditorWindowTabHeight - BTEditorUtility.ScrollBarSize));
+            mPreferencesPaneRect = new Rect(BTEditorUtility.PropertyBoxWidth + mGraphRect.width - BTEditorUtility.PreferencesPaneWidth, (BTEditorUtility.ToolBarHeight + (EditorGUIUtility.isProSkin ? 1 : 2)), BTEditorUtility.PreferencesPaneWidth, BTEditorUtility.PreferencesPaneHeight);
 
             if (mGraphScrollPosition == new Vector2(-1f, -1f))
             {
-                mGraphScrollPosition = (mGraphScrollSize - new Vector2(mGraphRect.width, mGraphRect.height)) / 2f - 2f * new Vector2(BTreeEditorUtility.ScrollBarSize, BTreeEditorUtility.ScrollBarSize);
+                mGraphScrollPosition = (mGraphScrollSize - new Vector2(mGraphRect.width, mGraphRect.height)) / 2f - 2f * new Vector2(BTEditorUtility.ScrollBarSize, BTEditorUtility.ScrollBarSize);
             }
         }
         //绘制图形区域
-        private bool drawGraphArea()
+        private bool DrawGraphArea()
         {
-            Vector2 vector = GUI.BeginScrollView(new Rect(mGraphRect.x, mGraphRect.y, mGraphRect.width + BTreeEditorUtility.ScrollBarSize, mGraphRect.height + BTreeEditorUtility.ScrollBarSize), mGraphScrollPosition, new Rect(0f, 0f, mGraphScrollSize.x, mGraphScrollSize.y), true, true);
+            Vector2 vector = GUI.BeginScrollView(new Rect(mGraphRect.x, mGraphRect.y, mGraphRect.width + BTEditorUtility.ScrollBarSize, mGraphRect.height + BTEditorUtility.ScrollBarSize), mGraphScrollPosition, new Rect(0f, 0f, mGraphScrollSize.x, mGraphScrollSize.y), true, true);
             if (vector != mGraphScrollPosition && Event.current.type != EventType.DragUpdated && Event.current.type != EventType.Ignore)
             {
                 mGraphOffset -= (vector - mGraphScrollPosition) / mGraphZoom;
@@ -125,30 +125,30 @@ namespace BTree.Editor
                 //mGraphDesigner.graphDirty();
             }
             GUI.EndScrollView();
-            GUI.Box(mGraphRect, "", BTreeEditorUtility.GraphBackgroundGUIStyle);
+            GUI.Box(mGraphRect, "", BTEditorUtility.GraphBackgroundGUIStyle);
 
-            BTreeEditorZoomArea.Begin(mGraphRect, mGraphZoom);
+            BTEditorZoomArea.Begin(mGraphRect, mGraphZoom);
             Vector2 mousePosition;
-            if (!getMousePositionInGraph(out mousePosition))
+            if (!GetMousePositionInGraph(out mousePosition))
             {
                 mousePosition = new Vector2(-1f, -1f);
             }
             bool result = false;
-            if (mGraphDesigner.drawNodes(mousePosition, mGraphOffset, mGraphZoom))
+            if (mGraphDesigner.DrawNodes(mousePosition, mGraphOffset, mGraphZoom))
             {
                 result = true;
             }
             if (mIsConnectingLine)
             {
-                var _curNode = mGraphDesigner.nodeAt(mousePosition, mGraphOffset);
-                Vector2 des = _curNode == null ? mousePosition : _curNode.m_EditorNode.m_Pos;
-                mGraphDesigner.drawTempConnection(des, mGraphOffset, mGraphZoom);
+                var _curNode = mGraphDesigner.NodeAt(mousePosition, mGraphOffset);
+                Vector2 des = _curNode == null ? mousePosition : _curNode.mEditorNode.mPos;
+                mGraphDesigner.DrawTempConnection(des, mGraphOffset, mGraphZoom);
             }
-            BTreeEditorZoomArea.End();
+            BTEditorZoomArea.End();
             return result;
         }
         //绘制工具栏
-        private void drawFileToolbar()
+        private void DrawFileToolbar()
         {
             GUILayout.BeginArea(mFileToolBarRect, EditorStyles.toolbar);
             GUILayout.BeginHorizontal(new GUILayoutOption[0]);
@@ -157,31 +157,38 @@ namespace BTree.Editor
                 GUILayout.Width(42f)
             }))
             {
-                newBTree();
+                NewBTree();
             }
             if (GUILayout.Button("Load", EditorStyles.toolbarButton, new GUILayoutOption[]
             {
                 GUILayout.Width(42f)
             }))
             {
-                loadBTree();
+                LoadBTree();
             }
             if (GUILayout.Button("Save", EditorStyles.toolbarButton, new GUILayoutOption[]
             {
                 GUILayout.Width(42f)
             }))
             {
-                saveBTree();
+                SaveBTree();
             }
-            if (GUILayout.Button("Export", EditorStyles.toolbarButton, new GUILayoutOption[]
+            if (GUILayout.Button("Export XML", EditorStyles.toolbarButton, new GUILayoutOption[]
             {
-                GUILayout.Width(45f)
+                GUILayout.Width(80f)
             }))
             {
-                exportBtree();
+                ExportXMLBTree();
+            }
+            if (GUILayout.Button("Export Binary", EditorStyles.toolbarButton, new GUILayoutOption[]
+            {
+                GUILayout.Width(80f)
+            }))
+            {
+                ExportBinaryBTree();
             }
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button("Preferences", mShowPrefPanel ? BTreeEditorUtility.ToolbarButtonSelectionGUIStyle : EditorStyles.toolbarButton, new GUILayoutOption[]
+            if (GUILayout.Button("Preferences", mShowPrefPanel ? BTEditorUtility.ToolbarButtonSelectionGUIStyle : EditorStyles.toolbarButton, new GUILayoutOption[]
             {
                 GUILayout.Width(80f)
             }))
@@ -192,21 +199,21 @@ namespace BTree.Editor
             GUILayout.EndArea();
         }
         //绘制属性栏
-        private void drawPropertiesBox()
+        private void DrawPropertiesBox()
         {
             GUILayout.BeginArea(mPropertyToolbarRect, EditorStyles.toolbar);
             GUILayout.EndArea();
-            GUILayout.BeginArea(mPropertyBoxRect, BTreeEditorUtility.PropertyBoxGUIStyle);
-            if (mGraphDesigner.m_SelectedNodes.Count == 1)
+            GUILayout.BeginArea(mPropertyBoxRect, BTEditorUtility.PropertyBoxGUIStyle);
+            if (mGraphDesigner.mSelectedNodes.Count == 1)
             {
-                mNodeInspector.drawInspector(mGraphDesigner.m_SelectedNodes[0]);
+                mNodeInspector.DrawInspector(mGraphDesigner.mSelectedNodes[0]);
             }
             GUILayout.EndArea();
         }
         
         #region 操作消息处理相关
         //获取鼠标位置是否在绘图区域内
-        private bool getMousePositionInGraph(out Vector2 mousePosition)
+        private bool GetMousePositionInGraph(out Vector2 mousePosition)
         {
             mousePosition = mCurrentMousePosition;
             if (!mGraphRect.Contains(mousePosition))
@@ -222,7 +229,7 @@ namespace BTree.Editor
             return true;
         }
         //处理操作消息
-        private void handleEvents()
+        private void HandleEvents()
         {
             if (EditorApplication.isCompiling) return;
 
@@ -232,7 +239,7 @@ namespace BTree.Editor
                 case EventType.MouseDown:
                     if (e.button == 0)
                     {
-                        if (leftMouseDown(e.clickCount))
+                        if (LeftMouseDown(e.clickCount))
                         {
                             e.Use();
                             return;
@@ -240,7 +247,7 @@ namespace BTree.Editor
                     }
                     else if (e.button == 1)
                     {
-                        if (rightMouseDown())
+                        if (RightMouseDown())
                         {
                             e.Use();
                             return;
@@ -250,7 +257,7 @@ namespace BTree.Editor
                 case EventType.MouseUp:
                     if (e.button == 0)
                     {
-                        if (leftMouseRelease())
+                        if (LeftMouseRelease())
                         {
                             e.Use();
                             return;
@@ -258,7 +265,7 @@ namespace BTree.Editor
                     }
                     else if (e.button == 1)
                     {
-                        if (rightMouseRelease())
+                        if (RightMouseRelease())
                         {
                             e.Use();
                             return;
@@ -266,7 +273,7 @@ namespace BTree.Editor
                     }
                     break;
                 case EventType.MouseMove:
-                    if (mouseMove())
+                    if (MouseMove())
                     {
                         e.Use();
                         return;
@@ -275,18 +282,18 @@ namespace BTree.Editor
                 case EventType.MouseDrag:
                     if (e.button == 0)
                     {
-                        if (leftMouseDragged())
+                        if (LeftMouseDragged())
                         {
                             e.Use();
                             return;
                         }
-                        if (e.modifiers == EventModifiers.Alt && mousePan())
+                        if (e.modifiers == EventModifiers.Alt && MousePan())
                         {
                             e.Use();
                             return;
                         }
                     }
-                    else if (e.button == 2 && mousePan())
+                    else if (e.button == 2 && MousePan())
                     {
                         e.Use();
                         return;
@@ -297,7 +304,7 @@ namespace BTree.Editor
                 case EventType.KeyUp:
                     break;
                 case EventType.ScrollWheel:
-                    if (mouseZoom())
+                    if (MouseZoom())
                     {
                         e.Use();
                         return;
@@ -328,43 +335,43 @@ namespace BTree.Editor
             }
         }
         //鼠标移动
-        private bool mouseMove()
+        private bool MouseMove()
         {
             return true;
         }
         //鼠标左键down
-        private bool leftMouseDown(int clickCount)
+        private bool LeftMouseDown(int clickCount)
         {
             Vector2 point;
-            if (!getMousePositionInGraph(out point))
+            if (!GetMousePositionInGraph(out point))
             {
                 mIsConnectingLine = false;
                 return false;
             }
-            var nodeDesigner = mGraphDesigner.nodeAt(point, mGraphOffset);
+            var nodeDesigner = mGraphDesigner.NodeAt(point, mGraphOffset);
             if (mIsConnectingLine && nodeDesigner != null)
             {
-                mGraphDesigner.addSelectNodeLine(nodeDesigner);
+                mGraphDesigner.AddSelectNodeLine(nodeDesigner);
             }
-            mGraphDesigner.clearNodeSelection();
+            mGraphDesigner.ClearNodeSelection();
             if (nodeDesigner != null)
             {
-                mGraphDesigner.select(nodeDesigner);
+                mGraphDesigner.Select(nodeDesigner);
                 mNodeClicked = true;
             }
             mIsConnectingLine = false;
             return true;
         }
-        private bool leftMouseDragged()
+        private bool LeftMouseDragged()
         {
             Vector2 point;
-            if (!getMousePositionInGraph(out point))
+            if (!GetMousePositionInGraph(out point))
             {
                 return false;
             }
             if (mNodeClicked)
             {
-                bool flag = mGraphDesigner.dragSelectedNodes(Event.current.delta / mGraphZoom, Event.current.modifiers != EventModifiers.Alt, mIsDragging);
+                bool flag = mGraphDesigner.DragSelectedNodes(Event.current.delta / mGraphZoom, Event.current.modifiers != EventModifiers.Alt, mIsDragging);
                 if (flag)
                 {
                     mIsDragging = true;
@@ -373,10 +380,10 @@ namespace BTree.Editor
             return true;
         }
         //鼠标左键Release
-        private bool leftMouseRelease()
+        private bool LeftMouseRelease()
         {
             Vector2 point;
-            if (!getMousePositionInGraph(out point))
+            if (!GetMousePositionInGraph(out point))
             {
                 return false;
             }
@@ -384,176 +391,189 @@ namespace BTree.Editor
             return true;
         }
         //鼠标右键down
-        private bool rightMouseDown()
+        private bool RightMouseDown()
         {
             Vector2 point;
             mIsConnectingLine = false;
-            if (!getMousePositionInGraph(out point))
+            if (!GetMousePositionInGraph(out point))
             {
                 return false;
             }
-            mGraphDesigner.clearNodeSelection();
-            var nodeDesigner = mGraphDesigner.nodeAt(point, mGraphOffset);
+            mGraphDesigner.ClearNodeSelection();
+            var nodeDesigner = mGraphDesigner.NodeAt(point, mGraphOffset);
             if (nodeDesigner != null)
             {
-                mGraphDesigner.select(nodeDesigner);
+                mGraphDesigner.Select(nodeDesigner);
                 mNodeClicked = true;
             }
             return true;
         }
         //鼠标右键Release
-        private bool rightMouseRelease()
+        private bool RightMouseRelease()
         {
             Vector2 point;
-            if (!getMousePositionInGraph(out point))
+            if (!GetMousePositionInGraph(out point))
             {
                 return false;
             }
-            if (mGraphDesigner.m_SelectedNodes != null && mGraphDesigner.m_SelectedNodes.Count != 0)
+            if (mGraphDesigner.mSelectedNodes != null && mGraphDesigner.mSelectedNodes.Count != 0)
             {
                 if (mRightClickNodeMenu == null)
                 {
-                    mRightClickNodeMenu = new BTreeEditorRightClickNodeMenu(this);
+                    mRightClickNodeMenu = new BTEditorRightClickNodeMenu(this);
                 }
-                mRightClickNodeMenu.ShowAsContext(mGraphDesigner.m_SelectedNodes);
+                mRightClickNodeMenu.ShowAsContext(mGraphDesigner.mSelectedNodes);
                 return true;
             }
             else
             {
                 if (mRightClickBlockMenu == null)
                 {
-                    mRightClickBlockMenu = new BTreeEditorRightClickBlockMenu(this);
+                    mRightClickBlockMenu = new BTEditorRightClickBlockMenu(this);
                 }
                 mRightClickBlockMenu.ShowAsContext();
                 return true;
             }
         }
-        private bool mouseZoom()
+        private bool MouseZoom()
         {
             Vector2 point;
-            if (!getMousePositionInGraph(out point))
+            if (!GetMousePositionInGraph(out point))
             {
                 return false;
             }
             return true;
         }
-        private bool mousePan()
+        private bool MousePan()
         {
             Vector2 point;
-            if (!getMousePositionInGraph(out point))
+            if (!GetMousePositionInGraph(out point))
             {
                 return false;
             }
             return true;
         }
         //添加节点
-        private void addNode(Type type, bool useMousePosition)
+        private void AddNode(Type type, bool useMousePosition)
         {
             Vector2 vector = new Vector2(mGraphRect.width / (2f * mGraphZoom), 150f);
             if (useMousePosition)
             {
-                getMousePositionInGraph(out vector);
+                GetMousePositionInGraph(out vector);
             }
             vector -= mGraphOffset;
-            if (mGraphDesigner.addNode(type, vector) != null)
+            if (mGraphDesigner.AddNode(type, vector) != null)
             {
                 Debugger.Log("addNode");
             }
         }
         //禁用节点
-        private void disableSelectNode()
+        private void DisableSelectNode()
         {
-            mGraphDesigner.disableNodeSelection();
+            mGraphDesigner.DisableNodeSelection();
         }
         //启用节点
-        private void enableSelectNode()
+        private void EnableSelectNode()
         {
-            mGraphDesigner.enableNodeSelection();
+            mGraphDesigner.EnableNodeSelection();
         }
         //删除节点
-        private void delectSelectNode()
+        private void DeleteSelectNode()
         {
-            mGraphDesigner.delectSelectNode();
+            mGraphDesigner.DeleteSelectNode();
         }
         //设置入口节点
-        private void setSelectNodeAsEntry()
+        private void SetSelectNodeAsEntry()
         {
-            mGraphDesigner.setSelectNodeAsEntry();
+            mGraphDesigner.SetSelectNodeAsEntry();
         }
         #endregion
 
         #region 配置文件相关
-        public void newBTree()
+        public void NewBTree()
         {
             Debugger.Log("createBTree");
             mGraphDesigner = null;
         }
 
-        public void loadBTree()
+        public void LoadBTree()
         {
-            string text = EditorUtility.OpenFilePanel("Load Behavior Tree", BTreeEditorUtility.editorPath +"Config", "xml");
+            string text = EditorUtility.OpenFilePanel("Load Behavior Tree", BTEditorUtility.editorPath+ "Config", "xml");
             if (!string.IsNullOrEmpty(text))
             {
                 Debugger.Log("loadBTree");
-                BTreeEditorConfig _config = BTreeEditorSerialization.ReadXMLAtPath(text);
-                mGraphDesigner = (new BTreeGraphDesigner());
-                mGraphDesigner.load(_config);
+                BTEditorConfig _config = BTEditorSerialization.ReadXMLAtPath(text);
+                mGraphDesigner = (new BTGraphDesigner());
+                mGraphDesigner.Load(_config);
             }
         }
-        public void saveBTree()
+        public void SaveBTree()
         {
-            if (mGraphDesigner == null || mGraphDesigner.m_RootNode == null)
+            if (mGraphDesigner == null || mGraphDesigner.mRootNode == null)
             {
                 EditorUtility.DisplayDialog("Save Error", "未创建根节点", "ok");
                 return;
             }
-            string text = EditorUtility.SaveFilePanel("Save Behavior Tree", BTreeEditorUtility.editorPath + "Config", mGraphDesigner.m_RootNode.m_NodeName,"xml");
+            string text = EditorUtility.SaveFilePanel("Save Behavior Tree", BTEditorUtility.editorPath + "Config", mGraphDesigner.mRootNode.NodeName,"xml");
             if (text.Length != 0 && Application.dataPath.Length < text.Length)
             {
                 Debugger.Log("saveBTree");
-                BTreeEditorConfig _config = BTreeEditorNodeFactory.CreateBtreeEditorConfigFromGraphDesigner(mGraphDesigner);
-                BTreeEditorSerialization.WirteXMLAtPath(_config, text);
+                BTEditorConfig _config = BTEditorNodeFactory.CreateBtreeEditorConfigFromGraphDesigner(mGraphDesigner);
+                BTEditorSerialization.WirteXMLAtPath(_config, text);
                 EditorUtility.DisplayDialog("Save", "保存行为树编辑器成功:" + text, "ok");
             }
         }
-        public void exportBtree()
+        public void ExportXMLBTree()
         {
-            if (mGraphDesigner == null || mGraphDesigner.m_RootNode == null)
+            if (mGraphDesigner == null || mGraphDesigner.mRootNode == null)
             {
                 EditorUtility.DisplayDialog("Export Error", "未创建根节点", "ok");
                 return;
             }
             Debugger.Log("exportBtree");
-            TreeConfig _treeConfig = BTreeEditorNodeFactory.CreateTreeConfigFromBTreeGraphDesigner(mGraphDesigner);
-            string name = mGraphDesigner.m_RootNode.m_NodeName;
+            TreeConfig _treeConfig = BTEditorNodeFactory.CreateTreeConfigFromBTreeGraphDesigner(mGraphDesigner);
+            string name = mGraphDesigner.mRootNode.NodeName;
+            BTSerialization.WriteXML(_treeConfig, name);
+            EditorUtility.DisplayDialog("Export", "导出行为树配置成功:" + name, "ok");
+        }
+        public void ExportBinaryBTree()
+        {
+            if (mGraphDesigner == null || mGraphDesigner.mRootNode == null)
+            {
+                EditorUtility.DisplayDialog("Export Error", "未创建根节点", "ok");
+                return;
+            }
+            Debugger.Log("exportBtree");
+            TreeConfig _treeConfig = BTEditorNodeFactory.CreateTreeConfigFromBTreeGraphDesigner(mGraphDesigner);
+            string name = mGraphDesigner.mRootNode.NodeName;
             BTSerialization.WriteBinary(_treeConfig, name);
             EditorUtility.DisplayDialog("Export", "导出行为树配置成功:" + name, "ok");
         }
         #endregion
         #region 右键菜单点击回调
-        public void addNodeCallback(object node)
+        public void AddNodeCallback(object node)
         {
-            addNode((Type)node,true);
+            AddNode((Type)node,true);
         }
-        public void disableNodeCallback()
+        public void DisableNodeCallback()
         {
-            disableSelectNode();
+            DisableSelectNode();
         }
-        public void enableNodeCallback()
+        public void EnableNodeCallback()
         {
-            enableSelectNode();
+            EnableSelectNode();
         }
-        public void delectNodeCallback()
+        public void DelectNodeCallback()
         {
-            delectSelectNode();
+            DeleteSelectNode();
         }
-        public void connectLineCallback()
+        public void ConnectLineCallback()
         {
             mIsConnectingLine = true;
         }
-        public void setEntryNodeCallback()
+        public void SetEntryNodeCallback()
         {
-            setSelectNodeAsEntry();
+            SetSelectNodeAsEntry();
         }
         #endregion
     }

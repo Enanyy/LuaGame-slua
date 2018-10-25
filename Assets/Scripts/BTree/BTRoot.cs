@@ -18,11 +18,11 @@ namespace BTree
             mTreeRoot = BTFactory.CreateBTreeRootFromConfig(_config);
         }
 
-        public void Tick(ref BTData _input)
+        public void Tick(ref BTInput _input)
         {
             if (mTreeRoot.Evaluate(_input))
             {
-                var result =  mTreeRoot.Tick(ref _input);
+                var result = mTreeRoot.Tick(ref _input);
             }
             else
             {

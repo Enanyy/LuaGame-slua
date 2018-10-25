@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace BTree.Editor
 {
-    public static class BTreeEditorUtility
+    public static class BTEditorUtility
     {
         public static readonly string editorPath = "Assets/Scripts/BTree/Editor/BTreeEditor/";
 
@@ -496,7 +496,7 @@ namespace BTree.Editor
             {
                 if (taskBorderTexture == null)
                 {
-                    initTaskBorderTexture();
+                    taskBorderTexture = LoadTexture("TaskBorder.png", true, null);
                 }
                 return taskBorderTexture;
             }
@@ -508,7 +508,7 @@ namespace BTree.Editor
             {
                 if (taskBorderRunningTexture == null)
                 {
-                    initTaskBorderRunningTexture();
+                    taskBorderRunningTexture = LoadTexture("TaskBorderRunning.png", true, null);
                 }
                 return taskBorderRunningTexture;
             }
@@ -520,7 +520,7 @@ namespace BTree.Editor
             {
                 if (taskBorderIdentifyTexture == null)
                 {
-                    initTaskBorderIdentifyTexture();
+                    taskBorderIdentifyTexture = LoadTexture("TaskBorderIdentify.png", true, null);
                 }
                 return taskBorderIdentifyTexture;
             }
@@ -532,7 +532,7 @@ namespace BTree.Editor
             {
                 if (taskConnectionTexture == null)
                 {
-                    initTaskConnectionTexture();
+                    taskConnectionTexture = LoadTexture("TaskConnection.png", false, null);
                 }
                 return taskConnectionTexture;
             }
@@ -544,7 +544,7 @@ namespace BTree.Editor
             {
                 if (taskConnectionTopTexture == null)
                 {
-                    initTaskConnectionTopTexture();
+                    taskConnectionTopTexture = LoadTexture("TaskConnectionTop.png", true, null);           
                 }
                 return taskConnectionTopTexture;
             }
@@ -556,7 +556,7 @@ namespace BTree.Editor
             {
                 if (taskConnectionBottomTexture == null)
                 {
-                    initTaskConnectionBottomTexture();
+                    taskConnectionBottomTexture = LoadTexture("TaskConnectionBottom.png", true, null);
                 }
                 return taskConnectionBottomTexture;
             }
@@ -568,7 +568,7 @@ namespace BTree.Editor
             {
                 if (taskConnectionRunningTopTexture == null)
                 {
-                    initTaskConnectionRunningTopTexture();
+                    taskConnectionRunningTopTexture = LoadTexture("TaskConnectionRunningTop.png", true, null);
                 }
                 return taskConnectionRunningTopTexture;
             }
@@ -580,7 +580,7 @@ namespace BTree.Editor
             {
                 if (taskConnectionRunningBottomTexture == null)
                 {
-                    initTaskConnectionRunningBottomTexture();
+                    taskConnectionRunningBottomTexture = LoadTexture("TaskConnectionRunningBottom.png", true, null);
                 }
                 return taskConnectionRunningBottomTexture;
             }
@@ -592,7 +592,7 @@ namespace BTree.Editor
             {
                 if (taskConnectionIdentifyTopTexture == null)
                 {
-                    initTaskConnectionIdentifyTopTexture();
+                    taskConnectionIdentifyTopTexture = LoadTexture("TaskConnectionIdentifyTop.png", true, null);
                 }
                 return taskConnectionIdentifyTopTexture;
             }
@@ -604,7 +604,7 @@ namespace BTree.Editor
             {
                 if (taskConnectionIdentifyBottomTexture == null)
                 {
-                    initTaskConnectionIdentifyBottomTexture();
+                    taskConnectionIdentifyBottomTexture = LoadTexture("TaskConnectionIdentifyBottom.png", true, null);
                 }
                 return taskConnectionIdentifyBottomTexture;
             }
@@ -616,7 +616,7 @@ namespace BTree.Editor
             {
                 if (taskConnectionCollapsedTexture == null)
                 {
-                    initTaskConnectionCollapsedTexture();
+                    taskConnectionCollapsedTexture = LoadTexture("TaskConnectionCollapsed.png", true, null);
                 }
                 return taskConnectionCollapsedTexture;
             }
@@ -628,7 +628,7 @@ namespace BTree.Editor
             {
                 if (contentSeparatorTexture == null)
                 {
-                    initContentSeparatorTexture();
+                    contentSeparatorTexture = LoadTexture("ContentSeparator.png", true, null);
                 }
                 return contentSeparatorTexture;
             }
@@ -640,7 +640,7 @@ namespace BTree.Editor
             {
                 if (docTexture == null)
                 {
-                    initDocTexture();
+                    docTexture = LoadTexture("DocIcon.png", true, null);
                 }
                 return docTexture;
             }
@@ -652,7 +652,7 @@ namespace BTree.Editor
             {
                 if (gearTexture == null)
                 {
-                    initGearTexture();
+                    gearTexture = LoadTexture("GearIcon.png", true, null);
                 }
                 return gearTexture;
             }
@@ -664,7 +664,7 @@ namespace BTree.Editor
             {
                 if (syncedTexture == null)
                 {
-                    initSyncedTexture();
+                    syncedTexture = LoadTexture("SyncedIcon.png", true, null);
                 }
                 return syncedTexture;
             }
@@ -676,7 +676,7 @@ namespace BTree.Editor
             {
                 if (sharedTexture == null)
                 {
-                    initSharedTexture();
+                    sharedTexture = LoadTexture("SharedIcon.png", true, null);
                 }
                 return sharedTexture;
             }
@@ -688,7 +688,7 @@ namespace BTree.Editor
             {
                 if (variableButtonTexture == null)
                 {
-                    initVariableButtonTexture();
+                    variableButtonTexture = LoadTexture("VariableButton.png", true, null);
                 }
                 return variableButtonTexture;
             }
@@ -700,7 +700,7 @@ namespace BTree.Editor
             {
                 if (variableButtonSelectedTexture == null)
                 {
-                    initVariableButtonSelectedTexture();
+                    variableButtonSelectedTexture = LoadTexture("VariableButtonSelected.png", true, null);
                 }
                 return variableButtonSelectedTexture;
             }
@@ -712,7 +712,7 @@ namespace BTree.Editor
             {
                 if (variableWatchButtonTexture == null)
                 {
-                    initVariableWatchButtonTexture();
+                    variableWatchButtonTexture = LoadTexture("VariableWatchButton.png", true, null);
                 }
                 return variableWatchButtonTexture;
             }
@@ -724,7 +724,7 @@ namespace BTree.Editor
             {
                 if (variableWatchButtonSelectedTexture == null)
                 {
-                    initVariableWatchButtonSelectedTexture();
+                    variableWatchButtonSelectedTexture = LoadTexture("VariableWatchButtonSelected.png", true, null);
                 }
                 return variableWatchButtonSelectedTexture;
             }
@@ -736,7 +736,7 @@ namespace BTree.Editor
             {
                 if (referencedTexture == null)
                 {
-                    initReferencedTexture();
+                    referencedTexture = LoadTexture("LinkedIcon.png", true, null);
                 }
                 return referencedTexture;
             }
@@ -748,7 +748,7 @@ namespace BTree.Editor
             {
                 if (deleteButtonTexture == null)
                 {
-                    initDeleteButtonTexture();
+                    deleteButtonTexture = LoadTexture("DeleteButton.png", true, null);
                 }
                 return deleteButtonTexture;
             }
@@ -760,7 +760,7 @@ namespace BTree.Editor
             {
                 if (identifyButtonTexture == null)
                 {
-                    initIdentifyButtonTexture();
+                    identifyButtonTexture = LoadTexture("IdentifyButton.png", true, null);
                 }
                 return identifyButtonTexture;
             }
@@ -772,7 +772,7 @@ namespace BTree.Editor
             {
                 if (breakpointTexture == null)
                 {
-                    initBreakpointTexture();
+                    breakpointTexture = LoadTexture("BreakpointIcon.png", false, null);
                 }
                 return breakpointTexture;
             }
@@ -784,7 +784,7 @@ namespace BTree.Editor
             {
                 if (enableTaskTexture == null)
                 {
-                    initEnableTaskTexture();
+                    enableTaskTexture = LoadTexture("TaskEnableIcon.png", false, null);
                 }
                 return enableTaskTexture;
             }
@@ -796,7 +796,7 @@ namespace BTree.Editor
             {
                 if (disableTaskTexture == null)
                 {
-                    initDisableTaskTexture();
+                    disableTaskTexture = LoadTexture("TaskDisableIcon.png", false, null);
                 }
                 return disableTaskTexture;
             }
@@ -808,7 +808,7 @@ namespace BTree.Editor
             {
                 if (expandTaskTexture == null)
                 {
-                    initExpandTaskTexture();
+                    expandTaskTexture = LoadTexture("TaskExpandIcon.png", false, null);
                 }
                 return expandTaskTexture;
             }
@@ -820,7 +820,7 @@ namespace BTree.Editor
             {
                 if (collapseTaskTexture == null)
                 {
-                    initCollapseTaskTexture();
+                    collapseTaskTexture = LoadTexture("TaskCollapseIcon.png", false, null);
                 }
                 return collapseTaskTexture;
             }
@@ -832,7 +832,7 @@ namespace BTree.Editor
             {
                 if (executionSuccessTexture == null)
                 {
-                    initExecutionSuccessTexture();
+                    executionSuccessTexture = LoadTexture("ExecutionSuccess.png", false, null);
                 }
                 return executionSuccessTexture;
             }
@@ -844,7 +844,7 @@ namespace BTree.Editor
             {
                 if (executionFailureTexture == null)
                 {
-                    initExecutionFailureTexture();
+                    executionFailureTexture = LoadTexture("ExecutionFailure.png", false, null);
                 }
                 return executionFailureTexture;
             }
@@ -855,7 +855,7 @@ namespace BTree.Editor
             {
                 if (prioritySelectorIcon == null)
                 {
-                    initPrioritySelectorIcon();
+                    prioritySelectorIcon = LoadTexture("PrioritySelectorIcon.png", false, null);
                 }
                 return prioritySelectorIcon;
             }
@@ -867,7 +867,7 @@ namespace BTree.Editor
             {
                 if (sequenceIcon == null)
                 {
-                    initSequenceIcon();
+                    sequenceIcon = LoadTexture("SequenceIcon.png", false, null);
                 }
                 return sequenceIcon;
             }
@@ -879,7 +879,7 @@ namespace BTree.Editor
             {
                 if (parallelSelectorIcon == null)
                 {
-                    initParallelSelectorIcon();
+                    parallelSelectorIcon = LoadTexture("ParallelSelectorIcon.png", false, null);
                 }
                 return parallelSelectorIcon;
             }
@@ -891,7 +891,7 @@ namespace BTree.Editor
             {
                 if (inverterIcon == null)
                 {
-                    initInverterIcon();
+                    inverterIcon = LoadTexture("InverterIcon.png", false, null);
                 }
                 return inverterIcon;
             }
@@ -955,8 +955,8 @@ namespace BTree.Editor
             }
             if (texture2D == null)
             {
-              
-                texture2D = (AssetDatabase.LoadAssetAtPath(editorPath + iconName, typeof(Texture2D)) as Texture2D);
+
+                texture2D = (AssetDatabase.LoadAssetAtPath(editorPath + "Res/" + iconName, typeof(Texture2D)) as Texture2D);
             }
             if (texture2D != null)
             {
@@ -1238,176 +1238,5 @@ namespace BTree.Editor
             welcomeScreenTextDescriptionGUIStyle = new GUIStyle(GUI.skin.label);
             welcomeScreenTextDescriptionGUIStyle.wordWrap = (true);
         }
-
-        private static void initTaskBorderTexture()
-        {
-            taskBorderTexture = LoadTexture("TaskBorder.png", true, null);
-        }
-
-        private static void initTaskBorderRunningTexture()
-        {
-            taskBorderRunningTexture = LoadTexture("TaskBorderRunning.png", true, null);
-        }
-
-        private static void initTaskBorderIdentifyTexture()
-        {
-            taskBorderIdentifyTexture = LoadTexture("TaskBorderIdentify.png", true, null);
-        }
-
-        private static void initTaskConnectionTexture()
-        {
-            taskConnectionTexture = LoadTexture("TaskConnection.png", false, null);
-        }
-
-        private static void initTaskConnectionTopTexture()
-        {
-            taskConnectionTopTexture = LoadTexture("TaskConnectionTop.png", true, null);
-        }
-
-        private static void initTaskConnectionBottomTexture()
-        {
-            taskConnectionBottomTexture = LoadTexture("TaskConnectionBottom.png", true, null);
-        }
-
-        private static void initTaskConnectionRunningTopTexture()
-        {
-            taskConnectionRunningTopTexture = LoadTexture("TaskConnectionRunningTop.png", true, null);
-        }
-
-        private static void initTaskConnectionRunningBottomTexture()
-        {
-            taskConnectionRunningBottomTexture = LoadTexture("TaskConnectionRunningBottom.png", true, null);
-        }
-
-        private static void initTaskConnectionIdentifyTopTexture()
-        {
-            taskConnectionIdentifyTopTexture = LoadTexture("TaskConnectionIdentifyTop.png", true, null);
-        }
-
-        private static void initTaskConnectionIdentifyBottomTexture()
-        {
-            taskConnectionIdentifyBottomTexture = LoadTexture("TaskConnectionIdentifyBottom.png", true, null);
-        }
-
-        private static void initTaskConnectionCollapsedTexture()
-        {
-            taskConnectionCollapsedTexture = LoadTexture("TaskConnectionCollapsed.png", true, null);
-        }
-
-        private static void initContentSeparatorTexture()
-        {
-            contentSeparatorTexture = LoadTexture("ContentSeparator.png", true, null);
-        }
-
-        private static void initDocTexture()
-        {
-            docTexture = LoadTexture("DocIcon.png", true, null);
-        }
-
-        private static void initGearTexture()
-        {
-            gearTexture = LoadTexture("GearIcon.png", true, null);
-        }
-
-        private static void initSyncedTexture()
-        {
-            syncedTexture = LoadTexture("SyncedIcon.png", true, null);
-        }
-
-        private static void initSharedTexture()
-        {
-            sharedTexture = LoadTexture("SharedIcon.png", true, null);
-        }
-
-        private static void initVariableButtonTexture()
-        {
-            variableButtonTexture = LoadTexture("VariableButton.png", true, null);
-        }
-
-        private static void initVariableButtonSelectedTexture()
-        {
-            variableButtonSelectedTexture = LoadTexture("VariableButtonSelected.png", true, null);
-        }
-
-        private static void initVariableWatchButtonTexture()
-        {
-            variableWatchButtonTexture = LoadTexture("VariableWatchButton.png", true, null);
-        }
-
-        private static void initVariableWatchButtonSelectedTexture()
-        {
-            variableWatchButtonSelectedTexture = LoadTexture("VariableWatchButtonSelected.png", true, null);
-        }
-
-        private static void initReferencedTexture()
-        {
-            referencedTexture = LoadTexture("LinkedIcon.png", true, null);
-        }
-
-        private static void initDeleteButtonTexture()
-        {
-            deleteButtonTexture = LoadTexture("DeleteButton.png", true, null);
-        }
-
-        private static void initIdentifyButtonTexture()
-        {
-            identifyButtonTexture = LoadTexture("IdentifyButton.png", true, null);
-        }
-
-        private static void initBreakpointTexture()
-        {
-            breakpointTexture = LoadTexture("BreakpointIcon.png", false, null);
-        }
-
-        private static void initEnableTaskTexture()
-        {
-            enableTaskTexture = LoadTexture("TaskEnableIcon.png", false, null);
-        }
-
-        private static void initDisableTaskTexture()
-        {
-            disableTaskTexture = LoadTexture("TaskDisableIcon.png", false, null);
-        }
-
-        private static void initExpandTaskTexture()
-        {
-            expandTaskTexture = LoadTexture("TaskExpandIcon.png", false, null);
-        }
-
-        private static void initCollapseTaskTexture()
-        {
-            collapseTaskTexture = LoadTexture("TaskCollapseIcon.png", false, null);
-        }
-
-        private static void initExecutionSuccessTexture()
-        {
-            executionSuccessTexture = LoadTexture("ExecutionSuccess.png", false, null);
-        }
-
-        private static void initExecutionFailureTexture()
-        {
-            executionFailureTexture = LoadTexture("ExecutionFailure.png", false, null);
-        }
-
-        private static void initPrioritySelectorIcon()
-        {
-            prioritySelectorIcon = LoadTexture("PrioritySelectorIcon.png", false, null);
-        }
-
-        private static void initSequenceIcon()
-        {
-            sequenceIcon = LoadTexture("SequenceIcon.png", false, null);
-        }
-
-        private static void initParallelSelectorIcon()
-        {
-            parallelSelectorIcon = LoadTexture("ParallelSelectorIcon.png", false, null);
-        }
-
-        private static void initInverterIcon()
-        {
-            inverterIcon = LoadTexture("InverterIcon.png", false, null);
-        }
-        
     }
 }

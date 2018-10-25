@@ -4,49 +4,49 @@ using UnityEngine;
 
 namespace BTree.Editor
 {
-    public class BTreeEditorGenericMenuBase
+    public class BTEditorGenericMenuBase
     {
-        protected GenericMenu m_Menu;
-        protected BTreeEditorWindow m_Window;
+        protected GenericMenu mMenu;
+        protected BTEditorWindow mWindow;
 
-        public BTreeEditorGenericMenuBase(BTreeEditorWindow _window)
+        public BTEditorGenericMenuBase(BTEditorWindow _window)
         {
-            m_Menu = new GenericMenu();
-            m_Window = _window;
+            mMenu = new GenericMenu();
+            mWindow = _window;
         }
 
         public void AddDisabledItem(GUIContent content)
         {
-            m_Menu.AddDisabledItem(content);
+            mMenu.AddDisabledItem(content);
         }
 
         public void AddItem(GUIContent content, bool on, GenericMenu.MenuFunction func)
         {
-            m_Menu.AddItem(content, on, func);
+            mMenu.AddItem(content, on, func);
         }
 
         public void AddItem(GUIContent content, bool on, GenericMenu.MenuFunction2 func, object userData)
         {
-            m_Menu.AddItem(content, on, func, userData);
+            mMenu.AddItem(content, on, func, userData);
         }
 
         public void AddSeparator(string path)
         {
-            m_Menu.AddSeparator(path);
+            mMenu.AddSeparator(path);
         }
 
         public void DropDown(Rect position)
         {
-            m_Menu.DropDown(position);
+            mMenu.DropDown(position);
         }
 
         public int GetItemCount()
         {
-            return m_Menu.GetItemCount();
+            return mMenu.GetItemCount();
         }
         public virtual void ShowAsContext()
         {
-            m_Menu.ShowAsContext();
+            mMenu.ShowAsContext();
         }
     }
 }

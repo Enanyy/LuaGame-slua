@@ -1,6 +1,9 @@
 ﻿
 namespace BTree
 {
+    /// <summary>
+    /// Check： 子节点全部返回true时该节点才返回true，否则返回false
+    /// </summary>
     public class BTPreconditionAND : BTPrecondition
     {
         private BTPrecondition[] mPreconditions;
@@ -19,7 +22,7 @@ namespace BTree
             }
             mPreconditions = param;
         }
-        public override bool Check(BTData _input)
+        public override bool Check(BTInput _input)
         {
             for (int i = 0; i < mPreconditions.Length; i++)
             {

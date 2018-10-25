@@ -1,7 +1,7 @@
 ﻿
 namespace BTree
 {
-    public interface BTData
+    public interface BTInput
     {
 
     }

@@ -10,7 +10,7 @@ namespace BTree
     /// </summary>
     public class BTParallel : BTComposite
     {
-        public BTParallelCondition mFinishCondition;
+        public BTParallelCondition finishCondition;
         private List<BTResult> mChildrenResults = new List<BTResult>();
         public BTParallel()
             : base()
@@ -21,7 +21,7 @@ namespace BTree
         {
         }
 
-        protected override bool OnEvaluate(BTData _input)
+        protected override bool OnEvaluate(BTInput _input)
         {
             for (int i = 0; i < childCount; i++)
             {
@@ -37,7 +37,7 @@ namespace BTree
             return true;
         }
 
-        protected override void OnTransition(BTData _input)
+        protected override void OnTransition(BTInput _input)
         {
             for (int i = 0; i < childCount; i++)
             {
@@ -47,13 +47,13 @@ namespace BTree
             }
         }
 
-        protected override BTResult OnTick(ref BTData _input)
+        protected override BTResult OnTick(ref BTInput _input)
         {
             int finishedChildCount = 0;
             for (int i = 0; i < childCount; i++)
             {
                 BTNode node = mChildren[i];
-                if (mFinishCondition == BTParallelCondition.OR)
+                if (finishCondition == BTParallelCondition.OR)
                 {
                     if (mChildrenResults[i] == BTResult.Executing)
                     {
@@ -65,7 +65,7 @@ namespace BTree
                         return BTResult.Success;
                     }
                 }
-                else if (mFinishCondition == BTParallelCondition.AND)
+                else if (finishCondition == BTParallelCondition.AND)
                 {
                     if (mChildrenResults[i] == BTResult.Executing)
                     {

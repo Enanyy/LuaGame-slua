@@ -13,9 +13,9 @@ namespace BTree
             }
             mPrecondition = _precondition;
         }
-        public override bool Check(BTData _input)
+        public override bool Check(BTInput _input)
         {
-            return !mPrecondition.Check(_input);
+            return mPrecondition!=null&&!mPrecondition.Check(_input);
         }
         public BTPrecondition GetChildPrecondition()
         {

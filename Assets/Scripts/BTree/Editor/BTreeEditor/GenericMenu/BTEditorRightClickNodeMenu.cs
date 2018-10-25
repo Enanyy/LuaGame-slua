@@ -5,20 +5,20 @@ using UnityEngine;
 
 namespace BTree.Editor
 {
-    public class BTreeEditorRightClickNodeMenu : BTreeEditorGenericMenuBase
+    public class BTEditorRightClickNodeMenu : BTEditorGenericMenuBase
     {
-        public BTreeEditorRightClickNodeMenu(BTreeEditorWindow _window)
+        public BTEditorRightClickNodeMenu(BTEditorWindow _window)
             :base(_window)
         {
         }
         
-        public void ShowAsContext(List<BTreeNodeDesigner> _selectNodes)
+        public void ShowAsContext(List<BTNodeDesigner> _selectNodes)
         {
             bool isMult = _selectNodes.Count != 1;
-            bool isDisable = _selectNodes[0].m_IsDisable;
-            bool isAction = _selectNodes[0].m_EditorNode.m_Node.isAcitonNode;
-            bool isEntry = _selectNodes[0].m_ParentNode == null && !_selectNodes[0].m_IsEntryDisplay;
-            m_Menu = new GenericMenu();
+            bool isDisable = _selectNodes[0].IsDisable;
+            bool isAction = _selectNodes[0].mEditorNode.mNode.GetType().IsSubclassOf(typeof(BTAction));
+            bool isEntry = _selectNodes[0].mParentNode == null && !_selectNodes[0].mIsEntryDisplay;
+            mMenu = new GenericMenu();
             if (!isMult)
             {
                 if (!isAction)
@@ -44,23 +44,23 @@ namespace BTree.Editor
 
         private void DisableCallback()
         {
-            m_Window.disableNodeCallback();
+            mWindow.DisableNodeCallback();
         }
         private void EnableCallback()
         {
-            m_Window.enableNodeCallback();
+            mWindow.EnableNodeCallback();
         }
         private void DelectCallback()
         {
-            m_Window.delectNodeCallback();
+            mWindow.DelectNodeCallback();
         }
         private void ConnectionCallback()
         {
-            m_Window.connectLineCallback();
+            mWindow.ConnectLineCallback();
         }
         private void SetEntryNodeCallback()
         {
-            m_Window.setEntryNodeCallback();
+            mWindow.SetEntryNodeCallback();
         }
     }
 }

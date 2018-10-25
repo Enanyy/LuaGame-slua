@@ -1,6 +1,9 @@
 ﻿
 namespace BTree
 {
+    /// <summary>
+    /// Check:子节点只要有一个返回true该节点就返回true
+    /// </summary>
     public class BTPreconditionOR : BTPrecondition
     {
         private BTPrecondition[] mPreconditions;
@@ -9,17 +12,17 @@ namespace BTree
         {
             if (param == null)
             {
-                Debugger.Log("BTreeNodePreconditionOR is null");
+                Debugger.Log("BTPreconditionOR is null");
                 return;
             }
             if (param.Length == 0)
             {
-                Debugger.Log("BTreeNodePreconditionOR's length is 0");
+                Debugger.Log("BTPreconditionOR's length is 0");
                 return;
             }
             mPreconditions = param;
         }
-        public override bool Check(BTData _input)
+        public override bool Check(BTInput _input)
         {
             for (int i = 0; i < mPreconditions.Length; i++)
             {

@@ -16,7 +16,7 @@ namespace BTree
             : base(_parentNode, _precondition)
         {
         }
-        protected override bool OnEvaluate(BTData _input)
+        protected override bool OnEvaluate(BTInput _input)
         {
             if (CheckIndex(mCurrentSelectIndex))
             {

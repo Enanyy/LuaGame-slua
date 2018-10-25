@@ -19,7 +19,7 @@ namespace BTree
         {
         }
 
-        protected override bool OnEvaluate(BTData _input)
+        protected override bool OnEvaluate(BTInput _input)
         {
             int i;
             if (mCurrentIndex == INVALID_CHILD_NODE_INDEX)
@@ -41,7 +41,7 @@ namespace BTree
             return false;
         }
 
-        protected override void OnTransition(BTData _input)
+        protected override void OnTransition(BTInput _input)
         {
             if (CheckIndex(mCurrentIndex))
             {
@@ -51,7 +51,7 @@ namespace BTree
             mCurrentIndex = INVALID_CHILD_NODE_INDEX;
         }
 
-        protected override BTResult OnTick(ref BTData _input)
+        protected override BTResult OnTick(ref BTInput _input)
         {
             BTResult result = BTResult.Success;
             //First Time

@@ -6,27 +6,27 @@ namespace BTree
     [Serializable]
     public class TreeConfig
     {
-        public string m_Name;
-        public TreeNodeConfig[] m_Nodes;
+        public string mName;
+        public TreeNodeConfig[] mNodes;
     }
     [Serializable]
     public class TreeNodeConfig
     {
-        public int m_ParentIndex = -1;
-        public int m_NodeType;
-        public int m_NodeSubType;
-        public int[] m_OtherParams;
-        public string m_ActionNodeName;
-        public string m_NodeName;
-        public PreconditionConfig[] m_Preconditions;
+        public int mParentIndex = -1;
+        public int mNodeType;
+        public int mNodeSubType;
+        public int[] mOtherParams;
+        public string mActionNodeName;
+        public string mNodeName;
+        public PreconditionConfig[] mPreconditions;
     }
     [Serializable]
     public class PreconditionConfig
     {
-        public int m_ParentIndex = -1;
-        public int m_Type;
-        public string m_PreconditionName;
-        public int[] m_ChildIndexs;
+        public int mParentIndex = -1;
+        public int mType;
+        public string mPreconditionName;
+        public int[] mChildIndexs;
     }
 
     public enum NodeType

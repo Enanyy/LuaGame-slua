@@ -6,17 +6,17 @@ using UnityEngine;
 
 namespace BTree.Editor
 {
-    public class BTreeEditorNodeInspector
+    public class BTEditorNodeInspector
     {
-        private UnityEngine.Object[] m_Precondition = new UnityEngine.Object[20];
+        private UnityEngine.Object[] mPrecondition = new UnityEngine.Object[20];
 
         private const int SPACEDETLE = 10;
 
-        public void drawInspector(BTreeNodeDesigner _selectNode)
+        public void DrawInspector(BTNodeDesigner _selectNode)
         {
             GUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Script:", new GUILayoutOption[] { GUILayout.Width(100) });
-            string[] scripts = AssetDatabase.FindAssets("t:Script " + _selectNode.m_EditorNode.m_Node.GetType().Name);
+            string[] scripts = AssetDatabase.FindAssets("t:Script " + _selectNode.mEditorNode.mNode.GetType().Name);
             if (scripts != null &&scripts.Length > 0)
             {
                 string path = AssetDatabase.GUIDToAssetPath(scripts[0]);
@@ -32,8 +32,8 @@ namespace BTree.Editor
             //    //genericMenu.AddItem(new GUIContent("Reset"), false, new GenericMenu.MenuFunction2(this.resetTask), _selectNode);
             //    genericMenu.ShowAsContext();
             //}
-            var _node = _selectNode.m_EditorNode.m_Node;
-            Type _nodeType = _selectNode.m_EditorNode.m_Node.GetType();
+            var _node = _selectNode.mEditorNode.mNode;
+            Type _nodeType = _selectNode.mEditorNode.mNode.GetType();
             FieldInfo[] fields = _nodeType.GetFields(BindingFlags.Instance | BindingFlags.Public);
             for (int i = fields.Length-1; i >= 0; i--)
             {
@@ -54,13 +54,13 @@ namespace BTree.Editor
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(_space);
                 
-                m_Precondition[index] = EditorGUILayout.ObjectField("", m_Precondition[index], typeof(MonoScript), false);
-                if (m_Precondition[index] != null)
+                mPrecondition[index] = EditorGUILayout.ObjectField("", mPrecondition[index], typeof(MonoScript), false);
+                if (mPrecondition[index] != null)
                 {
-                    Type type = GetPreconditionType(m_Precondition[index].name);
+                    Type type = GetPreconditionType(mPrecondition[index].name);
                     if (type == null)
                     {
-                        m_Precondition[index] = null;
+                        mPrecondition[index] = null;
                         return _condition;
                     }
                     result = (BTPrecondition)type.GetConstructor(new Type[] { }).Invoke(new object[] { });
@@ -69,7 +69,7 @@ namespace BTree.Editor
             }
             else
             {
-                m_Precondition[index] = null;
+                mPrecondition[index] = null;
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(_space);
                 string[] scripts = AssetDatabase.FindAssets("t:Script " + _condition.GetType().Name);
@@ -192,7 +192,7 @@ namespace BTree.Editor
             try
             {
                 GUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField(BTreeEditorUtility.SplitCamelCase(_field.Name)+":", new GUILayoutOption[] { GUILayout.Width(100) });
+                EditorGUILayout.LabelField(BTEditorUtility.SplitCamelCase(_field.Name)+":", new GUILayoutOption[] { GUILayout.Width(100) });
                 if (_field.FieldType == typeof(int))
                 {
                     var _val = EditorGUILayout.IntField((int)(_field.GetValue(_node)));
@@ -240,7 +240,7 @@ namespace BTree.Editor
                 Debugger.LogWarning(e.Message);
             }
         }
-        private void openInFileEditor(object _node)
+        private void OpenInFileEditor(object _node)
         {
             Debugger.Log(_node.GetType().Name);
             

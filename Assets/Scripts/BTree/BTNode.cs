@@ -26,13 +26,13 @@ namespace BTree
         public int childCount{ get { return mChildren.Count; }  }
         //父节点
         public BTNode parent { get; protected set; }
+        /*
         //上一个激活的节点
         public BTNode lastActiveNode { get; private set; }
         //当前激活的节点
         public BTNode activeNode { get; private set; }
-        //是否是Action节点
-        public bool isAcitonNode { get; protected set; }
-
+      
+        */
         protected const int MAX_CHILD_NODE_COUNT = 16;
         protected const int INVALID_CHILD_NODE_INDEX = -1;
 
@@ -42,30 +42,29 @@ namespace BTree
             name = GetType().Name;
             parent = null;
             precondition = null;
-            isAcitonNode = false;
         }
         public BTNode(BTNode _parentNode, BTPrecondition _precondition = null)
         {
             parent = _parentNode;
             precondition = _precondition;
-            isAcitonNode = false;
         }
 
-        public bool Evaluate(BTData _input)
+        public bool Evaluate(BTInput _input)
         {
             return (precondition == null 
                 || precondition.Check(_input)) 
                 && OnEvaluate(_input);
         }
 
-        public void Transition(BTData _input)
+        public void Transition(BTInput _input)
         {
             OnTransition(_input);
         }
 
-        public BTResult Tick(ref BTData _input)
+        public BTResult Tick(ref BTInput _input)
         {
-            return OnTick(ref _input);
+            BTResult result = OnTick(ref _input);
+            return result;
         }
 
         public virtual void AddChild(BTNode _childNode)
@@ -75,6 +74,7 @@ namespace BTree
                 Debugger.LogError("添加行为树节点失败：超过最大数量16");
                 return;
             }
+            _childNode.parent = this;
             mChildren.Add(_childNode);
         }
 
@@ -90,31 +90,33 @@ namespace BTree
             }
         }
 
-        public BTNode SetPrecondition(BTPrecondition _NodePrecondition)
+        public BTNode SetPrecondition(BTPrecondition _precondition)
         {
-            if (precondition != _NodePrecondition)
+            if (precondition != _precondition)
             {
-                precondition = _NodePrecondition;
+                precondition = _precondition;
             }
             return this;
         }
-       
+        /*
         public void SetActiveNode(BTNode _node)
         {
             lastActiveNode = activeNode;
             activeNode = _node;
             if (parent != null)
+            {
                 parent.SetActiveNode(_node);
+            }
         }
-
-        protected virtual bool OnEvaluate(BTData _input)
+        */
+        protected virtual bool OnEvaluate(BTInput _input)
         {
             return true;
         }
-        protected virtual void OnTransition(BTData _input)
+        protected virtual void OnTransition(BTInput _input)
         {
         }
-        protected virtual BTResult OnTick(ref BTData _input)
+        protected virtual BTResult OnTick(ref BTInput _input)
         {
             return BTResult.Success;
         }
