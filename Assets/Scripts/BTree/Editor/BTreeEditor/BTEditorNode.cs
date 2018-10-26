@@ -6,7 +6,6 @@ namespace BTree.Editor
     public class BTEditorNode
     {
         public BTNode mNode;
-        //public BTreeEditorNode<T, P>[] m_ChildNodeList;
         public Vector2 mPos;
         public bool mDisable;
         public bool mIsCollapsed;//损坏

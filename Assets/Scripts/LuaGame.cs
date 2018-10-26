@@ -7,9 +7,12 @@ public partial class LuaGame : MonoBehaviour
 {
     LuaSvr l;
     int progress = 0;
-   
 
-   
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -50,6 +53,8 @@ public partial class LuaGame : MonoBehaviour
     void OnComplete()
     {
         l.start("main");
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Example");
     }
 #if UNITY_EDITOR
     void OnGUI()
@@ -66,6 +71,14 @@ public partial class LuaGame : MonoBehaviour
         byte[] bytes = LuaFile.ReadBytes(path);
 
         return bytes;
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        PlayerData data = new PlayerData();
+        data.config = "Akari";
+        PlayerManager.GetSingleton().CreatePlayer(data);
+        
     }
 
 }

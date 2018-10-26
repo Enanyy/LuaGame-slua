@@ -20,6 +20,10 @@ namespace BTree
 
         public void Tick(ref BTInput _input)
         {
+            if(mTreeRoot==null)
+            {
+                return;
+            }
             if (mTreeRoot.Evaluate(_input))
             {
                 var result = mTreeRoot.Tick(ref _input);

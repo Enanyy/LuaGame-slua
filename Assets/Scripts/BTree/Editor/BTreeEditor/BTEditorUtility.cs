@@ -72,6 +72,8 @@ namespace BTree.Editor
 
         public static readonly int MaxTaskDescriptionBoxHeight = 300;
 
+        public static readonly int LineWidth = 2;
+
         private static GUIStyle graphStatusGUIStyle = null;
 
         private static GUIStyle taskFoldoutGUIStyle = null;

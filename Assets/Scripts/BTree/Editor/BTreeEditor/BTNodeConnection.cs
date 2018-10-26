@@ -43,7 +43,7 @@ namespace BTree.Editor
                 new Vector2(destination.x, HorizontalHeight),
                 destination
             };
-            Handles.DrawAAPolyLine(BTEditorUtility.TaskConnectionTexture, 1f / graphZoom, array);
+            Handles.DrawAAPolyLine(BTEditorUtility.TaskConnectionTexture, BTEditorUtility.LineWidth / graphZoom, array);
         }
         
     }

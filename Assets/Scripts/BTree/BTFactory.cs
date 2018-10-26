@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 namespace BTree
 {
@@ -76,17 +75,15 @@ namespace BTree
             {
                 onRegisterPrecondition(AddPreconditionType);
             }
-/*
-            AddActionType(typeof(AttackActionNode));
-            AddActionType(typeof(FindTargetActionNode));
-            AddActionType(typeof(IdleActionNode));
-            AddActionType(typeof(MoveToActionNode));
-            AddActionType(typeof(StartActionNode));
+            
+            AddActionType(typeof(ActionIdle));
+            AddActionType(typeof(ActionMoveToPoint));
+            AddActionType(typeof(ActionAttack));
+            
 
-            AddPreconditionType(typeof(HasTargetCondition));
-            AddPreconditionType(typeof(HasReachedTargetCondition));
-            AddPreconditionType(typeof(IsInAttackRangeCondition));
-*/
+            AddPreconditionType(typeof(IsArrivedCondition));
+           
+           
         }
 
         #region 从配置生成行为树相关方法

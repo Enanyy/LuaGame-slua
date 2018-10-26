@@ -530,11 +530,15 @@ namespace BTree.Editor
                 EditorUtility.DisplayDialog("Export Error", "未创建根节点", "ok");
                 return;
             }
-            Debugger.Log("exportBtree");
-            TreeConfig _treeConfig = BTEditorNodeFactory.CreateTreeConfigFromBTreeGraphDesigner(mGraphDesigner);
-            string name = mGraphDesigner.mRootNode.NodeName;
-            BTSerialization.WriteXML(_treeConfig, name);
-            EditorUtility.DisplayDialog("Export", "导出行为树配置成功:" + name, "ok");
+            string text = EditorUtility.SaveFilePanel("Save Behavior Tree", BTSerialization.configPath, mGraphDesigner.mRootNode.NodeName, "xml");
+            if (text.Length != 0 && Application.dataPath.Length < text.Length)
+            {
+                Debugger.Log("exportBtree");
+                TreeConfig _treeConfig = BTEditorNodeFactory.CreateTreeConfigFromBTreeGraphDesigner(mGraphDesigner);
+               
+                BTSerialization.WriteXML(_treeConfig,System.IO.Path.GetFileName(text));
+                EditorUtility.DisplayDialog("Export", "导出行为树配置成功:" + text, "ok");
+            }
         }
         public void ExportBinaryBTree()
         {

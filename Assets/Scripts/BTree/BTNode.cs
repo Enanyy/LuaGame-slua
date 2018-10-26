@@ -39,7 +39,7 @@ namespace BTree
         //必须有个无参的构造函数
         public BTNode()
         {
-            name = GetType().Name;
+            name = GetType().Name.Replace("BT","");
             parent = null;
             precondition = null;
         }

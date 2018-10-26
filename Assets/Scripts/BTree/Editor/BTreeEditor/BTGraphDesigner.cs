@@ -8,7 +8,6 @@ namespace BTree.Editor
 {
     public class BTGraphDesigner
     {
-        //public BTreeNodeDesigner m_EntryNode { get; private set; }
         public BTNodeDesigner mRootNode { get; private set; }
         public List<BTNodeDesigner> mDetachedNodes = new List<BTNodeDesigner>();
         public List<BTNodeDesigner> mSelectedNodes = new List<BTNodeDesigner>();
@@ -19,11 +18,6 @@ namespace BTree.Editor
         #region 绘制相关
         public bool DrawNodes(Vector2 mousePosition, Vector2 offset, float graphZoom)
         {
-            //if (m_EntryNode == null)
-            //{
-            //    return false;
-            //}
-            //m_EntryNode.drawNodeConnection(offset, graphZoom, false);
             //从根节点开始递归绘制
             
             if (mRootNode != null)
@@ -89,14 +83,14 @@ namespace BTree.Editor
         {
             if (mSelectedNodes != null && mSelectedNodes.Count == 1)
             {
-                Color color = Color.red;
+                Color color = Color.green;
                 Handles.color = color;
                 Vector3[] array = new Vector3[]
                 {
                     mSelectedNodes[0].GetConnectionPosition(offset,NodeConnectionType.Outgoing),
                     destination
                 };
-                Handles.DrawAAPolyLine(BTEditorUtility.TaskConnectionTexture, 1f / graphZoom, array);
+                Handles.DrawAAPolyLine(BTEditorUtility.TaskConnectionTexture, BTEditorUtility.LineWidth / graphZoom, array);
             }
         }
         //递归绘制连线
@@ -191,7 +185,7 @@ namespace BTree.Editor
             BTNodeDesigner result;
             if (mRootNode != null)
             {
-                result = nodeChildrenAt(mRootNode, point, offset);
+                result = NodeChildrenAt(mRootNode, point, offset);
                 if (result != null)
                 {
                     return result;
@@ -201,7 +195,7 @@ namespace BTree.Editor
             {
                 if (mDetachedNodes[j] != null)
                 {
-                    result = nodeChildrenAt(mDetachedNodes[j], point, offset);
+                    result = NodeChildrenAt(mDetachedNodes[j], point, offset);
                     if (result != null)
                     {
                         return result;
@@ -210,7 +204,7 @@ namespace BTree.Editor
             }
             return null;
         }
-        public BTNodeDesigner nodeChildrenAt(BTNodeDesigner nodeDesigner, Vector2 point, Vector2 offset)
+        public BTNodeDesigner NodeChildrenAt(BTNodeDesigner nodeDesigner, Vector2 point, Vector2 offset)
         {
             if (nodeDesigner.Contains(point, offset, true))
             {
@@ -225,7 +219,7 @@ namespace BTree.Editor
                         BTNodeDesigner result;
                         if (nodeDesigner.mChildNodeList[i] != null)
                         {
-                            result = nodeChildrenAt(nodeDesigner.mChildNodeList[i], point, offset);
+                            result = NodeChildrenAt(nodeDesigner.mChildNodeList[i], point, offset);
                             if (result != null)
                             {
                                 return result;

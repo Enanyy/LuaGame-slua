@@ -339,7 +339,7 @@ namespace BTree.Editor
             {
                 return isEntry;
             }
-            string name = NodeName.Replace("BTreeNode", "");
+            string name = NodeName.Replace("BT", "");
             return name + isEntry;
         }
     }

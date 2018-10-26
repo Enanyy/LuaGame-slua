@@ -23,7 +23,7 @@ namespace BTree.Editor
             {
                 if (!isAction)
                 {
-                    AddItem(new GUIContent("Make OutGoing Connection"), false, new GenericMenu.MenuFunction(ConnectionCallback));
+                    AddItem(new GUIContent("Make Transition"), false, new GenericMenu.MenuFunction(ConnectionCallback));
                 }
                 if (isEntry)
                 {
@@ -31,14 +31,14 @@ namespace BTree.Editor
                 }
                 if (isDisable)
                 {
-                    AddItem(new GUIContent("Enable"), false, new GenericMenu.MenuFunction(EnableCallback));
+                    AddItem(new GUIContent("Set Enable"), false, new GenericMenu.MenuFunction(EnableCallback));
                 }
                 else
                 {
-                    AddItem(new GUIContent("Disable"), false, new GenericMenu.MenuFunction(DisableCallback));
+                    AddItem(new GUIContent("Set Disable"), false, new GenericMenu.MenuFunction(DisableCallback));
                 }
             }
-            AddItem(new GUIContent("Delect Node"), false, new GenericMenu.MenuFunction(DelectCallback));
+            AddItem(new GUIContent("Delete"), false, new GenericMenu.MenuFunction(DeleteCallback));
             base.ShowAsContext();
         }
 
@@ -50,7 +50,7 @@ namespace BTree.Editor
         {
             mWindow.EnableNodeCallback();
         }
-        private void DelectCallback()
+        private void DeleteCallback()
         {
             mWindow.DelectNodeCallback();
         }
