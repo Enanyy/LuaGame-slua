@@ -76,7 +76,7 @@ public partial class LuaGame : MonoBehaviour
     private void OnLevelWasLoaded(int level)
     {
         PlayerData data = new PlayerData();
-        data.config = "Akari";
+        data.config = "Akali";
         PlayerManager.GetSingleton().CreatePlayer(data);
         
     }
