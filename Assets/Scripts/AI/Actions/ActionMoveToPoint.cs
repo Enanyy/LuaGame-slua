@@ -16,7 +16,11 @@ public class ActionMoveToPoint : BTAction
 
         PlayerController player = input.player;
 
-        player.PlayAnimation("run");
+        player.PlayAnimation("run",true);
+        if(player.mNavMeshAgent.isStopped)
+        {
+            player.mNavMeshAgent.isStopped = false;
+        }
 
         return base.OnExecute(ref _input);
     }

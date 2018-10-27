@@ -77,6 +77,17 @@ public partial class LuaGame : MonoBehaviour
     {
         PlayerData data = new PlayerData();
         data.config = "Akali";
+        data.animationLengths = new Dictionary<string, float> {
+            { "attack1",1.250f },
+            { "attack2",1.250f },
+            { "dance",8.875f },
+            { "die",1.750f },
+            { "idle",1.250f },
+            { "run",0.833f },
+            { "sneak",0.583f },
+            { "spell1",1.250f },
+            { "spell3",1.250f }
+        };
         PlayerManager.GetSingleton().CreatePlayer(data);
         
     }

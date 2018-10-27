@@ -15,7 +15,7 @@ public class PlayerInputData:BTInput
 
 public class PlayerController : MonoBehaviour {
 
-    private NavMeshAgent mNavMeshAgent;
+    public NavMeshAgent mNavMeshAgent;
     private Animation mAnimation;
 
     private BTRoot mRoot;
@@ -60,6 +60,11 @@ public class PlayerController : MonoBehaviour {
             mInput = new PlayerInputData(this);
         }
         mRoot.Tick(ref mInput);
+
+        if(playerData.animationTime >=0)
+        {
+            playerData.animationTime -= Time.deltaTime;
+        }
 	}
 
     public void MoveToPoint(Vector3 targetPosition)
@@ -71,16 +76,54 @@ public class PlayerController : MonoBehaviour {
         }
         Debugger.Log("Move To Target:"+targetPosition);
     }
-    public void PlayAnimation(string animationClip)
+
+    private float mFadeTime;
+    public void PlayAnimation(string animationClip,bool loop)
     {
-        if (playerData.animationClip != animationClip) {
-
+        bool transition = false;
+        if (playerData.animationClip != animationClip)
+        {
             playerData.animationClip = animationClip;
-
+            mFadeTime = Time.time;
+            transition = true;
+        }
+        if (Time.time - mFadeTime >= 0.2f || transition)
+        {
             if (mAnimation.IsPlaying(animationClip) == false)
             {
-                mAnimation.CrossFade(animationClip, 0.2f);
+                mAnimation.CrossFade(animationClip,0.2f);
+                mAnimation.wrapMode = loop ? WrapMode.Loop : WrapMode.Default;
+                playerData.animationTime = playerData.animationLengths[animationClip];
             }
         }
+    }
+
+    public void ReleaseSkill(string name)
+    {
+        if(IsReleaseSkill())
+        {
+            return;
+        }
+
+        PlayAnimation(name, false);
+        mNavMeshAgent.isStopped = true;
+    }
+
+    public bool IsReleaseSkill()
+    {
+        string animationClip = playerData.animationClip;
+        if (animationClip == "attack1"
+            || animationClip == "attack2"
+            || animationClip == "spell1"
+            || animationClip == "spell3")
+        {
+            if (playerData.animationTime > 0)
+            {
+                return true;
+            }
+        }
+
+
+        return false;
     }
 }

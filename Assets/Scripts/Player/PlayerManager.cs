@@ -49,7 +49,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
             if (mainCamera)
             {
@@ -62,6 +62,34 @@ public class PlayerManager : MonoBehaviour
                         player.MoveToPoint(tmpHit.point);
                     }
                 }
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            if(player)
+            {
+                player.ReleaseSkill("attack1");
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (player)
+            {
+                player.ReleaseSkill("attack2");
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            if (player)
+            {
+                player.ReleaseSkill("spell1");
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (player)
+            {
+                player.ReleaseSkill("spell3");
             }
         }
     }

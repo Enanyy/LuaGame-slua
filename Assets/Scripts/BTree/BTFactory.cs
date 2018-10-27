@@ -82,8 +82,9 @@ namespace BTree
             
 
             AddPreconditionType(typeof(IsArrivedCondition));
-           
-           
+            AddPreconditionType(typeof(IsReleaseSkillCondition));
+
+
         }
 
         #region 从配置生成行为树相关方法

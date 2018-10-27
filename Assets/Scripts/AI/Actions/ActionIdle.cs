@@ -20,7 +20,7 @@ public class ActionIdle :BTAction  {
 
         PlayerController player = input.player;
 
-        player.PlayAnimation("idle");
+        player.PlayAnimation("idle",true);
 
         return BTResult.Executing;
     }

@@ -536,7 +536,7 @@ namespace BTree.Editor
                 Debugger.Log("exportBtree");
                 TreeConfig _treeConfig = BTEditorNodeFactory.CreateTreeConfigFromBTreeGraphDesigner(mGraphDesigner);
                
-                BTSerialization.WriteXML(_treeConfig,System.IO.Path.GetFileName(text));
+                BTSerialization.WriteXML(_treeConfig,System.IO.Path.GetFileNameWithoutExtension(text));
                 EditorUtility.DisplayDialog("Export", "导出行为树配置成功:" + text, "ok");
             }
         }

@@ -16,7 +16,7 @@ public class IsArrivedCondition : BTPrecondition {
         Vector3 position = player.transform.position;
         position.y = player.playerData.destination.y;
         float distance = Vector3.Distance(player.playerData.destination, position);
-        if (distance <=0.1f)
+        if (distance <=0.01f)
         {
             return true;
         }
