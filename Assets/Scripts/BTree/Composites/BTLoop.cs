@@ -14,12 +14,14 @@ namespace BTree
         public BTLoop()
             : base()
         {
+            maxChild = 1;
         }
         public BTLoop(BTNode _parentNode, BTPrecondition _precondition = null, int _loopCount = INFINITELOOP)
             : base(_parentNode, _precondition)
         {
             loopCount = _loopCount;
             mCurrentCount = 0;
+            maxChild = 1;
         }
 
         protected override bool OnEvaluate(BTInput _input)

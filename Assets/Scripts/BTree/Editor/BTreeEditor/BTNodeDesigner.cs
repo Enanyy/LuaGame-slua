@@ -48,6 +48,17 @@ namespace BTree.Editor
             }
         }
 
+        public bool IsMaxChild
+        {
+            get
+            {
+                if(mEditorNode!=null)
+                {
+                    return mEditorNode.mNode.childCount >= mEditorNode.mNode.maxChild;
+                }
+                return false;
+            }
+        }
         private Texture mIcon;
 
         public BTNodeDesigner(BTEditorNode _editorNode)
@@ -87,7 +98,7 @@ namespace BTree.Editor
                 if (mChildNodeConnectionList[i].mDestinationNodeDesigner.Equals(childNodeDesigner))
                 {
                     mChildNodeConnectionList.RemoveAt(i);
-                    mEditorNode.DelChildNode(childNodeDesigner.mEditorNode);
+                    mEditorNode.RemoveChildNode(childNodeDesigner.mEditorNode);
                     MarkDirty();
                     break;
                 }

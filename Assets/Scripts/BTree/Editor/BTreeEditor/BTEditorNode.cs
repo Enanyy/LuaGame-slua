@@ -17,7 +17,7 @@ namespace BTree.Editor
         {
             mNode.AddChild(_node.mNode);
         }
-        public void DelChildNode(BTEditorNode _node)
+        public void RemoveChildNode(BTEditorNode _node)
         {
             mNode.RemoveChild(_node.mNode);
         }

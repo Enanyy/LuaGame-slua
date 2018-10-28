@@ -18,7 +18,7 @@ namespace BTree.Editor
         public void Init()
         {
             List<Type> actionList = new List<Type>();
-            List<Type> selectorList = new List<Type>();
+            List<Type> compositeList = new List<Type>();
             for (int i = 0; i < 4; i++)
             {
                 Assembly assembly = null;
@@ -57,7 +57,7 @@ namespace BTree.Editor
                             }
                             else if (types[j].IsSubclassOf(typeof(BTComposite)))
                             {
-                                selectorList.Add(types[j]);
+                                compositeList.Add(types[j]);
                             }
                         }
                     }
@@ -67,9 +67,9 @@ namespace BTree.Editor
             {
                 AddItem(new GUIContent("Add Task/Action/" + actionList[i].Name), false, new GenericMenu.MenuFunction2(AddNodeCallback), actionList[i]);
             }
-            for (int i = 0; i < selectorList.Count; i++)
+            for (int i = 0; i < compositeList.Count; i++)
             {
-                AddItem(new GUIContent("Add Task/Selector/" + selectorList[i].Name), false, new GenericMenu.MenuFunction2(AddNodeCallback), selectorList[i]);
+                AddItem(new GUIContent("Add Task/Composite/" + compositeList[i].Name), false, new GenericMenu.MenuFunction2(AddNodeCallback), compositeList[i]);
             }
         }
 

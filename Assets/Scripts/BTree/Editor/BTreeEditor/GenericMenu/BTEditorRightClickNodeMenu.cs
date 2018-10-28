@@ -18,10 +18,11 @@ namespace BTree.Editor
             bool isDisable = _selectNodes[0].IsDisable;
             bool isAction = _selectNodes[0].mEditorNode.mNode.GetType().IsSubclassOf(typeof(BTAction));
             bool isEntry = _selectNodes[0].mParentNode == null && !_selectNodes[0].mIsEntryDisplay;
+            bool isMaxChild = _selectNodes[0].IsMaxChild;
             mMenu = new GenericMenu();
             if (!isMult)
             {
-                if (!isAction)
+                if (!isAction &&!isMaxChild)
                 {
                     AddItem(new GUIContent("Make Transition"), false, new GenericMenu.MenuFunction(ConnectionCallback));
                 }

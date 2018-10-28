@@ -24,6 +24,7 @@ namespace BTree
         }
         //子节点数
         public int childCount{ get { return mChildren.Count; }  }
+        public int maxChild { get; protected set; }
         //父节点
         public BTNode parent { get; protected set; }
         /*
@@ -42,11 +43,13 @@ namespace BTree
             name = GetType().Name.Replace("BT","");
             parent = null;
             precondition = null;
+            maxChild = MAX_CHILD_NODE_COUNT;
         }
         public BTNode(BTNode _parentNode, BTPrecondition _precondition = null)
         {
             parent = _parentNode;
             precondition = _precondition;
+            maxChild = MAX_CHILD_NODE_COUNT;
         }
 
         public bool Evaluate(BTInput _input)
@@ -69,7 +72,7 @@ namespace BTree
 
         public virtual void AddChild(BTNode _childNode)
         {
-            if (childCount>= MAX_CHILD_NODE_COUNT)
+            if (childCount>= maxChild)
             {
                 Debugger.LogError("添加行为树节点失败：超过最大数量16");
                 return;
