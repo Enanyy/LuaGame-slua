@@ -15,7 +15,7 @@ public class PlayerInputData:BTInput
 
 public class PlayerController : MonoBehaviour {
 
-    public NavMeshAgent mNavMeshAgent;
+    private NavMeshAgent mNavMeshAgent;
     private Animation mAnimation;
 
     private BTRoot mRoot;
@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour {
         
         mNavMeshAgent.acceleration = 1000;
         mNavMeshAgent.angularSpeed = 7200;
+        mNavMeshAgent.speed = 6;
         mAnimation = GetComponent<Animation>();
         mRoot = new BTRoot();
     }
@@ -106,7 +107,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         PlayAnimation(name, false);
-        mNavMeshAgent.isStopped = true;
+        Stop();
     }
 
     public bool IsReleaseSkill()
@@ -125,5 +126,20 @@ public class PlayerController : MonoBehaviour {
 
 
         return false;
+    }
+    public void Stop()
+    {
+        if(mNavMeshAgent)
+        {
+            mNavMeshAgent.isStopped = true;
+        }
+    }
+
+    public void Resume()
+    {
+        if (mNavMeshAgent)
+        {
+            mNavMeshAgent.isStopped = false;
+        }
     }
 }
