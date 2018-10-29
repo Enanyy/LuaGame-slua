@@ -40,7 +40,10 @@ namespace BTree
         BTPrioritySelector = 2,
         BTNonePrioritySelector = 3,
         BTSequence = 4,
-        BTLoop = 5
+        BTLoop = 5,
+        BTRandomSelector = 6,
+        BTWeigthSelector = 7,
+        BTDecorator = 8,
     }
     public enum PreconditionType
     {

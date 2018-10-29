@@ -170,6 +170,12 @@ namespace BTree
                 case SelectorNodeType.BTLoop:
                     _node = CreateLoopNode(_parent, _nodeName, _param[0]);
                     break;
+                case SelectorNodeType.BTRandomSelector:
+                    _node = CreateRandomSelector(_parent, _nodeName, _param[0]);
+                    break;
+                case SelectorNodeType.BTWeigthSelector:
+                    _node = CreateWeigthSelector(_parent, _nodeName);
+                    break;
                 default:
                     break;
             }
@@ -391,6 +397,10 @@ namespace BTree
                             _otherParams = new int[1];
                             _otherParams[0] = ((BTLoop)_node).GetLoopCount();
                             break;
+                        case SelectorNodeType.BTRandomSelector:
+                            _otherParams = new int[1];
+                            _otherParams[0] = ((BTRandomSelector)_node).seed;
+                            break;
                         default:
                             break;
                     }
@@ -452,7 +462,19 @@ namespace BTree
             CreateNode(node, _parent, _nodeName);
             return node;
         }
-        
+        public static BTRandomSelector CreateRandomSelector(BTNode _parent,string _nodeName,int _seed)
+        {
+            BTRandomSelector node = new BTRandomSelector(_parent, null, _seed);
+            CreateNode(node, _parent, _nodeName);
+            return node;
+        }
+        public static BTWeigthSelector CreateWeigthSelector(BTNode _parent, string _nodeName)
+        {
+            BTWeigthSelector node = new BTWeigthSelector(_parent, null);
+            CreateNode(node, _parent, _nodeName);
+            return node;
+        }
+
         public static BTNode CreateActionNode<F>(BTNode _parent, string _nodeName) where F: BTAction
         {
             F node = (F)Activator.CreateInstance(typeof(F), _parent);

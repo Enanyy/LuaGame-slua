@@ -7,7 +7,7 @@ namespace BTree
     public  class BTWeigthSelector : BTPrioritySelector
     {
         public BTWeigthSelector() : base() { }
-        public BTWeigthSelector(BTNode _parent) : base(_parent) { }
+        public BTWeigthSelector(BTNode _parent, BTPrecondition _precondition = null) : base(_parent, _precondition) { }
 
         protected override bool OnEvaluate(BTInput _input)
         {
