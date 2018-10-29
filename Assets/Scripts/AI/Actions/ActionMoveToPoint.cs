@@ -15,8 +15,14 @@ public class ActionMoveToPoint : BTAction
         }
 
         PlayerController player = input.player;
-
-        player.PlayAnimation("run",true);
+        if (player.navMeshAgent.destination != player.playerData.destination)
+        {
+            if (player.navMeshAgent.isOnNavMesh)
+            {
+                player.navMeshAgent.SetDestination(player.playerData.destination);
+            }
+        }
+        player.PlayAnimation(PlayerAnimationType.run, true);
         player.Resume();
 
         return base.OnExecute(ref _input);

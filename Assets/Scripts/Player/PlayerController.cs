@@ -15,7 +15,7 @@ public class PlayerInputData:BTInput
 
 public class PlayerController : MonoBehaviour {
 
-    private NavMeshAgent mNavMeshAgent;
+    public NavMeshAgent navMeshAgent { get; private set; }
     private Animation mAnimation;
 
     private BTRoot mRoot;
@@ -26,18 +26,18 @@ public class PlayerController : MonoBehaviour {
 
     void Awake()
     {
-        if (mNavMeshAgent == null)
+        if (navMeshAgent == null)
         {
-            mNavMeshAgent = GetComponent<NavMeshAgent>();
+            navMeshAgent = GetComponent<NavMeshAgent>();
         }
-        if (mNavMeshAgent == null)
+        if (navMeshAgent == null)
         {
-            mNavMeshAgent = gameObject.AddComponent<NavMeshAgent>();
+            navMeshAgent = gameObject.AddComponent<NavMeshAgent>();
         }
         
-        mNavMeshAgent.acceleration = 1000;
-        mNavMeshAgent.angularSpeed = 7200;
-        mNavMeshAgent.speed = 6;
+        navMeshAgent.acceleration = 1000;
+        navMeshAgent.angularSpeed = 7200;
+        navMeshAgent.speed = 6;
         mAnimation = GetComponent<Animation>();
         mRoot = new BTRoot();
     }
@@ -71,52 +71,56 @@ public class PlayerController : MonoBehaviour {
     public void MoveToPoint(Vector3 targetPosition)
     {
         playerData.destination = targetPosition;
-        if (mNavMeshAgent.isOnNavMesh)
+        playerData.changeType = PlayerAnimationType.none;
+        if (navMeshAgent.isOnNavMesh)
         {
-            mNavMeshAgent.SetDestination(targetPosition);
+            navMeshAgent.SetDestination(targetPosition);
         }
         Debugger.Log("Move To Target:"+targetPosition);
     }
 
     private float mFadeTime;
-    public void PlayAnimation(string animationClip,bool loop)
+    public void PlayAnimation(PlayerAnimationType animation,bool loop)
     {
         bool transition = false;
-        if (playerData.animationClip != animationClip)
+        if (playerData.animationType != animation)
         {
-            playerData.animationClip = animationClip;
+            playerData.animationType = animation;
             mFadeTime = Time.time;
             transition = true;
         }
         if (Time.time - mFadeTime >= 0.2f || transition)
         {
-            if (mAnimation.IsPlaying(animationClip) == false)
+            if (mAnimation.IsPlaying(animation.ToString()) == false)
             {
-                mAnimation.CrossFade(animationClip,0.2f);
+                mAnimation.CrossFade(animation.ToString(),0.2f);
                 mAnimation.wrapMode = loop ? WrapMode.Loop : WrapMode.Default;
-                playerData.animationTime = playerData.animationLengths[animationClip];
+                playerData.animationTime = playerData.animationsLength[animation];
             }
         }
     }
 
-    public void ReleaseSkill(string name)
+    public void ReleaseSkill(PlayerAnimationType animation)
     {
+        playerData.changeType = animation;
+        /*
         if(IsReleaseSkill())
         {
             return;
         }
 
-        PlayAnimation(name, false);
+        PlayAnimation(animation, false);
         Stop();
+        */
     }
 
     public bool IsReleaseSkill()
     {
-        string animationClip = playerData.animationClip;
-        if (animationClip == "attack1"
-            || animationClip == "attack2"
-            || animationClip == "spell1"
-            || animationClip == "spell3")
+        var animationClip = playerData.animationType;
+        if (animationClip == PlayerAnimationType.attack1
+            || animationClip == PlayerAnimationType.attack2
+            || animationClip == PlayerAnimationType.spell1
+            || animationClip == PlayerAnimationType.spell3)
         {
             if (playerData.animationTime > 0)
             {
@@ -127,19 +131,24 @@ public class PlayerController : MonoBehaviour {
 
         return false;
     }
+    public bool HasChangeSkill()
+    {
+        return playerData.changeType != PlayerAnimationType.none;
+    }
+
     public void Stop()
     {
-        if(mNavMeshAgent)
+        if(navMeshAgent&&!navMeshAgent.isStopped)
         {
-            mNavMeshAgent.isStopped = true;
+            navMeshAgent.isStopped = true;
         }
     }
 
     public void Resume()
     {
-        if (mNavMeshAgent)
+        if (navMeshAgent && navMeshAgent.isStopped)
         {
-            mNavMeshAgent.isStopped = false;
+            navMeshAgent.isStopped = false;
         }
     }
 }

@@ -68,28 +68,28 @@ public class PlayerManager : MonoBehaviour
         {
             if(player)
             {
-                player.ReleaseSkill("attack1");
+                player.ReleaseSkill(PlayerAnimationType.attack1);
             }
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (player)
             {
-                player.ReleaseSkill("attack2");
+                player.ReleaseSkill(PlayerAnimationType.attack2);
             }
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
             if (player)
             {
-                player.ReleaseSkill("spell1");
+                player.ReleaseSkill(PlayerAnimationType.spell1);
             }
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (player)
             {
-                player.ReleaseSkill("spell3");
+                player.ReleaseSkill(PlayerAnimationType.spell3);
             }
         }
     }

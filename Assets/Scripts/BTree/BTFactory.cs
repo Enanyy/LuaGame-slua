@@ -83,6 +83,7 @@ namespace BTree
 
             AddPreconditionType(typeof(IsArrivedCondition));
             AddPreconditionType(typeof(IsReleaseSkillCondition));
+            AddPreconditionType(typeof(HasChangeSkill));
 
 
         }
