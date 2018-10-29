@@ -22,11 +22,23 @@ namespace BTree
                 return _children;
             }
         }
-        //子节点数
+        /// <summary>
+        /// 当前子节点数
+        /// </summary>
         public int childCount{ get { return mChildren.Count; }  }
+        /// <summary>
+        /// 最大子节点数
+        /// </summary>
         public int maxChild { get; protected set; }
-        //父节点
+        /// <summary>
+        /// 父节点
+        /// </summary>
         public BTNode parent { get; protected set; }
+
+        /// <summary>
+        /// 权重
+        /// </summary>
+        public int weight { get; protected set; }
         /*
         //上一个激活的节点
         public BTNode lastActiveNode { get; private set; }
