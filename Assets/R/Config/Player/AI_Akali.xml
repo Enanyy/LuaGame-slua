@@ -168,5 +168,12 @@
       <mActionNodeName>ActionFollowTarget</mActionNodeName>
       <mNodeName>ActionFollowTarget</mNodeName>
     </TreeNodeConfig>
+    <TreeNodeConfig>
+      <mParentIndex>0</mParentIndex>
+      <mNodeType>2</mNodeType>
+      <mNodeSubType>0</mNodeSubType>
+      <mActionNodeName>ActionRandomSkill</mActionNodeName>
+      <mNodeName>ActionRandomSkill</mNodeName>
+    </TreeNodeConfig>
   </mNodes>
 </TreeConfig>

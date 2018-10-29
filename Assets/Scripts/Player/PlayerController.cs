@@ -123,6 +123,18 @@ public class PlayerController : MonoBehaviour {
 
         return false;
     }
+
+    public bool IsArrivedDestination()
+    {
+        Vector3 position = transform.position;
+        position.y = data.destination.y;
+        float distance = Vector3.Distance(data.destination, position);
+        if (distance <= data.stopDistance)
+        {
+            return true;
+        }
+        return false;
+    }
     public bool HasChangeSkill()
     {
         return data.changeType != PlayerAnimationType.none;

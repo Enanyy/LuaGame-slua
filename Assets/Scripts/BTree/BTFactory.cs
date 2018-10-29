@@ -81,6 +81,7 @@ namespace BTree
             AddActionType(typeof(ActionAttack));
             AddActionType(typeof(ActionFindTarget));
             AddActionType(typeof(ActionFollowTarget));
+            AddActionType(typeof(ActionRandomSkill));
 
 
             AddPreconditionType(typeof(IsArrivedCondition));
