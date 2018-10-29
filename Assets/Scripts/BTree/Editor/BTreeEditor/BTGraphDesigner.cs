@@ -79,11 +79,10 @@ namespace BTree.Editor
             return result;
         }
         //绘制临时连线
-        public void DrawTempConnection(Vector2 destination, Vector2 offset, float graphZoom)
+        public void DrawTempConnection(Vector2 destination, Vector2 offset, float graphZoom,Color color)
         {
             if (mSelectedNodes != null && mSelectedNodes.Count == 1)
             {
-                Color color = Color.green;
                 Handles.color = color;
                 Vector3[] array = new Vector3[]
                 {

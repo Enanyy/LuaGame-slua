@@ -140,9 +140,28 @@ namespace BTree.Editor
             }
             if (mIsConnectingLine)
             {
+
                 var _curNode = mGraphDesigner.NodeAt(mousePosition, mGraphOffset);
-                Vector2 des = _curNode == null ? mousePosition : _curNode.mEditorNode.mPos;
-                mGraphDesigner.DrawTempConnection(des, mGraphOffset, mGraphZoom);
+                BTNodeDesigner _selectNode = null;
+                if(mGraphDesigner.mSelectedNodes!=null && mGraphDesigner.mSelectedNodes.Count >0)
+                {
+                    _selectNode = mGraphDesigner.mSelectedNodes[0];
+                }
+                Vector2 des =mousePosition;
+                Color color = Color.green;
+                if (_curNode != null)
+                {
+                    if (_curNode.mIsEntryDisplay == false&&(_selectNode!=null && _curNode!=_selectNode))
+                    {
+                        des = _curNode.mEditorNode.mPos;
+                    }
+                    else
+                    {
+                        color = Color.red;
+                    }
+                }
+                
+                mGraphDesigner.DrawTempConnection(des, mGraphOffset, mGraphZoom,color);
             }
             BTEditorZoomArea.End();
             return result;
@@ -349,7 +368,12 @@ namespace BTree.Editor
                 return false;
             }
             var nodeDesigner = mGraphDesigner.NodeAt(point, mGraphOffset);
-            if (mIsConnectingLine && nodeDesigner != null)
+            BTNodeDesigner _selectNode = null;
+            if(mGraphDesigner.mSelectedNodes!=null && mGraphDesigner.mSelectedNodes.Count >0)
+            {
+                _selectNode = mGraphDesigner.mSelectedNodes[0];
+            }
+            if (mIsConnectingLine && nodeDesigner != null && nodeDesigner!=_selectNode)
             {
                 mGraphDesigner.AddSelectNodeLine(nodeDesigner);
             }

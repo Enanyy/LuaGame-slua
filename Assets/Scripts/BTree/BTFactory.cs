@@ -79,11 +79,14 @@ namespace BTree
             AddActionType(typeof(ActionIdle));
             AddActionType(typeof(ActionMoveToPoint));
             AddActionType(typeof(ActionAttack));
-            
+            AddActionType(typeof(ActionFindTarget));
+            AddActionType(typeof(ActionFollowTarget));
+
 
             AddPreconditionType(typeof(IsArrivedCondition));
             AddPreconditionType(typeof(IsReleaseSkillCondition));
-            AddPreconditionType(typeof(HasChangeSkill));
+            AddPreconditionType(typeof(HasChangeSkillCondition));
+            AddPreconditionType(typeof(HasTargetCondition));
 
 
         }

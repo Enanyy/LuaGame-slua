@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour {
 
     private BTRoot mRoot;
 
-    public PlayerData playerData { get; private set; }
+    public PlayerData data { get; private set; }
 
     private BTInput mInput;
 
@@ -42,10 +42,10 @@ public class PlayerController : MonoBehaviour {
         mRoot = new BTRoot();
     }
 
-    public void Init(PlayerData data)
+    public void Init(PlayerData _data)
     {
-        playerData = data;
-        mRoot.InitXML(playerData.config);
+        data = _data;
+        mRoot.InitXML(data.config);
     }
 
     // Use this for initialization
@@ -62,30 +62,30 @@ public class PlayerController : MonoBehaviour {
         }
         mRoot.Tick(ref mInput);
 
-        if(playerData.animationTime >=0)
+        if(data.animationTime >=0)
         {
-            playerData.animationTime -= Time.deltaTime;
+            data.animationTime -= Time.deltaTime;
         }
 	}
 
     public void MoveToPoint(Vector3 targetPosition)
     {
-        playerData.destination = targetPosition;
-        playerData.changeType = PlayerAnimationType.none;
-        if (navMeshAgent.isOnNavMesh)
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(targetPosition, out hit, 5, NavMesh.AllAreas))
         {
-            navMeshAgent.SetDestination(targetPosition);
+            data.destination = hit.position;
+            data.changeType = PlayerAnimationType.none;
+            Debugger.Log("Move To Target:" + data.destination);
         }
-        Debugger.Log("Move To Target:"+targetPosition);
     }
 
     private float mFadeTime;
     public void PlayAnimation(PlayerAnimationType animation,bool loop)
     {
         bool transition = false;
-        if (playerData.animationType != animation)
+        if (data.animationType != animation)
         {
-            playerData.animationType = animation;
+            data.animationType = animation;
             mFadeTime = Time.time;
             transition = true;
         }
@@ -95,34 +95,26 @@ public class PlayerController : MonoBehaviour {
             {
                 mAnimation.CrossFade(animation.ToString(),0.2f);
                 mAnimation.wrapMode = loop ? WrapMode.Loop : WrapMode.Default;
-                playerData.animationTime = playerData.animationsLength[animation];
+                data.animationTime = data.animationsLength[animation];
             }
         }
     }
 
     public void ReleaseSkill(PlayerAnimationType animation)
     {
-        playerData.changeType = animation;
-        /*
-        if(IsReleaseSkill())
-        {
-            return;
-        }
-
-        PlayAnimation(animation, false);
-        Stop();
-        */
+        data.changeType = animation;
+        
     }
 
     public bool IsReleaseSkill()
     {
-        var animationClip = playerData.animationType;
+        var animationClip = data.animationType;
         if (animationClip == PlayerAnimationType.attack1
             || animationClip == PlayerAnimationType.attack2
             || animationClip == PlayerAnimationType.spell1
             || animationClip == PlayerAnimationType.spell3)
         {
-            if (playerData.animationTime > 0)
+            if (data.animationTime > 0)
             {
                 return true;
             }
@@ -133,7 +125,7 @@ public class PlayerController : MonoBehaviour {
     }
     public bool HasChangeSkill()
     {
-        return playerData.changeType != PlayerAnimationType.none;
+        return data.changeType != PlayerAnimationType.none;
     }
 
     public void Stop()

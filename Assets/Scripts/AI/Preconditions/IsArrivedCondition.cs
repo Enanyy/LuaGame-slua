@@ -14,10 +14,11 @@ public class IsArrivedCondition : BTPrecondition {
 
         PlayerController player = input.player;
         Vector3 position = player.transform.position;
-        position.y = player.playerData.destination.y;
-        float distance = Vector3.Distance(player.playerData.destination, position);
-        if (distance <=0.01f)
+        position.y = player.data.destination.y;
+        float distance = Vector3.Distance(player.data.destination, position);
+        if (distance <= player.data.stopDistance)
         {
+            player.data.destination = player.transform.position;
             return true;
         }
 

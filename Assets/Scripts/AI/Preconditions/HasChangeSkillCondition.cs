@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using BTree;
-public class HasChangeSkill : BTPrecondition
+public class HasChangeSkillCondition : BTPrecondition
 {
+    public HasChangeSkillCondition() { }
     public override bool Check(BTInput _input)
     {
         PlayerInputData input = _input as PlayerInputData;
@@ -10,7 +11,7 @@ public class HasChangeSkill : BTPrecondition
         {
             return false;
         }
-        return input.player.playerData.changeType != PlayerAnimationType.none;
+        return input.player.data.changeType != PlayerAnimationType.none;
     }
 }
 

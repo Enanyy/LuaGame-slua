@@ -76,7 +76,9 @@ public partial class LuaGame : MonoBehaviour
     private void OnLevelWasLoaded(int level)
     {
         PlayerData data = new PlayerData();
+        data.id = 0;
         data.config = "Akali";
+        data.destination = new Vector3(2f, 0, 8);
         data.animationsLength = new Dictionary<PlayerAnimationType, float> {
             { PlayerAnimationType.attack1,1.250f },
             { PlayerAnimationType.attack2,1.250f },
@@ -89,7 +91,25 @@ public partial class LuaGame : MonoBehaviour
             { PlayerAnimationType.spell3,1.250f }
         };
         PlayerManager.GetSingleton().CreatePlayer(data);
-        
+
+        PlayerData data1 = new PlayerData();
+        data1.id = 1;
+        data1.config = "AI_Akali";
+        data1.destination = new Vector3(1f, 0, 4);
+        data1.animationsLength = new Dictionary<PlayerAnimationType, float> {
+            { PlayerAnimationType.attack1,1.250f },
+            { PlayerAnimationType.attack2,1.250f },
+            { PlayerAnimationType.dance,8.875f },
+            { PlayerAnimationType.die,1.750f },
+            { PlayerAnimationType.idle,1.250f },
+            { PlayerAnimationType.run,0.833f },
+            { PlayerAnimationType.sneak,0.583f },
+            { PlayerAnimationType.spell1,1.250f },
+            { PlayerAnimationType.spell3,1.250f }
+        };
+
+        PlayerManager.GetSingleton().CreatePlayer(data1);
+
     }
 
 }

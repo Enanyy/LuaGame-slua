@@ -14,10 +14,10 @@ public class ActionAttack : BTAction
 
         }
         var player = input.player;
-        if (player.playerData.changeType != PlayerAnimationType.none)
+        if (player.data.changeType != PlayerAnimationType.none)
         {
-            player.PlayAnimation(player.playerData.changeType, false);
-            player.playerData.changeType = PlayerAnimationType.none;
+            player.PlayAnimation(player.data.changeType, false);
+            player.data.changeType = PlayerAnimationType.none;
             player.Stop();
         }
         return base.OnExecute(ref _input);

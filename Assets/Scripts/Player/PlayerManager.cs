@@ -26,6 +26,8 @@ public class PlayerManager : MonoBehaviour
         } }
 
     private PlayerController player;
+    private List<PlayerController> mPlayerList = new List<PlayerController>();
+    public List<PlayerController> players { get { return mPlayerList; } }
 
     public void CreatePlayer(PlayerData data, Action<PlayerController> action = null)
     {
@@ -39,12 +41,30 @@ public class PlayerManager : MonoBehaviour
             go.transform.position = hit.position;
         }
 
-        player = go.AddComponent<PlayerController>();
-        player.Init(data);
+        var pc = go.AddComponent<PlayerController>();
+        pc.Init(data);
+        mPlayerList.Add(pc);
+        if(data.id == 0)
+        {
+            player = pc;
+        }
+
         if (action != null)
         {
             action(player);
         }
+    }
+
+    public PlayerController GetPlayer(int id)
+    {
+        for(int i = 0;  i< mPlayerList.Count; ++i)
+        {
+            if(mPlayerList[i].data.id == id)
+            {
+                return mPlayerList[i];
+            }
+        }
+        return null;
     }
 
     private void Update()

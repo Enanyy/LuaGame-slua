@@ -78,12 +78,19 @@ namespace BTree.Editor
                     string path = AssetDatabase.GUIDToAssetPath(scripts[0]);
                     MonoScript monoScript = (MonoScript)AssetDatabase.LoadAssetAtPath(path, typeof(MonoScript));
                     var obj = EditorGUILayout.ObjectField("", monoScript, typeof(MonoScript), false);
-                    Type type = GetPreconditionType(obj.name);
-                    if (type == null)
+                    if (obj != null)
                     {
-                        return _condition;
+                        Type type = GetPreconditionType(obj.name);
+                        if (type == null)
+                        {
+                            return _condition;
+                        }
+                        result = (BTPrecondition)type.GetConstructor(new Type[] { }).Invoke(new object[] { });
                     }
-                    result = (BTPrecondition)type.GetConstructor(new Type[] { }).Invoke(new object[] { });
+                    else
+                    {
+                        result = null;
+                    }
                 }
                 GUILayout.EndHorizontal();
                 _space = _space + SPACEDETLE;

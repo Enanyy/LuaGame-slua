@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <BTEditorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <mRootNode>
-    <mName>PrioritySelector</mName>
+    <mName>Parallel</mName>
     <mNodes>
       <TreeNodeConfig>
         <mParentIndex>-1</mParentIndex>
+        <mNodeType>1</mNodeType>
+        <mNodeSubType>1</mNodeSubType>
+        <mOtherParams>
+          <int>2</int>
+        </mOtherParams>
+        <mNodeName>Parallel</mNodeName>
+      </TreeNodeConfig>
+      <TreeNodeConfig>
+        <mParentIndex>0</mParentIndex>
         <mNodeType>1</mNodeType>
         <mNodeSubType>2</mNodeSubType>
         <mNodeName>PrioritySelector</mNodeName>
       </TreeNodeConfig>
       <TreeNodeConfig>
-        <mParentIndex>0</mParentIndex>
+        <mParentIndex>1</mParentIndex>
         <mNodeType>1</mNodeType>
         <mNodeSubType>2</mNodeSubType>
         <mNodeName>PrioritySelector</mNodeName>
@@ -53,7 +62,7 @@
         </mPreconditions>
       </TreeNodeConfig>
       <TreeNodeConfig>
-        <mParentIndex>1</mParentIndex>
+        <mParentIndex>2</mParentIndex>
         <mNodeType>2</mNodeType>
         <mNodeSubType>0</mNodeSubType>
         <mActionNodeName>ActionIdle</mActionNodeName>
@@ -89,7 +98,7 @@
         </mPreconditions>
       </TreeNodeConfig>
       <TreeNodeConfig>
-        <mParentIndex>1</mParentIndex>
+        <mParentIndex>2</mParentIndex>
         <mNodeType>2</mNodeType>
         <mNodeSubType>0</mNodeSubType>
         <mActionNodeName>ActionMoveToPoint</mActionNodeName>
@@ -97,43 +106,21 @@
         <mPreconditions>
           <PreconditionConfig>
             <mParentIndex>-1</mParentIndex>
-            <mType>1</mType>
-            <mPreconditionName>BTPreconditionAND</mPreconditionName>
+            <mType>3</mType>
+            <mPreconditionName>BTPreconditionNOT</mPreconditionName>
             <mChildIndexs>
               <int>1</int>
-              <int>3</int>
             </mChildIndexs>
           </PreconditionConfig>
           <PreconditionConfig>
             <mParentIndex>0</mParentIndex>
-            <mType>3</mType>
-            <mPreconditionName>BTPreconditionNOT</mPreconditionName>
-            <mChildIndexs>
-              <int>2</int>
-            </mChildIndexs>
-          </PreconditionConfig>
-          <PreconditionConfig>
-            <mParentIndex>1</mParentIndex>
             <mType>0</mType>
             <mPreconditionName>IsArrivedCondition</mPreconditionName>
-          </PreconditionConfig>
-          <PreconditionConfig>
-            <mParentIndex>0</mParentIndex>
-            <mType>3</mType>
-            <mPreconditionName>BTPreconditionNOT</mPreconditionName>
-            <mChildIndexs>
-              <int>4</int>
-            </mChildIndexs>
-          </PreconditionConfig>
-          <PreconditionConfig>
-            <mParentIndex>3</mParentIndex>
-            <mType>0</mType>
-            <mPreconditionName>IsReleaseSkillCondition</mPreconditionName>
           </PreconditionConfig>
         </mPreconditions>
       </TreeNodeConfig>
       <TreeNodeConfig>
-        <mParentIndex>0</mParentIndex>
+        <mParentIndex>1</mParentIndex>
         <mNodeType>2</mNodeType>
         <mNodeSubType>0</mNodeSubType>
         <mActionNodeName>ActionAttack</mActionNodeName>
@@ -167,20 +154,46 @@
             <mPreconditionName>IsReleaseSkillCondition</mPreconditionName>
           </PreconditionConfig>
         </mPreconditions>
+      </TreeNodeConfig>
+      <TreeNodeConfig>
+        <mParentIndex>0</mParentIndex>
+        <mNodeType>2</mNodeType>
+        <mNodeSubType>0</mNodeSubType>
+        <mActionNodeName>ActionFindTarget</mActionNodeName>
+        <mNodeName>ActionFindTarget</mNodeName>
+      </TreeNodeConfig>
+      <TreeNodeConfig>
+        <mParentIndex>0</mParentIndex>
+        <mNodeType>2</mNodeType>
+        <mNodeSubType>0</mNodeSubType>
+        <mActionNodeName>ActionFollowTarget</mActionNodeName>
+        <mNodeName>ActionFollowTarget</mNodeName>
       </TreeNodeConfig>
     </mNodes>
     <mEditorNodes>
       <BTEditorNodeConfig>
         <mParentIndex>-1</mParentIndex>
         <mNodeType>1</mNodeType>
-        <mNodeSubType>2</mNodeSubType>
-        <mNodeName>PrioritySelector</mNodeName>
-        <mPosX>701</mPosX>
-        <mPosY>172</mPosY>
+        <mNodeSubType>1</mNodeSubType>
+        <mOtherParams>
+          <int>2</int>
+        </mOtherParams>
+        <mNodeName>Parallel</mNodeName>
+        <mPosX>597</mPosX>
+        <mPosY>171</mPosY>
         <mDisable>false</mDisable>
       </BTEditorNodeConfig>
       <BTEditorNodeConfig>
         <mParentIndex>0</mParentIndex>
+        <mNodeType>1</mNodeType>
+        <mNodeSubType>2</mNodeSubType>
+        <mNodeName>PrioritySelector</mNodeName>
+        <mPosX>836</mPosX>
+        <mPosY>366</mPosY>
+        <mDisable>false</mDisable>
+      </BTEditorNodeConfig>
+      <BTEditorNodeConfig>
+        <mParentIndex>1</mParentIndex>
         <mNodeType>1</mNodeType>
         <mNodeSubType>2</mNodeSubType>
         <mNodeName>PrioritySelector</mNodeName>
@@ -221,12 +234,12 @@
             <mPreconditionName>IsReleaseSkillCondition</mPreconditionName>
           </PreconditionConfig>
         </mPreconditions>
-        <mPosX>432</mPosX>
-        <mPosY>377</mPosY>
+        <mPosX>635</mPosX>
+        <mPosY>507</mPosY>
         <mDisable>false</mDisable>
       </BTEditorNodeConfig>
       <BTEditorNodeConfig>
-        <mParentIndex>1</mParentIndex>
+        <mParentIndex>2</mParentIndex>
         <mNodeType>2</mNodeType>
         <mNodeSubType>0</mNodeSubType>
         <mActionNodeName>ActionIdle</mActionNodeName>
@@ -260,12 +273,12 @@
             <mPreconditionName>IsArrivedCondition</mPreconditionName>
           </PreconditionConfig>
         </mPreconditions>
-        <mPosX>351</mPosX>
-        <mPosY>537</mPosY>
+        <mPosX>379</mPosX>
+        <mPosY>659</mPosY>
         <mDisable>false</mDisable>
       </BTEditorNodeConfig>
       <BTEditorNodeConfig>
-        <mParentIndex>1</mParentIndex>
+        <mParentIndex>2</mParentIndex>
         <mNodeType>2</mNodeType>
         <mNodeSubType>0</mNodeSubType>
         <mActionNodeName>ActionMoveToPoint</mActionNodeName>
@@ -273,46 +286,24 @@
         <mPreconditions>
           <PreconditionConfig>
             <mParentIndex>-1</mParentIndex>
-            <mType>1</mType>
-            <mPreconditionName>BTPreconditionAND</mPreconditionName>
+            <mType>3</mType>
+            <mPreconditionName>BTPreconditionNOT</mPreconditionName>
             <mChildIndexs>
               <int>1</int>
-              <int>3</int>
             </mChildIndexs>
           </PreconditionConfig>
           <PreconditionConfig>
             <mParentIndex>0</mParentIndex>
-            <mType>3</mType>
-            <mPreconditionName>BTPreconditionNOT</mPreconditionName>
-            <mChildIndexs>
-              <int>2</int>
-            </mChildIndexs>
-          </PreconditionConfig>
-          <PreconditionConfig>
-            <mParentIndex>1</mParentIndex>
             <mType>0</mType>
             <mPreconditionName>IsArrivedCondition</mPreconditionName>
           </PreconditionConfig>
-          <PreconditionConfig>
-            <mParentIndex>0</mParentIndex>
-            <mType>3</mType>
-            <mPreconditionName>BTPreconditionNOT</mPreconditionName>
-            <mChildIndexs>
-              <int>4</int>
-            </mChildIndexs>
-          </PreconditionConfig>
-          <PreconditionConfig>
-            <mParentIndex>3</mParentIndex>
-            <mType>0</mType>
-            <mPreconditionName>IsReleaseSkillCondition</mPreconditionName>
-          </PreconditionConfig>
         </mPreconditions>
-        <mPosX>694</mPosX>
-        <mPosY>656</mPosY>
+        <mPosX>821</mPosX>
+        <mPosY>657</mPosY>
         <mDisable>false</mDisable>
       </BTEditorNodeConfig>
       <BTEditorNodeConfig>
-        <mParentIndex>0</mParentIndex>
+        <mParentIndex>1</mParentIndex>
         <mNodeType>2</mNodeType>
         <mNodeSubType>0</mNodeSubType>
         <mActionNodeName>ActionAttack</mActionNodeName>
@@ -346,8 +337,28 @@
             <mPreconditionName>IsReleaseSkillCondition</mPreconditionName>
           </PreconditionConfig>
         </mPreconditions>
-        <mPosX>903</mPosX>
-        <mPosY>443</mPosY>
+        <mPosX>1122</mPosX>
+        <mPosY>485</mPosY>
+        <mDisable>false</mDisable>
+      </BTEditorNodeConfig>
+      <BTEditorNodeConfig>
+        <mParentIndex>0</mParentIndex>
+        <mNodeType>2</mNodeType>
+        <mNodeSubType>0</mNodeSubType>
+        <mActionNodeName>ActionFindTarget</mActionNodeName>
+        <mNodeName>ActionFindTarget</mNodeName>
+        <mPosX>336</mPosX>
+        <mPosY>305</mPosY>
+        <mDisable>false</mDisable>
+      </BTEditorNodeConfig>
+      <BTEditorNodeConfig>
+        <mParentIndex>0</mParentIndex>
+        <mNodeType>2</mNodeType>
+        <mNodeSubType>0</mNodeSubType>
+        <mActionNodeName>ActionFollowTarget</mActionNodeName>
+        <mNodeName>ActionFollowTarget</mNodeName>
+        <mPosX>596</mPosX>
+        <mPosY>333</mPosY>
         <mDisable>false</mDisable>
       </BTEditorNodeConfig>
     </mEditorNodes>

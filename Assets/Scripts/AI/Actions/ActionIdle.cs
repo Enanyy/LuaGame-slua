@@ -22,6 +22,6 @@ public class ActionIdle :BTAction  {
 
         player.PlayAnimation( PlayerAnimationType.idle,true);
 
-        return BTResult.Executing;
+        return BTResult.Success;
     }
 }

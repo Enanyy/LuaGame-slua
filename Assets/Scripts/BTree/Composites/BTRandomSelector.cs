@@ -3,6 +3,7 @@ namespace BTree
 {
     public class BTRandomSelector: BTPrioritySelector
     {
+        private System.Random mRandom = new System.Random();
         public BTRandomSelector()
             : base()
         {
@@ -15,7 +16,7 @@ namespace BTree
 
         protected override bool OnEvaluate(BTInput _input)
         {
-            mCurrentSelectIndex = UnityEngine.Random.Range(0, childCount);
+            mCurrentSelectIndex = mRandom.Next(0, childCount);
             if(CheckIndex(mCurrentSelectIndex))
             {
                 var node = children[mCurrentSelectIndex];
@@ -26,6 +27,11 @@ namespace BTree
             }
 
             return base.OnEvaluate(_input);
+        }
+
+        public void SetSeed(int seed)
+        {
+            mRandom = new System.Random(seed);
         }
     }
 }
