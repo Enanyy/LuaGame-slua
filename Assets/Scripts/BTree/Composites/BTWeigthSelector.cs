@@ -20,9 +20,10 @@ namespace BTree
                 BTNode node = mChildren[i];
                 if (node.Evaluate(_input))
                 {
-                    if (weight == -1 || node.GetWeight() > weight)
+                    int w = node.GetWeight();
+                    if (weight == -1 || w > weight)
                     {
-                        weight = node.GetWeight();
+                        weight = w;
                         mCurrentSelectIndex = i;
                     }
                 }
