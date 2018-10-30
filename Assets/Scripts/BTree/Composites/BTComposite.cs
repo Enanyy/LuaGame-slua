@@ -1,7 +1,9 @@
 ﻿
 namespace BTree
 {
-    //选择节点基类
+    /// <summary>
+    /// 混合节点
+    /// </summary>
     public class BTComposite : BTNode
     {
         public BTComposite()
@@ -13,6 +15,23 @@ namespace BTree
             : base(_parentNode, _precondition)
         {
 
+        }
+
+        public override int GetWeight()
+        {
+            int weight = -1;
+
+            for (int i = 0; i < childCount; i++)
+            {
+                BTNode node = mChildren[i];
+
+                if (weight == -1 || node.GetWeight() > weight)
+                {
+                    weight = node.GetWeight();
+                }
+
+            }
+            return weight;
         }
     }
 }

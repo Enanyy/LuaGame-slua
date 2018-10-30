@@ -34,18 +34,7 @@ namespace BTree
         /// 父节点
         /// </summary>
         public BTNode parent { get; protected set; }
-
-        /// <summary>
-        /// 权重
-        /// </summary>
-        public int weight { get; protected set; }
-        /*
-        //上一个激活的节点
-        public BTNode lastActiveNode { get; private set; }
-        //当前激活的节点
-        public BTNode activeNode { get; private set; }
-      
-        */
+       
         protected const int MAX_CHILD_NODE_COUNT = 16;
         protected const int INVALID_CHILD_NODE_INDEX = -1;
 
@@ -113,17 +102,7 @@ namespace BTree
             }
             return this;
         }
-        /*
-        public void SetActiveNode(BTNode _node)
-        {
-            lastActiveNode = activeNode;
-            activeNode = _node;
-            if (parent != null)
-            {
-                parent.SetActiveNode(_node);
-            }
-        }
-        */
+      
         protected virtual bool OnEvaluate(BTInput _input)
         {
             return true;
@@ -135,10 +114,14 @@ namespace BTree
         {
             return BTResult.Success;
         }
-
         protected bool CheckIndex(int _index)
 		{
 			return _index >= 0 && _index < childCount;
 		}
-}
+        public virtual int GetWeight()
+        {
+            return 0;
+        }
+
+    }
 }
