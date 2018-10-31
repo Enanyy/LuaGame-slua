@@ -15,6 +15,10 @@ public class PlayerManager : MonoBehaviour
         }
         return mInstance;
     }
+    public static void Destroy()
+    {
+
+    }
 
     private Camera mCamera;
     public Camera mainCamera { get {
