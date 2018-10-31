@@ -546,6 +546,138 @@ public static class LuaHelper
             go.transform.SetAsLastSibling();
         }
     }
+    public static void SetSiblingIndex(int id, int index)
+    {
+        var go = Get(id);
+
+        if (go)
+        {
+            go.transform.SetSiblingIndex(index);
+        }
+    }
+    public static int GetSiblingIndex(int id)
+    {
+        var go = Get(id);
+
+        if (go)
+        {
+            return go.transform.GetSiblingIndex();
+        }
+        return -1;
+    }
+    public static void InverseTransformDirection(int id, float x, float y, float z, out float ox, out float oy, out float oz)
+    {
+        var go = Get(id);
+
+        ox = oy = oz = 0;
+
+        if (go)
+        {
+            Vector3 pos = go.transform.InverseTransformDirection(x, y, z);
+            ox = pos.x;
+            oy = pos.y;
+            oz = pos.z;
+        }
+    }
+
+    public static void InverseTransformPoint(int id, float x, float y, float z, out float ox, out float oy, out float oz)
+    {
+        var go = Get(id);
+
+        ox = oy = oz = 0;
+
+        if (go)
+        {
+            Vector3 pos = go.transform.InverseTransformPoint(x, y, z);
+            ox = pos.x;
+            oy = pos.y;
+            oz = pos.z;
+        }
+    }
+
+    public static void InverseTransformVector(int id, float x, float y, float z, out float ox, out float oy, out float oz)
+    {
+        var go = Get(id);
+
+        ox = oy = oz = 0;
+
+        if (go)
+        {
+            Vector3 pos = go.transform.InverseTransformVector(x, y, z);
+            ox = pos.x;
+            oy = pos.y;
+            oz = pos.z;
+        }
+    }
+
+    public static void TransformDirection(int id, float x, float y, float z, out float ox, out float oy, out float oz)
+    {
+        var go = Get(id);
+
+        ox = oy = oz = 0;
+
+        if (go)
+        {
+            Vector3 pos = go.transform.TransformDirection(x, y, z);
+            ox = pos.x;
+            oy = pos.y;
+            oz = pos.z;
+        }
+    }
+    public static void TransformPoint(int id, float x, float y, float z, out float ox, out float oy, out float oz)
+    {
+        var go = Get(id);
+
+        ox = oy = oz = 0;
+
+        if (go)
+        {
+            Vector3 pos = go.transform.TransformPoint(x, y, z);
+            ox = pos.x;
+            oy = pos.y;
+            oz = pos.z;
+        }
+    }
+    public static void TransformVector(int id, float x, float y, float z, out float ox, out float oy, out float oz)
+    {
+        var go = Get(id);
+
+        ox = oy = oz = 0;
+
+        if (go)
+        {
+            Vector3 pos = go.transform.TransformVector(x, y, z);
+            ox = pos.x;
+            oy = pos.y;
+            oz = pos.z;
+        }
+    }
+
+    public static void LookAt(int id, float x, float y, float z)
+    {
+        var go = Get(id);
+        if (go)
+        {
+            go.transform.LookAt(new Vector3(x, y, z));
+        }
+    }
+
+    public static void Rotate(int id, float x, float y, float z)
+    {
+        var go = Get(id);
+        if (go)
+        {
+            go.transform.Rotate(x, y, z);
+        }
+    }
+    public static void Translate(int id, float x, float y, float z)
+    {
+        var go = Get(id);
+        if (go)
+        {
+            go.transform.Translate(x, y, z);
+        }
+    }
     #endregion
     #endregion
 

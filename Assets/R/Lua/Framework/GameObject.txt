@@ -30,11 +30,23 @@ local _SetParent                = LuaHelper.SetParent
 local _GetParent                = LuaHelper.GetParent
 local _SetAsFirstSibling        = LuaHelper.SetAsFirstSibling
 local _SetAsLastSibling         = LuaHelper.SetAsLastSibling
+local _SetSiblingIndex          = LuaHelper.SetSiblingIndex
+local _GetSiblingIndex          = LuaHelper.GetSiblingIndex
 local _SetLayer                 = LuaHelper.SetLayer
 local _GetChildCount            = LuaHelper.GetChildCount
 local _GetChild                 = LuaHelper.GetChild
 local _FindChild                = LuaHelper.FindChild
 local _FindChildWithComponent   = LuaHelper.FindChildWithComponent
+local _InverseTransformDirection= LuaHelper.InverseTransformDirection
+local _InverseTransformPoint    = LuaHelper.InverseTransformPoint
+local _InverseTransformVector   = LuaHelper.InverseTransformVector
+local _TransformDirection       = LuaHelper.TransformDirection
+local _TransformPoint           = LuaHelper.TransformPoint
+local _TransformVector          = LuaHelper.TransformVector
+local _LookAt                   = LuaHelper.LookAt
+local _Rotate                   = LuaHelper.Rotate
+local _Translate                = LuaHelper.Translate
+
 
 function Instantiate(go)
     if go == nil then return nil end
@@ -260,6 +272,14 @@ function GameObject:SetAsLastSibling()
     _SetAsLastSibling(self.id)
 end
 
+function GameObject:SetSiblingIndex(index)
+    _SetSiblingIndex(self.id,index)
+end
+
+function GameObject:GetSiblingIndex()
+    return _GetSiblingIndex(self.id)
+end
+
 function GameObject:SetLayer(layer)
     _SetLayer(self.id, layer)
 end
@@ -293,4 +313,82 @@ function GameObject:FindChildWithComponent(component)
     else
         return nil
     end
+end
+
+function GameObject:InverseTransformDirection(position)
+    local pos = Vector3.new()
+    local x = 0
+    local y = 0
+    local z = 0
+    x, y, z = _InverseTransformDirection(self.id, position.x,position.y,position.z, x, y, z)
+    pos:Set(x, y, z)
+    return pos
+end
+
+function GameObject:InverseTransformPoint(position)
+    local pos = Vector3.new()
+    local x = 0
+    local y = 0
+    local z = 0
+    x, y, z = _InverseTransformPoint(self.id, position.x,position.y,position.z, x, y, z)
+    pos:Set(x, y, z)
+    return pos
+end
+
+function GameObject:InverseTransformVector(position)
+    local pos = Vector3.new()
+    local x = 0
+    local y = 0
+    local z = 0
+    x, y, z = _InverseTransformVector(self.id, position.x,position.y,position.z, x, y, z)
+    pos:Set(x, y, z)
+    return pos
+end
+
+function GameObject:TransformDirection(position)
+    local pos = Vector3.new()
+    local x = 0
+    local y = 0
+    local z = 0
+    x, y, z = _TransformDirection(self.id, position.x,position.y,position.z, x, y, z)
+    pos:Set(x, y, z)
+    return pos
+end
+
+function GameObject:TransformPoint(position)
+    local pos = Vector3.new()
+    local x = 0
+    local y = 0
+    local z = 0
+    x, y, z = _TransformPoint(self.id, position.x,position.y,position.z, x, y, z)
+    pos:Set(x, y, z)
+    return pos
+end
+
+function GameObject:TransformVector(position)
+    local pos = Vector3.new()
+    local x = 0
+    local y = 0
+    local z = 0
+    x, y, z = _TransformVector(self.id, position.x,position.y,position.z, x, y, z)
+    pos:Set(x, y, z)
+    return pos
+end
+
+function GameObject:LookAt(position)
+   
+    _LookAt(self.id, position.x,position.y,position.z)
+
+end
+
+function GameObject:Rotate(position)
+   
+    _Rotate(self.id, position.x,position.y,position.z)
+
+end
+
+function GameObject:Translate(position)
+   
+    _Translate(self.id, position.x,position.y,position.z)
+
 end
