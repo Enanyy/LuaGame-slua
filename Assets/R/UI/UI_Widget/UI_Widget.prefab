@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 4444368818364976}
   - component: {fileID: 114770979918787948}
   m_Layer: 5
-  m_Name: '@Label.mLabel'
+  m_Name: '@mLabel'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 65715715468794034}
   - component: {fileID: 114358026818061080}
   m_Layer: 5
-  m_Name: '@Button.mMainWindow'
+  m_Name: '@mMainWindow'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 4291594655841998}
   - component: {fileID: 114174437264163770}
   m_Layer: 5
-  m_Name: '@Sprite.mSprite'
+  m_Name: '@mSprite'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

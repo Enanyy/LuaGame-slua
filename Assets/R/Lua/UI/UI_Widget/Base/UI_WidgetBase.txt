@@ -3,8 +3,15 @@
 --]]
 
 function UI_WidgetGen(self)
-	self.mSprite = self.transform:Find("@Sprite.mSprite"):GetComponent(UISprite)
-	self.mClose = self.transform:Find("@mClose"):GetComponent(UnityEngine.Transform)
-	self.mMainWindow = self.transform:Find("@Button.mMainWindow"):GetComponent(UIButton)
-	self.mLabel = self.transform:Find("@Label.mLabel"):GetComponent(UILabel)
+	self.mSprite = self.gameObject:Find("@mSprite")
+	self.mClose = self.gameObject:Find("@mClose")
+	self.mMainWindow = self.gameObject:Find("@mMainWindow")
+	self.mLabel = self.gameObject:Find("@mLabel")
+end
+
+function UI_WidgetClear(self)
+	self.mSprite:Destroy()
+	self.mClose:Destroy()
+	self.mMainWindow:Destroy()
+	self.mLabel:Destroy()
 end

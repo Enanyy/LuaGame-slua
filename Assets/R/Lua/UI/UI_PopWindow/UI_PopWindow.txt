@@ -14,36 +14,26 @@ end
 
 function this:Start()
 
-    local mainWindow = self.transform:Find("MainWindow")
-
-    local mainButton = mainWindow:GetComponent(UIButton) 
-    if mainButton then
-        mainButton.onClick:Add(EventDelegate(function() 
-            print("Click MainWindow")
-            WindowManager:Open(UI_Main)
-        end))
-    end
-
+    LuaHelper.AddClick(LuaHelper.FindChild(self.gameObject.id,"MainWindow"),function()
     
-    local dialogWindow = self.transform:Find("Dialog")
-    local dialogButton = dialogWindow:GetComponent(UIButton) 
+        print("Click MainWindow")
+        WindowManager:Open(UI_Main)
 
-    if dialogButton then
-        dialogButton.onClick:Add(EventDelegate(function() 
-            print("Click Dialog")        
-            WindowManager:Open(UI_Dialog)
-        end))
-    end
-   
-    local close = self.transform:Find("Close")
-    local closeButton = close:GetComponent(UIButton) 
+    end)
 
-    if closeButton then
-        closeButton.onClick:Add(EventDelegate(function() 
-            print("Click Close")        
+    LuaHelper.AddClick(LuaHelper.FindChild(self.gameObject.id,"Dialog"),function()
+    
+        print("Click Dialog")
+        WindowManager:Open(UI_Dialog)
+
+    end)
+
+    LuaHelper.AddClick(LuaHelper.FindChild(self.gameObject.id,"Close"),function()
+    
+        print("Click Close")        
             self:Close()
-        end))
-    end
+
+    end)
 end
 
 

@@ -1,0 +1,296 @@
+require("Class")
+
+local _Instantiate              = LuaHelper.Instantiate
+local _Destroy                  = LuaHelper.Destroy
+local _DontDestroyOnLoad        = LuaHelper.DontDestroyOnLoad
+local _DestroyImmediate         = LuaHelper.DestroyImmediate
+local _AddComponent             = LuaHelper.AddComponent
+local _DestroyComponent         = LuaHelper.DestroyComponent
+local _GetPosition              = LuaHelper.GetPosition
+local _SetPosition              = LuaHelper.SetPosition
+local _GetLocalPosition         = LuaHelper.GetLocalPosition
+local _SetLocalPosition         = LuaHelper.SetLocalPosition
+local _SetScale                 = LuaHelper.SetScale
+local _GetScale                 = LuaHelper.GetScale
+local _SetLocalRotation         = LuaHelper.SetLocalRotation
+local _GetLocalRotation         = LuaHelper.GetLocalRotation
+local _SetRotation              = LuaHelper.SetRotation
+local _GetRotation              = LuaHelper.GetRotation
+local _SetLocalEuler            = LuaHelper.SetLocalEuler
+local _GetLocalEuler            = LuaHelper.GetLocalEuler
+local _SetEuler                 = LuaHelper.SetEuler
+local _GetEuler                 = LuaHelper.GetEuler
+local _SetForward               = LuaHelper.SetForward
+local _GetForward               = LuaHelper.GetForward
+local _SetActive                = LuaHelper.SetActive
+local _IsActive                 = LuaHelper.IsActive
+local _SetEnable                = LuaHelper.SetEnable
+local _IsEnable                 = LuaHelper.IsEnable
+local _SetParent                = LuaHelper.SetParent
+local _GetParent                = LuaHelper.GetParent
+local _SetAsFirstSibling        = LuaHelper.SetAsFirstSibling
+local _SetAsLastSibling         = LuaHelper.SetAsLastSibling
+local _SetLayer                 = LuaHelper.SetLayer
+local _GetChildCount            = LuaHelper.GetChildCount
+local _GetChild                 = LuaHelper.GetChild
+local _FindChild                = LuaHelper.FindChild
+local _FindChildWithComponent   = LuaHelper.FindChildWithComponent
+
+function Instantiate(go)
+    if go == nil then return nil end
+    local id = _Instantiate(go.id)
+    if id ~= -1 then
+        return GameObject.new(id)
+    else
+        return nil
+    end
+end
+
+function Destroy(go)
+    if go == nil then return nil end
+    _Destroy(go.id)
+end
+
+function DestroyImmediate(go)
+    if go == nil then return nil end
+    _DestroyImmediate(go.id)
+end
+
+function DontDestroyOnLoad(go)
+    if go == nil then return nil end
+    _DontDestroyOnLoad(go.id)
+end
+
+GameObject = Class("GameObject")
+function GameObject:ctor(id)
+    if type(id) == "number" then
+        self.id = id
+    else
+        self.id = LuaHelper.GameObject(tostring(id))
+    end
+end
+
+function GameObject:AddComponent(component)
+    return _AddComponent(self.id,component)
+end
+
+function GameObject:DestroyComponent(component)
+    _DestroyComponent(self.id, component)
+end
+
+function GameObject:Destroy()
+    _Destroy(self.id)
+end
+
+function GameObject:DestroyImmediate()
+    _DestroyImmediate(self.id)
+end
+
+function GameObject:SetParent(parent)
+    _SetParent(self.id,parent.id)
+end
+
+function GameObject:GetParent()
+    local id = _GetParent(self.id)
+    if id ~= -1 then
+        return GameObject.new(id)
+    else
+        return nil
+    end
+end
+
+function GameObject:GetPosition(position)
+    local pos = position or  Vector3.new()
+    local x = 0
+    local y = 0
+    local z = 0
+    x, y, z = _GetPosition(self.id, x, y, z)
+    pos:Set(x, y, z)
+    return pos
+end
+
+function GameObject:SetPosition(position)
+    _SetPosition(self.id, position.x, position.y, position.z)
+end
+
+function GameObject:GetLocalPosition(position)
+    local pos =position or Vector3.new()
+    local x = 0
+    local y = 0
+    local z = 0
+    x, y, z = _GetLocalPosition(self.id, x, y, z)
+    pos:Set(x, y, z)
+    return pos
+end
+function GameObject:SetLocalPosition(position)
+
+    _SetLocalPosition(self.id, position.x, position.y, position.z)
+
+end
+
+function GameObject:SetScale( scale)
+  
+    _SetScale(self.id, scale.x, scale.y, scale.z)
+    
+end
+
+function GameObject:GetScale(scale)
+    local pos = scale or Vector3.new()
+    local x = 0
+    local y = 0
+    local z = 0
+    x, y, z = _GetScale(self.id, x, y, z)
+    pos:Set(x, y, z)
+    return pos
+end
+
+function GameObject:GetForward(forward)
+    local pos = forward or Vector3.new()
+    local x = 0
+    local y = 0
+    local z = 0
+    x, y, z = _GetForward(self.id, x, y, z)
+    pos:Set(x, y, z)
+    return pos
+end
+
+function GameObject:SetForward(forward)
+
+    _SetForward(self.id, forward.x, forward.y, forward.z)
+    
+end
+
+function GameObject:SetLocalRotation(rotation)
+
+    _SetLocalRotation(self.id, rotation.x, rotation.y, rotation.z, rotation.w)
+    
+end
+
+function GameObject:GetLocalRotation( rotation)
+    local r = rotation or Quaternion.new(0,0,0,1)
+    local x = 0
+    local y = 0
+    local z = 0
+    local w = 0
+    x, y, z, w = _GetLocalRotation(self.id, x, y, z, w)
+    r:Set(x, y, z, w)
+    return r
+end
+
+function GameObject:SetRotation(rotation)
+
+    _SetRotation(self.id, rotation.x, rotation.y, rotation.z, rotation.w)
+    
+end
+
+function GameObject:GetRotation(rotation)
+    local r = rotation or  Quaternion.new(0,0,0,1)
+    local x = 0
+    local y = 0
+    local z = 0
+    local w = 0
+    x, y, z, w  = _GetRotation(self.id, x, y, z, w)
+    r:Set(x, y, z, w)
+    return r
+end
+
+function GameObject:GetLocalEuler(euler)
+    local pos = euler or  Vector3.new()
+    local x = 0
+    local y = 0
+    local z = 0
+    x, y, z = _GetLocalEuler(self.id, x, y, z)
+    pos:Set(x, y, z)
+    return pos
+end
+
+function GameObject:SetLocalEuler( euler)
+
+    _SetLocalEuler(self.id, euler.x, euler.y, euler.z)
+    
+end
+
+function GameObject:GetEuler(euler)
+    local pos = euler or  Vector3.new()
+    local x = 0
+    local y = 0
+    local z = 0
+    x, y, z = _GetEuler(self.id, x, y, z)
+    pos:Set(x, y, z)
+    return pos
+end
+
+function GameObject:SetEuler(euler)
+
+    _SetEuler(self.id, euler.x, euler.y, euler.z)
+end
+
+function GameObject:SetActive( active)
+    if active then
+        _SetActive(self.id, 1)
+    else
+        _SetActive(self.id, 0)
+    end
+end
+
+function GameObject:IsActive()
+    local active = _IsActive(self.id)
+    if active == 1 then return true end
+    return false
+end
+
+function GameObject:SetEnable( component, enable)
+    if enable then
+        _SetEnable(self.id,component,1)
+    else
+        _SetEnable(self.id,component,0)
+    end
+end
+function GameObject:IsEnable(component)
+    local enable = _IsEnable(self.id,component)
+    if enable == 1 then return true end
+    return false
+end
+
+function GameObject:SetAsFirstSibling()
+    _SetAsFirstSibling(self.id)
+end
+
+function GameObject:SetAsLastSibling()
+    _SetAsLastSibling(self.id)
+end
+
+function GameObject:SetLayer(layer)
+    _SetLayer(self.id, layer)
+end
+
+function GameObject:GetChildCount()
+    return _GetChildCount(self.id)
+end
+
+function GameObject:GetChild(index)
+    local id = _GetChild(self.id,index)
+    if id ~= -1 then
+        return GameObject.new(id)
+    else
+        return nil
+    end
+end
+
+function GameObject:Find(path)
+    local id = _FindChild(self.id,path)
+    if id ~= -1 then
+        return GameObject.new(id)
+    else
+        return nil
+    end
+end
+
+function GameObject:FindChildWithComponent(component)
+    local id = _FindChildWithComponent(self.id,component)
+    if id ~= -1 then
+        return GameObject.new(id)
+    else
+        return nil
+    end
+end

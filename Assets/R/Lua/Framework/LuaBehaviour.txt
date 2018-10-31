@@ -16,7 +16,6 @@ end
 function LuaBehaviour:_init(gameObject)
    
     self.gameObject = gameObject 
-    self.transform = gameObject.transform
    
     if self.base then
         self.base:_init(gameObject)

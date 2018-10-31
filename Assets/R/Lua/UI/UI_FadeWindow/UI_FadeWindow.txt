@@ -16,53 +16,40 @@ end
 
 function this:Start()
 
-    local mainWindow = self.transform:Find("MainWindow")
+    
+    LuaHelper.AddClick(LuaHelper.FindChild(self.gameObject.id,"MainWindow"),function()
+    
+        print("Click MainWindow")
+        WindowManager:Open(UI_Main)
 
-    local mainButton = mainWindow:GetComponent(UIButton) 
-    if mainButton then
-        mainButton.onClick:Add(EventDelegate(function() 
-            print("Click MainWindow")
-            WindowManager:Open(UI_Main)
-        end))
-    end
+    end)
 
-    local scaleWindow = self.transform:Find("ScaleWindow")
-    local scaleButton = scaleWindow:GetComponent(UIButton) 
-    if scaleButton then
-        scaleButton.onClick:Add(EventDelegate(function() 
-            print("Click ScaleWindow")
-            WindowManager:Open(UI_ScaleWindow)
-        end))
-    end
+    LuaHelper.AddClick(LuaHelper.FindChild(self.gameObject.id,"ScaleWindow"),function()
+    
+        print("Click ScaleWindow")
+        WindowManager:Open(UI_ScaleWindow)
 
+    end)
 
-    local moveWindow = self.transform:Find("MoveWindow")
-    local moveButton = moveWindow:GetComponent(UIButton) 
+    LuaHelper.AddClick(LuaHelper.FindChild(self.gameObject.id,"MoveWindow"),function()
+    
+        print("Click MoveWindow")
+        WindowManager:Open(UI_MoveWindow)
 
-    if moveButton then
-        moveButton.onClick:Add(EventDelegate(function() 
-            print("Click MoveWindow")
-            WindowManager:Open(UI_MoveWindow)
-        end))
-    end
+    end)
 
-    local popWindow = self.transform:Find("PopWindow")
-    local popButton = popWindow:GetComponent(UIButton) 
+    LuaHelper.AddClick(LuaHelper.FindChild(self.gameObject.id,"PopWindow"),function()
+    
+        print("Click PopWindow")
+        WindowManager:Open(UI_PopWindow)
 
-    if popButton then
-        popButton.onClick:Add(EventDelegate(function() 
-            print("Click PopWindow")
-            WindowManager:Open(UI_PopWindow)
-        end))
-    end
-
-    local close = self.transform:Find("Close")
-    local closeButton = close:GetComponent(UIButton) 
-
-    if closeButton then
-        closeButton.onClick:Add(EventDelegate(function() 
-            print("Click Close")        
+    end)
+    LuaHelper.AddClick(LuaHelper.FindChild(self.gameObject.id,"Close"),function()
+    
+        print("Click Close")        
             self:Close()
-        end))
-    end
+
+    end)
+
+    
 end

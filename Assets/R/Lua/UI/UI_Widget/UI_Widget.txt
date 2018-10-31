@@ -23,22 +23,22 @@ function this:Start()
 
    
 
-    LuaHelper.AddClick(self.mMainWindow,function()
+    LuaHelper.AddClick(self.mMainWindow.id,function()
     
         print("Click MainWindow")
         WindowManager:Open(UI_Main)
 
     end)
 
+    LuaHelper.AddClick(self.mClose.id,function()
     
+        print("Click Close")        
+        self:Close()
 
-    
-    local closeButton = self.mClose:GetComponent(UIButton) 
+    end)
 
-    if closeButton then
-        closeButton.onClick:Add(EventDelegate(function() 
-            print("Click Close")        
-            self:Close()
-        end))
-    end
+end
+
+function this:OnDestroy()
+    UI_WidgetClear(self)
 end

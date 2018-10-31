@@ -2,9 +2,7 @@ require("LuaBehaviour")
 require("UnityClass")
 require("WindowType")
 
-
 Window = Class("Window",LuaBehaviour)
-
 
 function Window:ctor(path)
   
@@ -33,82 +31,73 @@ function Window:OnEnter()
     if self.useMask then
         self:CreateMask()
     end
-    self.panel = GetComponent(self.gameObject, UIPanel)
-
     self:Start()
 end
 
 function Window:CreateMask()
 
-    local go = GameObject("Mask")
-    SetParent(go, self.transform)
-    SetLocalPosition(go, Vector3.zero)
-    SetScale(go, Vector3.one)
-    SetLocalRotation(go, Quaternion.identity)
+    self.mask = GameObject.new("Mask")
+
+    self.mask:SetParent( self.gameObject)
+    self.mask:SetLocalPosition(Vector3.new())
+    self.mask:SetScale(Vector3.new(1,1,1))
+    self.mask:SetLocalRotation(Quaternion.new(0,0,0,1))
   
-    go.transform:SetAsFirstSibling()
+    self.mask:SetAsFirstSibling()
   
-    self.mask = go
-
-    local box = AddComponent(go,BoxCollider)
-    box.center = Vector3.zero
+    self.mask:AddComponent(UnityClass.BoxCollider)
    
+    self.mask:AddComponent(UnityClass.UIWidget)
 
-    local widget = AddComponent(go,UIWidget)
-    widget.depth = -1
-    widget.updateAnchors = UIRect.AnchorUpdate.OnStart
-
-    local root = WindowManager.uiRoot
-    widget.width = root.manualWidth
-    widget.height = root.manualHeight
-   
-    widget.autoResizeBoxCollider = true
-    widget:SetAnchor(self.gameObject, 0, 0, 1, 1)
-
+    LuaHelper.SetWidgetDepth(self.mask.id,-1)
     
-    widget:ResizeCollider()
+    LuaHelper.SetWidgetSize(self.mask.id,WindowManager.width,WindowManager.height)
+
+    LuaHelper.SetAnchor(self.mask.id,self.gameObject.id, 0, 0, 1, 1)
+
+    LuaHelper.ResizeCollider(self.mask.id)
 
 end
 
 function Window:OnPause()
     self.isPause = true
 
-    if self.panel == nil then
-        self.panel = GetComponent(self.gameObject,UIPanel)
-    end
-    if self.panel then
-        self.panel.alpha = 0
-    end
+    LuaHelper.SetPanelAlpha(self.gameObject.id,0)
+   
 end
 
 
 function Window:OnResume()
     self.isPause = false
 
-    if self.panel == nil then
-        self.panel = GetComponent(self.gameObject, UIPanel)
-    end
-    if self.panel then
-        self.panel.alpha = 1
-    end
+    self.gameObject:SetAsLastSibling()
 
-    self.transform:SetAsLastSibling()
+    LuaHelper.SetPanelAlpha(self.gameObject.id,1)
+    
     WindowManager:SetBlur()
     
 end
 
 function Window:OnExit()
+    
     WindowManager:SetBlur()
 
     self:OnDestroy()
 
-    if self.gameObject then
-        GameObject.Destroy(self.gameObject)
-    end
+    self.gameObject:Destroy()
     self.gameObject = nil
-    self.transform = nil
 end
 
 function Window:Close()
     WindowManager:Close(self)
+end
+
+function Window:GetDepth()
+
+    return LuaHelper.GetPanelDepth(self.gameObject.id)
+
+end
+
+function Window:SetDepth(depth)
+    LuaHelper.GetPanelDepth(self.gameObject.id,depth)
 end

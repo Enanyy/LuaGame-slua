@@ -37,17 +37,15 @@ namespace SLua
         {
 			// below lines only used for demostrate how to add custom class to export, can be delete on your app
 
-            add(typeof(System.Func<int>), null);
-            add(typeof(System.Action<int, string>), null);
-            add(typeof(System.Action<int, Dictionary<int, object>>), null);
-            add(typeof(List<int>), "ListInt");
+            //add(typeof(System.Func<int>), null);
+            //add(typeof(System.Action<int, string>), null);
+            //add(typeof(System.Action<int, Dictionary<int, object>>), null);
+            //add(typeof(List<int>), "ListInt");
             // .net 4.6 export class not match used class on runtime, so skip it
             //add(typeof(Dictionary<int, string>), "DictIntStr");
-            add(typeof(string), "String");
+            //add(typeof(string), "String");
             add(typeof(LuaHelper), null);
-            add(typeof(BlurEffect), null);
-          
-
+            
             // add your custom class here
             // add( type, typename)
             // type is what you want to export
@@ -56,6 +54,7 @@ namespace SLua
 
         public static void OnAddNGUIClass(LuaCodeGen.ExportGenericDelegate add)
         {
+            /*
             add(typeof(UIRoot), null);
             add(typeof(UIRoot.Scaling), null);
             add(typeof(UIRect), null);
@@ -99,7 +98,7 @@ namespace SLua
             add(typeof(EventDelegate), null);
             add(typeof(UITweener.Method), null);
             add(typeof(UITweener.Style), null);
-
+            */
             // add ngui class here
             // add( type, typename)
 
@@ -126,7 +125,7 @@ namespace SLua
         public static void OnGetUseList(out List<string> list)
         {
             list = new List<string>
-            {
+            {/*
                 "UnityEngine.Camera",
                 "UnityEngine.CameraClearFlags",
                 "UnityEngine.AudioListener",
@@ -157,7 +156,8 @@ namespace SLua
                 "UnityEngine.KeyCode",
                 "UnityEngine.BoxCollider",
                 "UnityEngine.CapsuleCollider",
-                "UnityEngine.Mathf",
+               
+                "UnityEngine.Mathf", */
             };
         }
 

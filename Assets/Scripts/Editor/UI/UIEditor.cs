@@ -20,17 +20,17 @@ using System.Text;
 public class Variable
 {
     string name = string.Empty;
-    string type = string.Empty;
+    //string type = string.Empty;
     string path = string.Empty;
 
-    public Variable(string varName, string varType, string varPath)
+    public Variable(string varName, /*string varType,*/ string varPath)
     {
         name = varName;
-        type = varType;
+        //type = varType;
         path = varPath;
     }
     public string Name { get { return name; } }
-    public string Type { get { return type; } }
+    //public string Type { get { return type; } }
     public string Path { get { return path; } }
 
 }
@@ -89,7 +89,18 @@ public class UIEditor
         
         foreach (var v in variableDir)
         {
-           builder.Append(string.Format("\tself.{0} = self.transform:Find(\"{1}\"):GetComponent({2})\n", v.Key, v.Value.Path, v.Value.Type));
+           builder.Append(string.Format("\tself.{0} = self.gameObject:Find(\"{1}\")\n", v.Key, v.Value.Path));
+        }
+
+        builder.Append("end");
+
+        builder.Append("\n\n");
+
+        builder.Append(string.Format("function {0}Clear(self)\n", className));
+
+        foreach (var v in variableDir)
+        {
+            builder.Append(string.Format("\tself.{0}:Destroy()\n", v.Key));
         }
 
         builder.Append("end");
@@ -119,6 +130,27 @@ public class UIEditor
                 if (index >= name.Length - 1)
                     continue;
 
+                string variableName = name.Substring(index + 1);
+                string path = name;
+
+                while (child.parent && child.parent != ui.transform)
+                {
+                    path = string.Format("{0}/{1}", child.parent.name, path);
+                    child = child.parent;
+                }
+
+                if (!string.IsNullOrEmpty(variableName)  && !string.IsNullOrEmpty(path))
+                {
+                    variableDir.Add(variableName, new Variable(variableName, path));
+                }
+                else
+                {
+                    variableDir.Clear();
+                    Debug.LogError(string.Format("命名错误：{0}", name));
+                    return variableDir;
+                }
+
+                /*
                 string variableNameAndType = name.Substring(index + 1);
 
                 string variableName, type, path;
@@ -142,7 +174,7 @@ public class UIEditor
                     type = "transform";
                     variableName = variableNameAndType;
                 }
-
+                
                 System.Type variableType = GetType(type);
                 if (variableType == null)
                 {
@@ -150,7 +182,7 @@ public class UIEditor
                     Debug.LogError(string.Format("命名错误,没定义该类型：{0}", name));
                     return variableDir;
                 }
-
+                
                 if (!child.GetComponent(variableType))
                 {
                     variableDir.Clear();
@@ -173,7 +205,7 @@ public class UIEditor
 
                     return variableDir;
                 }
-
+                
                 if (!ui.transform.Find(path).GetComponent(variableType))
                 {
                     Debug.LogError(string.Format("根据路径 path = {0}未能找到物体上的{1}组件！", path, variableType.ToString()));
@@ -200,6 +232,7 @@ public class UIEditor
                         return variableDir;
                     }
                 }
+                */
             }
         }
 
@@ -211,7 +244,7 @@ public class UIEditor
     {
         switch (type.ToLower())
         {
-            case "gameobject": return typeof(Transform);
+           /* case "gameobject": return typeof(Transform);
             case "transform": return typeof(Transform);
             case "camera": return typeof(Camera);
             case "panel": return typeof(UIPanel);
@@ -232,7 +265,7 @@ public class UIEditor
             case "tweenposition": return typeof(TweenPosition);
             case "tweenscale": return typeof(TweenScale);
             case "tweencolor":return typeof(TweenColor);
-                
+                */
             default:
                 return null;
         }

@@ -14,51 +14,40 @@ end
 
 function this:Start()
 
-    local fadeWindow = self.transform:Find("FadeWindow")
-    local fadeButton = fadeWindow:GetComponent(UIButton) 
-    if fadeButton then
-        fadeButton.onClick:Add(EventDelegate(function() 
-            print("Click FadeWindow")
-            WindowManager:Open(UI_FadeWindow)
-        end))
-    end
-    local scaleWindow = self.transform:Find("ScaleWindow")
-    local scaleButton = scaleWindow:GetComponent(UIButton) 
-    if scaleButton then
-        scaleButton.onClick:Add(EventDelegate(function() 
-            print("Click ScaleWindow")
-            WindowManager:Open(UI_ScaleWindow)
-        end))
-    end
-
-
-    local moveWindow = self.transform:Find("MoveWindow")
-    local moveButton = moveWindow:GetComponent(UIButton) 
-
-    if moveButton then
-        moveButton.onClick:Add(EventDelegate(function() 
-            print("Click MoveWindow")
-            WindowManager:Open(UI_MoveWindow)
-        end))
-    end
-
-    local popWindow = self.transform:Find("PopWindow")
-    local popButton = popWindow:GetComponent(UIButton) 
-
-    if popButton then
-        popButton.onClick:Add(EventDelegate(function() 
-            print("Click PopWindow")
-            WindowManager:Open(UI_PopWindow)
-        end))
-    end
-   
-    local widget = self.transform:Find("Widget")
-    local widgetButton = widget:GetComponent(UIButton) 
-    if widgetButton then
-        widgetButton.onClick:Add(EventDelegate(function() 
-            print("Click Widget")
-            WindowManager:Open(UI_Widget)
-        end))
-    end
+    LuaHelper.AddClick(LuaHelper.FindChild(self.gameObject.id,"FadeWindow"),function()
     
+        print("Click FadeWindow")
+        WindowManager:Open(UI_FadeWindow)
+
+    end)
+
+    LuaHelper.AddClick(LuaHelper.FindChild(self.gameObject.id,"ScaleWindow"),function()
+    
+        print("Click ScaleWindow")
+        WindowManager:Open(UI_ScaleWindow)
+
+    end)
+
+    LuaHelper.AddClick(LuaHelper.FindChild(self.gameObject.id,"MoveWindow"),function()
+    
+        print("Click MoveWindow")
+        WindowManager:Open(UI_MoveWindow)
+
+    end)
+
+    LuaHelper.AddClick(LuaHelper.FindChild(self.gameObject.id,"PopWindow"),function()
+    
+        print("Click PopWindow")
+        WindowManager:Open(UI_PopWindow)
+
+    end)
+
+
+    LuaHelper.AddClick(LuaHelper.FindChild(self.gameObject.id,"Widget"),function()
+    
+        print("Click Widget")
+        WindowManager:Open(UI_Widget)
+
+    end)
+   
 end

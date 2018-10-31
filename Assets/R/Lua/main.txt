@@ -1,14 +1,16 @@
 require "UnityClass"
 require "WindowManager"
 require "protobuf"
+
 function main()
 	
 	TestPBC()
 
 	TestOverWrite()
-	
+
 	WindowManager:Initialize()
 	WindowManager:Open(UI_Main)
+	
 end
 
 function TestPBC()
@@ -85,7 +87,7 @@ message Phone
 
 	local data = protobuf.decode("Person",pb_data)
 
-	printf(data)
+	--printf(data)
 end
 
 

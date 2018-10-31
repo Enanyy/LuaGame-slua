@@ -18,63 +18,31 @@ function  WindowManager:Initialize()
         self.uiLayer = UnityLayer.UI              --UI显示层
         self.blurLayer = UnityLayer.Blur          --背景模糊层 Unity没有该层的话请创建
 
-        local go = GameObject('WindowManager')  
+        local go = GameObject.new('WindowManager')  
         self:_init(go)   
-        GameObject.DontDestroyOnLoad(go)
+        DontDestroyOnLoad(go)
 
+        self.width = 1280
+        self.height = 720
         
-        local p = NGUITools.CreateUI(false)
-        p.transform:SetParent(go.transform)
+        self.uiRoot = GameObject.new(LuaHelper.CreateUI(self.width, self.height))
+        self.uiRoot:SetParent(go)
+        self.uiCamera = self.uiRoot:FindChildWithComponent(UnityClass.UICamera)
+        self.uiCamera:SetLayer(self.uiLayer)
 
-        self.uiCamera = p:GetComponentInChildren(UICamera)
-        local camera = self.uiCamera:GetComponent(Camera)
-        camera.clearFlags = CameraClearFlags.Depth
-        camera.cullingMask =  UnityLayer.MakeMask(self.uiLayer)
-       
-        NGUITools.SetLayer(self.uiCamera.gameObject, self.uiLayer)
-        Object.Destroy(self.uiCamera:GetComponent(AudioListener))
-        camera.depth = 2
+        LuaHelper.SetCameraCullingMask(self.uiCamera.id,UnityLayer.MakeMask(self.uiLayer))
+        LuaHelper.SetCameraDepth(self.uiCamera.id,2)
 
 
-        self.uiRoot = p:GetComponent(UIRoot)
-        self.uiRoot.scalingStyle = UIRoot.Scaling.Constrained
-        
-        local DESIGN_WIDTH = 1280
-        local DESIGN_HEIGHT = 720
-
-        self.uiRoot.manualHeight = DESIGN_HEIGHT
-        self.uiRoot.manualWidth = DESIGN_WIDTH
-
-        local tmpScreenAspectRatio = (Screen.width * 1.0) / Screen.height
-        local tmpDesignAspectRatio = (DESIGN_WIDTH * 1.0) / DESIGN_HEIGHT
-        if (tmpScreenAspectRatio * 100) < (tmpDesignAspectRatio * 100) then
-        
-            self.uiRoot.fitWidth = true
-            self.uiRoot.fitHeight = false
-
-        elseif (tmpScreenAspectRatio * 100) > (tmpDesignAspectRatio * 100) then
-        
-            self.uiRoot.fitWidth = false
-            self.uiRoot.fitHeight = true
-        end
-
-
-        local blurGo = GameObject.Instantiate(self.uiCamera.gameObject)
-        blurGo.name = "BlurCamera"
-        blurGo.transform:SetParent(self.uiRoot.transform)
-        Object.Destroy(blurGo:GetComponent(AudioListener))
-       
-        self.blurCamera = blurGo:GetComponent(UICamera)  
-        local camera = self.blurCamera:GetComponent(Camera)
-        camera.clearFlags = CameraClearFlags.Depth 
-        camera.cullingMask =  UnityLayer.MakeMask(self.blurLayer)       
-      
-        NGUITools.SetLayer(blurGo,  self.blurLayer)
-        camera.depth = 1
-        self.blurCamera.enabled = false
-
-        self.blurEffect = blurGo:AddComponent(BlurEffect)        
-        self.blurEffect.enabled = false
+        self.blurCamera = Instantiate(self.uiCamera)
+        self.blurCamera:SetParent(self.uiRoot)
+        self.blurCamera:SetScale(Vector3.new(1,1,1))
+        self.blurCamera:AddComponent(UnityClass.BlurEffect)
+        self.blurCamera:SetEnable( UnityClass.Camera, false)
+        self.blurCamera:SetEnable( UnityClass.BlurEffect, false)
+        self.blurCamera:SetLayer(self.blurLayer)
+        LuaHelper.SetCameraCullingMask(self.blurCamera.id,UnityLayer.MakeMask(self.blurLayer))
+        LuaHelper.SetCameraDepth(self.blurCamera.id,1)
 
         --Window栈容器
         self.mWindowStack = Stack.new()             --窗口
@@ -86,9 +54,10 @@ end
 
 --是否可以点击
 function  WindowManager:SetTouchable(touchable)
-    if self.uiCamera then
-        self.uiCamera.useTouch = touchable
-        self.uiCamera.useMouse = touchable
+    if touchable then
+        LuaHelper.SetUITouchable(self.uiCamera.id,1)
+    else
+        LuaHelper.SetUITouchable(self.uiCamera.id,0)
     end
 end
 
@@ -140,28 +109,24 @@ function WindowManager:Open(class, callback)
 
         if  path ~= nil then
         
-            local varGo = LuaHelper.LoadAsset(path)
+            local id = LuaHelper.LoadAsset(path)
            
-            if varGo then
-            
-                local go = GameObject.Instantiate(varGo)
+            if id ~= -1 then
+                
+                local ui = GameObject.new(LuaHelper.FindChild(id,name))
+               
+                LuaHelper.Destroy(id)
 
-                NGUITools.SetLayer(go,  self.uiLayer)
-
-                local tran = go.transform:Find(name)
-
-                tran:SetParent(self.uiRoot.transform)
-
-                GameObject.Destroy(go)
-
-                tran.localPosition = Vector3.zero
-                tran.localRotation = Quaternion.identity
-                tran.localScale = Vector3.one
-
-                tran.gameObject:SetActive(true)
+                ui:SetLayer(self.uiLayer)
+                ui:SetParent(self.uiRoot)
+                ui:SetLocalPosition(Vector3.new())
+                ui:SetLocalRotation(Quaternion.new(0,0,0,1))
+                ui:SetScale(Vector3.new(1,1,1))
+                ui:SetActive(true)
+                ui:SetEnable(UnityClass.UIPanel,true)
 
                 t = class.new(path)
-                t:_init(tran.gameObject)
+                t:_init(ui)
 
               
 
@@ -173,7 +138,7 @@ function WindowManager:Open(class, callback)
                     if  window ~= nil then
                     
                         error("已经存在一个 windowType = 0 的界面，本界面将销毁.")
-                        GameObject.Destroy(tran.gameObject)
+                        Destroy(ui)
                         self:SetTouchable(true)
 
                         return
@@ -329,8 +294,7 @@ function WindowManager:SetDepth(window)
 
         if window.depth ~= nil then
             --可以在界面构造函数中设置depth
-            window.panel.depth = window.depth
-
+            window:SetDepth(window.depth) 
         else
             local depth = self:GetMaxDepth(window.windowType)
             if window.windowType == WindowType.Normal then
@@ -347,7 +311,8 @@ function WindowManager:SetDepth(window)
             depth = depth + 50
             depth = WindowDepth:Clamp(window.windowType,depth)
            
-            window.panel.depth = depth       
+            window:SetDepth(depth)  
+
         end
     end
 end
@@ -360,14 +325,16 @@ function WindowManager:GetMaxDepth(windowType)
 
     if windowType == WindowType.Widget then
         for i,v in ipairs(self.mWidgetList) do
-            if v.panel.depth > depth then
-                depth = v.panel.depth           
+            local value = v:GetDepth()
+            if value > depth then
+                depth = value          
             end
         end
     else
         for i,v in ipairs(self.mWindowStack.items) do
-            if v.windowType == windowType and v.panel.depth > depth then
-                depth = v.panel.depth
+            local value = v:GetDepth()
+            if v.windowType == windowType and value > depth then
+                depth = value
             end
         end    
     end
@@ -524,22 +491,17 @@ function WindowManager:SetBlur()
     if self.mWindowStack:Count() > 0 then
     
         local w = self.mWindowStack:Pop()
-        NGUITools.SetLayer(w.gameObject,  self.uiLayer)
+            w.gameObject:SetLayer( self.uiLayer)
 
         if self.mWindowStack:Count() > 0 then
         
             local b = self.mWindowStack:Peek()
-            NGUITools.SetLayer(b.gameObject,  self.blurLayer)
+            b.gameObject:SetLayer( self.blurLayer)
         end
 
         self.mWindowStack:Push(w)
     end
-    self.blurEffect.enabled = self.mWindowStack:Count() > 1
-    
-    if Camera.main then 
-        local blurEffect = Camera.main:GetComponent(BlurEffect)
-        if blurEffect == nil then blurEffect = Camera.main.gameObject:AddComponent(BlurEffect) end
-
-        blurEffect.enabled = self.blurEffect.enabled
-    end
+    local enable = self.mWindowStack:Count() > 1
+    self.blurCamera:SetEnable(UnityClass.BlurEffect,enable)
+    self.blurCamera:SetEnable(UnityClass.Camera,enable)
 end

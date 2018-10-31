@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour {
         {
             data.destination = hit.position;
             data.changeType = PlayerAnimationType.none;
-            Debugger.Log("Move To Target:" + data.destination);
+            
         }
     }
 
