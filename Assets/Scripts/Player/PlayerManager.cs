@@ -46,19 +46,10 @@ public class PlayerManager : MonoBehaviour
         data.camp = 1;
         data.x = 2;
         data.z = 2;
+        data.model = "Akali";
         data.config = "Akali";
         data.destination = new Vector3(2f, 0, 8);
-        data.animationsLength = new Dictionary<PlayerAnimationType, float> {
-            { PlayerAnimationType.attack1,1.250f },
-            { PlayerAnimationType.attack2,1.250f },
-            { PlayerAnimationType.dance,8.875f },
-            { PlayerAnimationType.die,1.750f },
-            { PlayerAnimationType.idle,1.250f },
-            { PlayerAnimationType.run,0.833f },
-            { PlayerAnimationType.sneak,0.583f },
-            { PlayerAnimationType.spell1,1.250f },
-            { PlayerAnimationType.spell3,1.250f }
-            };
+      
         mControledPlayer =  CreatePlayer(data);
 
         PlayerData data1 = new PlayerData();
@@ -66,19 +57,11 @@ public class PlayerManager : MonoBehaviour
         data1.camp = 2;
         data1.x = 2;
         data1.z = 2;
+        data1.model = "Akali";
+
         data1.config = "AI_Akali";
         data1.destination = new Vector3(1f, 0, 4);
-        data1.animationsLength = new Dictionary<PlayerAnimationType, float> {
-            { PlayerAnimationType.attack1,1.250f },
-            { PlayerAnimationType.attack2,1.250f },
-            { PlayerAnimationType.dance,8.875f },
-            { PlayerAnimationType.die,1.750f },
-            { PlayerAnimationType.idle,1.250f },
-            { PlayerAnimationType.run,0.833f },
-            { PlayerAnimationType.sneak,0.583f },
-            { PlayerAnimationType.spell1,1.250f },
-            { PlayerAnimationType.spell3,1.250f }
-            };
+      
 
         CreatePlayer(data1);
     }
@@ -101,6 +84,7 @@ public class PlayerManager : MonoBehaviour
         attackData.spaceColumn = -2;
         attackData.spaceRow = 2;
         attackData.count = 10;
+        attackData.model = "Akali";
 
         GameObject attackGo = new GameObject("Attack Group");
         attackGo.transform.SetParent(transform);
@@ -120,6 +104,8 @@ public class PlayerManager : MonoBehaviour
         defenseData.spaceColumn = 2;
         defenseData.spaceRow = 2;
         defenseData.count = 10;
+        defenseData.model = "Akali";
+
 
         GameObject defenseGo = new GameObject("Attack Group");
         defenseGo.transform.SetParent(transform);

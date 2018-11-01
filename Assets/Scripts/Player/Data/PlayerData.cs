@@ -26,11 +26,11 @@ public class PlayerData
     public float dirZ;
 
     public int target = -1;
+    public string model;
     public string config;
     public Vector3 destination;
     public PlayerAnimationType animationType = PlayerAnimationType.idle;//当前播放的动作
     public PlayerAnimationType changeType = PlayerAnimationType.none;//下个的动作
-    public Dictionary<PlayerAnimationType, float> animationsLength;
     public float animationTime;
     public const float DEFAULT_STOPDISTANCE = 0.01f;
     public float stopDistance = DEFAULT_STOPDISTANCE;

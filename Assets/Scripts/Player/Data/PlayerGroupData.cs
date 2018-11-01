@@ -11,7 +11,7 @@ public class PlayerGroupData
 
     public float dirX, dirZ;
 
-    public int type;
+    public string model = "Akali";
 
     public int target;
 

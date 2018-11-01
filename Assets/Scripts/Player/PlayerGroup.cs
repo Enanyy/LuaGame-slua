@@ -27,20 +27,8 @@ public class PlayerGroup : EntityBase<PlayerGroupData>
             playerData.camp = data.camp;
 
             playerData.config = "AI_Akali";
+            playerData.model = data.model;
           
-            playerData.animationsLength = new Dictionary<PlayerAnimationType, float> {
-            { PlayerAnimationType.attack1,1.250f },
-            { PlayerAnimationType.attack2,1.250f },
-            { PlayerAnimationType.dance,8.875f },
-            { PlayerAnimationType.die,1.750f },
-            { PlayerAnimationType.idle,1.250f },
-            { PlayerAnimationType.run,0.833f },
-            { PlayerAnimationType.sneak,0.583f },
-            { PlayerAnimationType.spell1,1.250f },
-            { PlayerAnimationType.spell3,1.250f } };
-
-
-
             int column = i / data.columns;
             int row = i % data.columns;
 

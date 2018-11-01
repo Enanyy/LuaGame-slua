@@ -99,7 +99,7 @@ public class PlayerEntity : EntityBase<PlayerData>
             {
                 mAnimation.CrossFade(animation.ToString(),0.2f);
                 mAnimation.wrapMode = loop ? WrapMode.Loop : WrapMode.Default;
-                data.animationTime = data.animationsLength[animation];
+                data.animationTime = PlayerAnimations.GetAnimationLength(data.model,animation);
             }
         }
     }
