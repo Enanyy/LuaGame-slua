@@ -20,7 +20,7 @@ public class ActionFollowTarget : BTAction
         var player = input.player;
         if (player.IsDead() == false)
         {
-            if (player.data.target > 0)
+            if (player.HasTarget())
             {
                 var target = PlayerManager.GetSingleton().GetPlayer(player.data.target);
                 if (target != null)
@@ -28,6 +28,11 @@ public class ActionFollowTarget : BTAction
                     player.SetDestination(target.transform.position);
                     player.data.stopDistance = player.data.attackDistance;
                 }
+            }
+            else
+            {
+                player.SetDestination(player.transform.position);
+               
             }
         }
 
