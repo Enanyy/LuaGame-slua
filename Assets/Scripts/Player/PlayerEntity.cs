@@ -8,7 +8,7 @@ public class PlayerInputData:BTInput
 {
     public PlayerEntity player;
 
-    public PlayerInputData(PlayerEntity _player)
+    public void SetData(PlayerEntity _player)
     {
         player = _player;
     }
@@ -46,19 +46,27 @@ public class PlayerEntity : EntityBase<PlayerData>
     public override void SetData(PlayerData _data)
     {
         base.SetData(_data);
-        mRoot = new BTRoot();
 
-        mRoot.InitXML(data.config);
+        if (string.IsNullOrEmpty(data.config) == false)
+        {
+            mRoot = new BTRoot();
+
+            mRoot.InitXML(data.config);
+        }
     }
 	
 
     public void Tick(float deltaTime)
     {
-        if (mInput == null)
+        if (mRoot != null)
         {
-            mInput = new PlayerInputData(this);
+            if (mInput == null)
+            {
+                mInput = new PlayerInputData();
+                (mInput as PlayerInputData).SetData(this);
+            }
+            mRoot.Tick(ref mInput);
         }
-        mRoot.Tick(ref mInput);
 
         if (data.animationTime > 0)
         {

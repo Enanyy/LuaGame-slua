@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BTree;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -6,7 +7,8 @@ using UnityEngine.AI;
 public class PlayerGroup : EntityBase<PlayerGroupData>
 {
     public List<PlayerEntity> playerList { get; private set; }
-
+    private BTInput mInput;
+    private BTRoot mRoot;
 
     public override void SetData(PlayerGroupData _data)
     {
@@ -18,15 +20,18 @@ public class PlayerGroup : EntityBase<PlayerGroupData>
     private void Init()
     {
         playerList = new List<PlayerEntity>();
+        mInput = new PlayerInputData();
+        mRoot = new BTRoot();
+        mRoot.InitXML(data.config);
 
-        for(int i = 0; i < data.count; ++i)
+        for (int i = 0; i < data.count; ++i)
         {
            
             PlayerData playerData = new PlayerData();
             playerData.id = data.id *100 +i;
             playerData.camp = data.camp;
 
-            playerData.config = "AI_Akali";
+            playerData.config = "";
             playerData.model = data.model;
             playerData.hp = data.hp;
           
@@ -60,7 +65,11 @@ public class PlayerGroup : EntityBase<PlayerGroupData>
 
     public void Tick(float deltaTime)
     {
-
+        for(int i = 0; i < playerList.Count; ++i)
+        {
+            (mInput as PlayerInputData).SetData(playerList[i]);
+            mRoot.Tick(ref mInput);
+        }
     }
    
 }

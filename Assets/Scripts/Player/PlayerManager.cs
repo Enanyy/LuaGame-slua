@@ -87,9 +87,10 @@ public class PlayerManager : MonoBehaviour
         attackData.spaceRow = 2;
         attackData.count = 10;
         attackData.model = "Akali";
-        attackData.hp = 10;
+        attackData.config = "AI_Akali";
+        attackData.hp = 10; 
 
-        GameObject attackGo = new GameObject("Attack Group");
+         GameObject attackGo = new GameObject("Attack Group");
         attackGo.transform.SetParent(transform);
         attackGroup = attackGo.AddComponent<PlayerGroup>();
         attackGroup.SetData(attackData);
@@ -108,6 +109,7 @@ public class PlayerManager : MonoBehaviour
         defenseData.spaceRow = 2;
         defenseData.count = 10;
         defenseData.model = "Akali";
+        defenseData.config = "AI_Akali";
         defenseData.hp = 8;
 
 

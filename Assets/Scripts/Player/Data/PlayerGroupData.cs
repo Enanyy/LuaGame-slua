@@ -13,6 +13,8 @@ public class PlayerGroupData
 
     public string model = "Akali";
 
+    public string config;
+
     public int target;
 
     public int columns;
