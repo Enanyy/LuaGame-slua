@@ -21,6 +21,7 @@ public class ActionDie : BTAction
         player.PlayAnimation(PlayerAnimationType.die, UnityEngine.WrapMode.ClampForever);
         player.data.target = 0;
         player.Stop();
+        player.navMeshAgent.enabled = false;
 
         return base.OnExecute(ref _input);
     }

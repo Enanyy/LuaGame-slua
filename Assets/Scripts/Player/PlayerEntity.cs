@@ -185,7 +185,7 @@ public class PlayerEntity : EntityBase<PlayerData>
     }
 
 
-    public void FindTarget()
+    public bool FindTarget()
     {
         var players = PlayerManager.GetSingleton().players;
         float minDistance = float.MaxValue;
@@ -220,8 +220,10 @@ public class PlayerEntity : EntityBase<PlayerData>
         if (minTarget != -1)
         {
             data.target = minTarget;
+            return true;
         }
-       
+
+        return false;
     }
 
     public void LookAtTarget()
@@ -238,7 +240,7 @@ public class PlayerEntity : EntityBase<PlayerData>
 
     public void Stop()
     {
-        if(navMeshAgent&&!navMeshAgent.isStopped)
+        if(navMeshAgent&& navMeshAgent.isOnNavMesh&& !navMeshAgent.isStopped)
         {
             navMeshAgent.isStopped = true;
         }
@@ -246,7 +248,7 @@ public class PlayerEntity : EntityBase<PlayerData>
 
     public void Resume()
     {
-        if (navMeshAgent && navMeshAgent.isStopped)
+        if (navMeshAgent && navMeshAgent.isOnNavMesh && navMeshAgent.isStopped)
         {
             navMeshAgent.isStopped = false;
         }

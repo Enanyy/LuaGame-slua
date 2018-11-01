@@ -24,7 +24,10 @@ public class ActionFindTarget : BTAction
             return BTResult.Success;
         }
 
-        player.FindTarget();
+        if(player.FindTarget()==false)
+        {
+           
+        }
 
         return base.OnExecute(ref _input);
     }
