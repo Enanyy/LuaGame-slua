@@ -9,6 +9,7 @@ public partial class LuaGame : MonoBehaviour
 {
     LuaSvr l;
     int progress = 0;
+    string sceneName = "Battle";
 
     private void Awake()
     {
@@ -58,6 +59,7 @@ public partial class LuaGame : MonoBehaviour
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene("Example");
+       
 
     }
 #if UNITY_EDITOR
@@ -66,10 +68,12 @@ public partial class LuaGame : MonoBehaviour
         if (progress != 100)
             GUI.Label(new Rect(0, 0, 100, 50), string.Format("Loading {0}%", progress));
 
-        if(GUI.Button(new Rect(100,20,200,50),"Battle Scene"))
+        if(GUI.Button(new Rect(20,20,100,40),sceneName))
         {
-            SceneManager.LoadScene("Battle");
+            PlayerManager.Destroy();
+            SceneManager.LoadScene(sceneName);
         }
+
     }
 #endif
 
@@ -86,40 +90,14 @@ public partial class LuaGame : MonoBehaviour
     {
         if (scene.name == "Example")
         {
-            PlayerData data = new PlayerData();
-            data.id = 0;
-            data.config = "Akali";
-            data.destination = new Vector3(2f, 0, 8);
-            data.animationsLength = new Dictionary<PlayerAnimationType, float> {
-            { PlayerAnimationType.attack1,1.250f },
-            { PlayerAnimationType.attack2,1.250f },
-            { PlayerAnimationType.dance,8.875f },
-            { PlayerAnimationType.die,1.750f },
-            { PlayerAnimationType.idle,1.250f },
-            { PlayerAnimationType.run,0.833f },
-            { PlayerAnimationType.sneak,0.583f },
-            { PlayerAnimationType.spell1,1.250f },
-            { PlayerAnimationType.spell3,1.250f }
-        };
-            PlayerManager.GetSingleton().CreatePlayer(data);
+            PlayerManager.GetSingleton().Init();
+            sceneName = "Battle";
+        }
+        else if (scene.name == "Battle")
+        {
+            PlayerManager.GetSingleton().InitBattle();
+            sceneName = "Example";
 
-            PlayerData data1 = new PlayerData();
-            data1.id = 1;
-            data1.config = "AI_Akali";
-            data1.destination = new Vector3(1f, 0, 4);
-            data1.animationsLength = new Dictionary<PlayerAnimationType, float> {
-            { PlayerAnimationType.attack1,1.250f },
-            { PlayerAnimationType.attack2,1.250f },
-            { PlayerAnimationType.dance,8.875f },
-            { PlayerAnimationType.die,1.750f },
-            { PlayerAnimationType.idle,1.250f },
-            { PlayerAnimationType.run,0.833f },
-            { PlayerAnimationType.sneak,0.583f },
-            { PlayerAnimationType.spell1,1.250f },
-            { PlayerAnimationType.spell3,1.250f }
-        };
-
-            PlayerManager.GetSingleton().CreatePlayer(data1);
         }
     }
 

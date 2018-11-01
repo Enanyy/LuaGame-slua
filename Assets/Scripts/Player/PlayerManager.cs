@@ -17,7 +17,8 @@ public class PlayerManager : MonoBehaviour
     }
     public static void Destroy()
     {
-
+        Destroy(mInstance.gameObject);
+        mInstance = null;
     }
 
     private Camera mCamera;
@@ -27,45 +28,128 @@ public class PlayerManager : MonoBehaviour
                 mCamera = Camera.main;
             }
             return mCamera;
-        } }
+    } }
 
-    private PlayerController player;
-    private List<PlayerController> mPlayerList = new List<PlayerController>();
-    public List<PlayerController> players { get { return mPlayerList; } }
+    private PlayerEntity mControledPlayer;
+   
+    public List<PlayerEntity> players { get; private set; }
 
-    public void CreatePlayer(PlayerData data, Action<PlayerController> action = null)
+    public PlayerGroup attackGroup { get; private set; }
+    public PlayerGroup defenseGroup { get; private set; }
+
+    public void Init()
+    {
+        players = new List<PlayerEntity>();
+
+        PlayerData data = new PlayerData();
+        data.id = 1;
+        data.camp = 1;
+        data.x = 2;
+        data.z = 2;
+        data.config = "Akali";
+        data.destination = new Vector3(2f, 0, 8);
+        data.animationsLength = new Dictionary<PlayerAnimationType, float> {
+            { PlayerAnimationType.attack1,1.250f },
+            { PlayerAnimationType.attack2,1.250f },
+            { PlayerAnimationType.dance,8.875f },
+            { PlayerAnimationType.die,1.750f },
+            { PlayerAnimationType.idle,1.250f },
+            { PlayerAnimationType.run,0.833f },
+            { PlayerAnimationType.sneak,0.583f },
+            { PlayerAnimationType.spell1,1.250f },
+            { PlayerAnimationType.spell3,1.250f }
+            };
+        mControledPlayer =  CreatePlayer(data);
+
+        PlayerData data1 = new PlayerData();
+        data1.id = 2;
+        data1.camp = 2;
+        data1.x = 2;
+        data1.z = 2;
+        data1.config = "AI_Akali";
+        data1.destination = new Vector3(1f, 0, 4);
+        data1.animationsLength = new Dictionary<PlayerAnimationType, float> {
+            { PlayerAnimationType.attack1,1.250f },
+            { PlayerAnimationType.attack2,1.250f },
+            { PlayerAnimationType.dance,8.875f },
+            { PlayerAnimationType.die,1.750f },
+            { PlayerAnimationType.idle,1.250f },
+            { PlayerAnimationType.run,0.833f },
+            { PlayerAnimationType.sneak,0.583f },
+            { PlayerAnimationType.spell1,1.250f },
+            { PlayerAnimationType.spell3,1.250f }
+            };
+
+        CreatePlayer(data1);
+    }
+
+   
+
+    public void InitBattle()
+    {
+        players = new List<PlayerEntity>();
+
+        PlayerGroupData attackData = new PlayerGroupData();
+        attackData.id = 1;
+        attackData.camp = 1;
+        attackData.target = 0;
+        attackData.columns = 5;
+        attackData.x = 0;
+        attackData.z = -15;
+        attackData.dirX = 0;
+        attackData.dirZ = 1;
+        attackData.spaceColumn = -2;
+        attackData.spaceRow = 2;
+        attackData.count = 10;
+
+        GameObject attackGo = new GameObject("Attack Group");
+        attackGo.transform.SetParent(transform);
+        attackGroup = attackGo.AddComponent<PlayerGroup>();
+        attackGroup.SetData(attackData);
+
+
+        PlayerGroupData defenseData = new PlayerGroupData();
+        defenseData.id = 2;
+        defenseData.camp = 2;
+        defenseData.target = 0;
+        defenseData.columns = 5;
+        defenseData.x = 0;
+        defenseData.z = 15;
+        defenseData.dirX = 0;
+        defenseData.dirZ = -1;
+        defenseData.spaceColumn = 2;
+        defenseData.spaceRow = 2;
+        defenseData.count = 10;
+
+        GameObject defenseGo = new GameObject("Attack Group");
+        defenseGo.transform.SetParent(transform);
+        defenseGroup = defenseGo.AddComponent<PlayerGroup>();
+        defenseGroup.SetData(defenseData);
+    }
+
+    public PlayerEntity CreatePlayer(PlayerData data)
     {
         var obj = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Object>("Assets/R/Charactor/Akali/Prefab/Akali.prefab");
         var go = Instantiate(obj) as GameObject;
         go.transform.SetParent(transform);
+        
+        var p = go.AddComponent<PlayerEntity>();
+        p.SetData(data);
+        p.SetPosition(data.x, data.z);
+        p.SetForword(data.dirX, data.dirZ);
 
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(Vector3.zero, out hit, 5, NavMesh.AllAreas))
-        {
-            go.transform.position = hit.position;
-        }
-
-        var pc = go.AddComponent<PlayerController>();
-        pc.Init(data);
-        mPlayerList.Add(pc);
-        if(data.id == 0)
-        {
-            player = pc;
-        }
-
-        if (action != null)
-        {
-            action(player);
-        }
+        players.Add(p);
+      
+        return p;
     }
 
-    public PlayerController GetPlayer(int id)
+    public PlayerEntity GetPlayer(int id)
     {
-        for(int i = 0;  i< mPlayerList.Count; ++i)
+        for(int i = 0;  i< players.Count; ++i)
         {
-            if(mPlayerList[i].data.id == id)
+            if(players[i].data.id == id)
             {
-                return mPlayerList[i];
+                return players[i];
             }
         }
         return null;
@@ -73,6 +157,20 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
+        for (int i = 0; i < players.Count; ++i)
+        {
+            players[i].Tick(Time.deltaTime);
+        }
+
+        if(attackGroup!=null)
+        {
+            attackGroup.Tick(Time.deltaTime);
+        }
+        if (defenseGroup != null)
+        {
+            defenseGroup.Tick(Time.deltaTime);
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             if (mainCamera)
@@ -81,39 +179,39 @@ public class PlayerManager : MonoBehaviour
                 RaycastHit tmpHit;
                 if (Physics.Raycast(tmpRay, out tmpHit, 100))
                 {
-                    if(player)
+                    if(mControledPlayer)
                     {
-                        player.MoveToPoint(tmpHit.point);
+                        mControledPlayer.MoveToPoint(tmpHit.point);
                     }
                 }
             }
         }
         if(Input.GetKeyDown(KeyCode.A))
         {
-            if(player)
+            if(mControledPlayer)
             {
-                player.ReleaseSkill(PlayerAnimationType.attack1);
+                mControledPlayer.ReleaseSkill(PlayerAnimationType.attack1);
             }
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (player)
+            if (mControledPlayer)
             {
-                player.ReleaseSkill(PlayerAnimationType.attack2);
+                mControledPlayer.ReleaseSkill(PlayerAnimationType.attack2);
             }
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            if (player)
+            if (mControledPlayer)
             {
-                player.ReleaseSkill(PlayerAnimationType.spell1);
+                mControledPlayer.ReleaseSkill(PlayerAnimationType.spell1);
             }
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (player)
+            if (mControledPlayer)
             {
-                player.ReleaseSkill(PlayerAnimationType.spell3);
+                mControledPlayer.ReleaseSkill(PlayerAnimationType.spell3);
             }
         }
     }

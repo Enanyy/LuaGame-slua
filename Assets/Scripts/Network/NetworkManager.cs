@@ -26,8 +26,9 @@ namespace Network
         #endregion
         private Dictionary<int, Connection> mConnectionDic = new Dictionary<int, Connection>();
 
-        private List<Connection> mConnectionList = new List<Connection>();
-
+        //private List<Connection> mConnectionList = new List<Connection>();
+        private Queue<NetPacket> mPacketQueue = new Queue<NetPacket>();
+        private object mLock = new object();
         public void Connect(ConnectID varConnectID, string ip, int port, OnConnectionHandler onConnect, OnConnectionHandler onDisconnect)
         {
             int id = (int)varConnectID;
@@ -65,6 +66,18 @@ namespace Network
         
         public void Update()
         {
+            if(mPacketQueue.Count > 0)
+            {
+                lock(mLock)
+                {
+                    while(mPacketQueue.Count >0)
+                    {
+                        NetPacket packet = mPacketQueue.Dequeue();
+                    }
+                }
+            }
+
+            /*
             mConnectionList.AddRange(mConnectionDic.Values);
             for(int i = 0; i < mConnectionList.Count; ++i)
             {
@@ -74,6 +87,7 @@ namespace Network
                 }
             }
             mConnectionList.Clear();
+            */
         }    
 
 
@@ -84,7 +98,7 @@ namespace Network
         /// <typeparam name="T"></typeparam>
         /// <param name="messageId"></param>
         /// <param name="data"></param>
-        public void Send<T>(ConnectID clientID, int id, T data) where T : class, ProtoBuf.IExtensible
+        public void Send(ConnectID clientID, int id, NetPacket packet) //where T : class, ProtoBuf.IExtensible
         {
             var client = GetConnection(clientID);
 
@@ -93,7 +107,7 @@ namespace Network
                 return;
             }
 
-            byte[] bytes = ProtoTransfer.SerializeProtoBuf<T>(data);
+            byte[] bytes = packet.GetBuffer(); // ProtoTransfer.SerializeProtoBuf<T>(data);
 
             client.Send(bytes, (ushort)bytes.Length);
         }
@@ -130,6 +144,12 @@ namespace Network
             if(data == null)
             {
                 return;
+            }
+            NetPacket packet = new NetPacket(data);
+
+            lock(mLock)
+            {
+                mPacketQueue.Enqueue(packet);
             }
             //if (Debuger.EnableLog)
             //{

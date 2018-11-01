@@ -23,10 +23,8 @@ public class ActionFollowTarget : BTAction
             var target = PlayerManager.GetSingleton().GetPlayer(player.data.target);
             if(target!=null)
             {
-                Vector3 direction = (target.transform.position - player.transform.position).normalized;
-                Vector3 targetPosition = target.transform.position - direction * 2;
-
-                player.MoveToPoint(targetPosition);
+                player.SetDestination(target.transform.position);
+                player.data.stopDistance = player.data.attackDistance;
             }
         }
 

@@ -16,7 +16,7 @@ public class ActionRandomSkill : BTAction
         }
 
         var player = input.player;
-        if(player.IsReleaseSkill()==false && player.HasChangeSkill()==false && player.IsArrivedDestination())
+        if(player.HasTarget()&& player.IsReleaseSkill()==false && player.HasChangeSkill()==false && player.IsArrivedDestination())
         {
             int value = mRandom.Next(0, 4);
             switch(value)

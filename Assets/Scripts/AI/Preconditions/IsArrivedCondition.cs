@@ -12,7 +12,7 @@ public class IsArrivedCondition : BTPrecondition {
             return false;
         }
 
-        PlayerController player = input.player;
+        PlayerEntity player = input.player;
        
         if (player.IsArrivedDestination())
         {

@@ -18,7 +18,7 @@ public class ActionIdle :BTAction  {
             
         }
 
-        PlayerController player = input.player;
+        PlayerEntity player = input.player;
 
         player.PlayAnimation( PlayerAnimationType.idle,true);
 

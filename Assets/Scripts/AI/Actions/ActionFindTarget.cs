@@ -20,7 +20,7 @@ public class ActionFindTarget : BTAction
         int minTarget = -1;
         for(int i = 0;  i < players.Count; ++i)
         {
-            if(players[i].data.id!=player.data.id)
+            if (players[i].data.camp != player.data.camp)
             {
                 if(minTarget == -1)
                 {

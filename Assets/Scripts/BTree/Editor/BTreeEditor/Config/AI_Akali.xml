@@ -195,8 +195,8 @@
         <mNodeType>1</mNodeType>
         <mNodeSubType>2</mNodeSubType>
         <mNodeName>PrioritySelector</mNodeName>
-        <mPosX>923</mPosX>
-        <mPosY>351</mPosY>
+        <mPosX>914</mPosX>
+        <mPosY>330</mPosY>
         <mDisable>false</mDisable>
       </BTEditorNodeConfig>
       <BTEditorNodeConfig>
@@ -241,8 +241,8 @@
             <mPreconditionName>IsReleaseSkillCondition</mPreconditionName>
           </PreconditionConfig>
         </mPreconditions>
-        <mPosX>722</mPosX>
-        <mPosY>492</mPosY>
+        <mPosX>813</mPosX>
+        <mPosY>473</mPosY>
         <mDisable>false</mDisable>
       </BTEditorNodeConfig>
       <BTEditorNodeConfig>
@@ -280,8 +280,8 @@
             <mPreconditionName>IsArrivedCondition</mPreconditionName>
           </PreconditionConfig>
         </mPreconditions>
-        <mPosX>466</mPosX>
-        <mPosY>644</mPosY>
+        <mPosX>657</mPosX>
+        <mPosY>630</mPosY>
         <mDisable>false</mDisable>
       </BTEditorNodeConfig>
       <BTEditorNodeConfig>
@@ -305,8 +305,8 @@
             <mPreconditionName>IsArrivedCondition</mPreconditionName>
           </PreconditionConfig>
         </mPreconditions>
-        <mPosX>908</mPosX>
-        <mPosY>642</mPosY>
+        <mPosX>979</mPosX>
+        <mPosY>624</mPosY>
         <mDisable>false</mDisable>
       </BTEditorNodeConfig>
       <BTEditorNodeConfig>
@@ -344,8 +344,8 @@
             <mPreconditionName>IsReleaseSkillCondition</mPreconditionName>
           </PreconditionConfig>
         </mPreconditions>
-        <mPosX>1209</mPosX>
-        <mPosY>470</mPosY>
+        <mPosX>1048</mPosX>
+        <mPosY>457</mPosY>
         <mDisable>false</mDisable>
       </BTEditorNodeConfig>
       <BTEditorNodeConfig>
@@ -354,8 +354,8 @@
         <mNodeSubType>0</mNodeSubType>
         <mActionNodeName>ActionFindTarget</mActionNodeName>
         <mNodeName>ActionFindTarget</mNodeName>
-        <mPosX>336</mPosX>
-        <mPosY>305</mPosY>
+        <mPosX>343</mPosX>
+        <mPosY>327</mPosY>
         <mDisable>false</mDisable>
       </BTEditorNodeConfig>
       <BTEditorNodeConfig>

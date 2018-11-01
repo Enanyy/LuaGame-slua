@@ -14,7 +14,7 @@ public class ActionMoveToPoint : BTAction
 
         }
 
-        PlayerController player = input.player;
+        PlayerEntity player = input.player;
         if (player.navMeshAgent.destination != player.data.destination)
         {
             if (player.navMeshAgent.isOnNavMesh)

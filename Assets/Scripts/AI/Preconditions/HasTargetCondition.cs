@@ -12,7 +12,7 @@ public class HasTargetCondition : BTPrecondition
             return false;
         }
         
-        if(input.player.data.target >=0)
+        if(input.player.HasTarget())
         {
             return true;
         }
