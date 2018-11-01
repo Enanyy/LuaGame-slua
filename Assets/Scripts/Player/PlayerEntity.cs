@@ -192,20 +192,27 @@ public class PlayerEntity : EntityBase<PlayerData>
         int minTarget = -1;
         for (int i = 0; i < players.Count; ++i)
         {
-            if (players[i].data.camp != data.camp)
+            if (players[i].data.id == data.target && players[i].IsDead())
             {
-                if (minTarget == -1)
+                minTarget = 0;
+            }
+            else
+            {
+                if (players[i].data.camp != data.camp && players[i].IsDead() == false)
                 {
-                    minTarget = players[i].data.id;
-                    minDistance = Vector3.Distance(players[i].transform.position, transform.position);
-                }
-                else
-                {
-                    float distance = Vector3.Distance(players[i].transform.position, transform.position);
-                    if (distance < minDistance)
+                    if (minTarget == -1)
                     {
                         minTarget = players[i].data.id;
-                        minDistance = distance;
+                        minDistance = Vector3.Distance(players[i].transform.position, transform.position);
+                    }
+                    else
+                    {
+                        float distance = Vector3.Distance(players[i].transform.position, transform.position);
+                        if (distance < minDistance)
+                        {
+                            minTarget = players[i].data.id;
+                            minDistance = distance;
+                        }
                     }
                 }
             }
@@ -214,6 +221,7 @@ public class PlayerEntity : EntityBase<PlayerData>
         {
             data.target = minTarget;
         }
+       
     }
 
     public void LookAtTarget()

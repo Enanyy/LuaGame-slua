@@ -78,14 +78,14 @@ public class PlayerManager : MonoBehaviour
         attackData.id = 1;
         attackData.camp = 1;
         attackData.target = 0;
-        attackData.columns = 10;
+        attackData.columns = 5;
         attackData.x = 0;
         attackData.z = -15;
         attackData.dirX = 0;
         attackData.dirZ = 1;
         attackData.spaceColumn = -2;
         attackData.spaceRow = 2;
-        attackData.count = 50;
+        attackData.count = 10;
         attackData.model = "Akali";
         attackData.hp = 10;
 
@@ -99,14 +99,14 @@ public class PlayerManager : MonoBehaviour
         defenseData.id = 2;
         defenseData.camp = 2;
         defenseData.target = 0;
-        defenseData.columns = 10;
+        defenseData.columns = 5;
         defenseData.x = 0;
         defenseData.z = 15;
         defenseData.dirX = 0;
         defenseData.dirZ = -1;
         defenseData.spaceColumn = 2;
         defenseData.spaceRow = 2;
-        defenseData.count = 50;
+        defenseData.count = 10;
         defenseData.model = "Akali";
         defenseData.hp = 8;
 
