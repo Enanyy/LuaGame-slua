@@ -46,6 +46,7 @@ public class PlayerManager : MonoBehaviour
         data.camp = 1;
         data.x = 2;
         data.z = 2;
+        data.hp = 10;
         data.model = "Akali";
         data.config = "Akali";
         data.destination = new Vector3(2f, 0, 8);
@@ -57,6 +58,7 @@ public class PlayerManager : MonoBehaviour
         data1.camp = 2;
         data1.x = 2;
         data1.z = 2;
+        data1.hp = 5;
         data1.model = "Akali";
 
         data1.config = "AI_Akali";
@@ -76,15 +78,16 @@ public class PlayerManager : MonoBehaviour
         attackData.id = 1;
         attackData.camp = 1;
         attackData.target = 0;
-        attackData.columns = 5;
+        attackData.columns = 10;
         attackData.x = 0;
         attackData.z = -15;
         attackData.dirX = 0;
         attackData.dirZ = 1;
         attackData.spaceColumn = -2;
         attackData.spaceRow = 2;
-        attackData.count = 10;
+        attackData.count = 50;
         attackData.model = "Akali";
+        attackData.hp = 10;
 
         GameObject attackGo = new GameObject("Attack Group");
         attackGo.transform.SetParent(transform);
@@ -96,15 +99,16 @@ public class PlayerManager : MonoBehaviour
         defenseData.id = 2;
         defenseData.camp = 2;
         defenseData.target = 0;
-        defenseData.columns = 5;
+        defenseData.columns = 10;
         defenseData.x = 0;
         defenseData.z = 15;
         defenseData.dirX = 0;
         defenseData.dirZ = -1;
         defenseData.spaceColumn = 2;
         defenseData.spaceRow = 2;
-        defenseData.count = 10;
+        defenseData.count = 50;
         defenseData.model = "Akali";
+        defenseData.hp = 8;
 
 
         GameObject defenseGo = new GameObject("Attack Group");

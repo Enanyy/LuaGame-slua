@@ -6,7 +6,8 @@ using UnityEngine;
 public class ActionFollowTarget : BTAction
 {
     public ActionFollowTarget() : base() { }
-    public ActionFollowTarget(BTNode _parent) : base(_parent) { }
+    public ActionFollowTarget(BTNode _parent)
+            : base(_parent) { }
 
     protected override BTResult OnExecute(ref BTInput _input)
     {
@@ -17,14 +18,16 @@ public class ActionFollowTarget : BTAction
 
         }
         var player = input.player;
-
-        if(player.data.target >=0)
+        if (player.IsDead() == false)
         {
-            var target = PlayerManager.GetSingleton().GetPlayer(player.data.target);
-            if(target!=null)
+            if (player.data.target > 0)
             {
-                player.SetDestination(target.transform.position);
-                player.data.stopDistance = player.data.attackDistance;
+                var target = PlayerManager.GetSingleton().GetPlayer(player.data.target);
+                if (target != null)
+                {
+                    player.SetDestination(target.transform.position);
+                    player.data.stopDistance = player.data.attackDistance;
+                }
             }
         }
 

@@ -20,5 +20,7 @@ public class PlayerGroupData
     public int spaceRow, spaceColumn;
 
     public int count;
+
+    public int hp;
 }
 

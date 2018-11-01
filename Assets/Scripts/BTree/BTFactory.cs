@@ -82,12 +82,14 @@ namespace BTree
             AddActionType(typeof(ActionFindTarget));
             AddActionType(typeof(ActionFollowTarget));
             AddActionType(typeof(ActionRandomSkill));
+            AddActionType(typeof(ActionDie));
 
 
             AddPreconditionType(typeof(IsArrivedCondition));
             AddPreconditionType(typeof(IsReleaseSkillCondition));
             AddPreconditionType(typeof(HasChangeSkillCondition));
             AddPreconditionType(typeof(HasTargetCondition));
+            AddPreconditionType(typeof(IsDeadCondition));
 
 
         }

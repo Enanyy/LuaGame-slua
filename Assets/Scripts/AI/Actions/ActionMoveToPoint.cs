@@ -4,7 +4,8 @@ using BTree;
 public class ActionMoveToPoint : BTAction
 {
     public ActionMoveToPoint() : base() { }
-    public ActionMoveToPoint(BTNode _parent) : base(_parent) { }
+    public ActionMoveToPoint(BTNode _parent)
+            : base(_parent) { }
 
     protected override BTResult OnExecute(ref BTInput _input)
     {
@@ -22,7 +23,7 @@ public class ActionMoveToPoint : BTAction
                 player.navMeshAgent.SetDestination(player.data.destination);
             }
         }
-        player.PlayAnimation(PlayerAnimationType.run, true);
+        player.PlayAnimation(PlayerAnimationType.run,  WrapMode.Loop);
         player.Resume();
 
         return base.OnExecute(ref _input);

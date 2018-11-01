@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 using BTree;
-public class ActionFindTarget : BTAction
+
+
+public class ActionDie : BTAction
 {
-    public ActionFindTarget() : base() { }
-    public ActionFindTarget(BTNode _parent)
+    public ActionDie():base() { }
+    public ActionDie(BTNode _parent)
             : base(_parent) { }
 
     protected override BTResult OnExecute(ref BTInput _input)
@@ -17,16 +18,12 @@ public class ActionFindTarget : BTAction
         }
         var player = input.player;
 
-        if(player.IsDead())
-        {
-            player.data.target = 0;
-
-            return BTResult.Success;
-        }
-
-        player.FindTarget();
+        player.PlayAnimation(PlayerAnimationType.die, UnityEngine.WrapMode.ClampForever);
+        player.data.target = 0;
+        player.Stop();
 
         return base.OnExecute(ref _input);
     }
+
 }
 

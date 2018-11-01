@@ -3,7 +3,8 @@
 public class ActionIdle :BTAction  {
 
     public ActionIdle() : base() { }
-    public ActionIdle(BTNode _parent) : base(_parent) { }
+    public ActionIdle(BTNode _parent)
+            : base(_parent) { }
 
     protected override void OnEnter(BTInput _input)
     {
@@ -20,7 +21,7 @@ public class ActionIdle :BTAction  {
 
         PlayerEntity player = input.player;
 
-        player.PlayAnimation( PlayerAnimationType.idle,true);
+        player.PlayAnimation( PlayerAnimationType.idle, UnityEngine.WrapMode.Loop);
 
         return BTResult.Success;
     }

@@ -31,6 +31,7 @@
             <mChildIndexs>
               <int>1</int>
               <int>3</int>
+              <int>5</int>
             </mChildIndexs>
           </PreconditionConfig>
           <PreconditionConfig>
@@ -58,6 +59,19 @@
             <mParentIndex>3</mParentIndex>
             <mType>0</mType>
             <mPreconditionName>IsReleaseSkillCondition</mPreconditionName>
+          </PreconditionConfig>
+          <PreconditionConfig>
+            <mParentIndex>0</mParentIndex>
+            <mType>3</mType>
+            <mPreconditionName>BTPreconditionNOT</mPreconditionName>
+            <mChildIndexs>
+              <int>6</int>
+            </mChildIndexs>
+          </PreconditionConfig>
+          <PreconditionConfig>
+            <mParentIndex>5</mParentIndex>
+            <mType>0</mType>
+            <mPreconditionName>IsDeadCondition</mPreconditionName>
           </PreconditionConfig>
         </mPreconditions>
       </TreeNodeConfig>
@@ -133,6 +147,7 @@
             <mChildIndexs>
               <int>1</int>
               <int>2</int>
+              <int>4</int>
             </mChildIndexs>
           </PreconditionConfig>
           <PreconditionConfig>
@@ -152,6 +167,33 @@
             <mParentIndex>2</mParentIndex>
             <mType>0</mType>
             <mPreconditionName>IsReleaseSkillCondition</mPreconditionName>
+          </PreconditionConfig>
+          <PreconditionConfig>
+            <mParentIndex>0</mParentIndex>
+            <mType>3</mType>
+            <mPreconditionName>BTPreconditionNOT</mPreconditionName>
+            <mChildIndexs>
+              <int>5</int>
+            </mChildIndexs>
+          </PreconditionConfig>
+          <PreconditionConfig>
+            <mParentIndex>4</mParentIndex>
+            <mType>0</mType>
+            <mPreconditionName>IsDeadCondition</mPreconditionName>
+          </PreconditionConfig>
+        </mPreconditions>
+      </TreeNodeConfig>
+      <TreeNodeConfig>
+        <mParentIndex>1</mParentIndex>
+        <mNodeType>2</mNodeType>
+        <mNodeSubType>0</mNodeSubType>
+        <mActionNodeName>ActionDie</mActionNodeName>
+        <mNodeName>ActionDie</mNodeName>
+        <mPreconditions>
+          <PreconditionConfig>
+            <mParentIndex>-1</mParentIndex>
+            <mType>0</mType>
+            <mPreconditionName>IsDeadCondition</mPreconditionName>
           </PreconditionConfig>
         </mPreconditions>
       </TreeNodeConfig>
@@ -212,6 +254,7 @@
             <mChildIndexs>
               <int>1</int>
               <int>3</int>
+              <int>5</int>
             </mChildIndexs>
           </PreconditionConfig>
           <PreconditionConfig>
@@ -240,9 +283,22 @@
             <mType>0</mType>
             <mPreconditionName>IsReleaseSkillCondition</mPreconditionName>
           </PreconditionConfig>
+          <PreconditionConfig>
+            <mParentIndex>0</mParentIndex>
+            <mType>3</mType>
+            <mPreconditionName>BTPreconditionNOT</mPreconditionName>
+            <mChildIndexs>
+              <int>6</int>
+            </mChildIndexs>
+          </PreconditionConfig>
+          <PreconditionConfig>
+            <mParentIndex>5</mParentIndex>
+            <mType>0</mType>
+            <mPreconditionName>IsDeadCondition</mPreconditionName>
+          </PreconditionConfig>
         </mPreconditions>
-        <mPosX>813</mPosX>
-        <mPosY>473</mPosY>
+        <mPosX>744</mPosX>
+        <mPosY>484</mPosY>
         <mDisable>false</mDisable>
       </BTEditorNodeConfig>
       <BTEditorNodeConfig>
@@ -280,8 +336,8 @@
             <mPreconditionName>IsArrivedCondition</mPreconditionName>
           </PreconditionConfig>
         </mPreconditions>
-        <mPosX>657</mPosX>
-        <mPosY>630</mPosY>
+        <mPosX>588</mPosX>
+        <mPosY>641</mPosY>
         <mDisable>false</mDisable>
       </BTEditorNodeConfig>
       <BTEditorNodeConfig>
@@ -305,8 +361,8 @@
             <mPreconditionName>IsArrivedCondition</mPreconditionName>
           </PreconditionConfig>
         </mPreconditions>
-        <mPosX>979</mPosX>
-        <mPosY>624</mPosY>
+        <mPosX>910</mPosX>
+        <mPosY>635</mPosY>
         <mDisable>false</mDisable>
       </BTEditorNodeConfig>
       <BTEditorNodeConfig>
@@ -323,6 +379,7 @@
             <mChildIndexs>
               <int>1</int>
               <int>2</int>
+              <int>4</int>
             </mChildIndexs>
           </PreconditionConfig>
           <PreconditionConfig>
@@ -343,9 +400,39 @@
             <mType>0</mType>
             <mPreconditionName>IsReleaseSkillCondition</mPreconditionName>
           </PreconditionConfig>
+          <PreconditionConfig>
+            <mParentIndex>0</mParentIndex>
+            <mType>3</mType>
+            <mPreconditionName>BTPreconditionNOT</mPreconditionName>
+            <mChildIndexs>
+              <int>5</int>
+            </mChildIndexs>
+          </PreconditionConfig>
+          <PreconditionConfig>
+            <mParentIndex>4</mParentIndex>
+            <mType>0</mType>
+            <mPreconditionName>IsDeadCondition</mPreconditionName>
+          </PreconditionConfig>
         </mPreconditions>
-        <mPosX>1048</mPosX>
-        <mPosY>457</mPosY>
+        <mPosX>1157</mPosX>
+        <mPosY>452</mPosY>
+        <mDisable>false</mDisable>
+      </BTEditorNodeConfig>
+      <BTEditorNodeConfig>
+        <mParentIndex>1</mParentIndex>
+        <mNodeType>2</mNodeType>
+        <mNodeSubType>0</mNodeSubType>
+        <mActionNodeName>ActionDie</mActionNodeName>
+        <mNodeName>ActionDie</mNodeName>
+        <mPreconditions>
+          <PreconditionConfig>
+            <mParentIndex>-1</mParentIndex>
+            <mType>0</mType>
+            <mPreconditionName>IsDeadCondition</mPreconditionName>
+          </PreconditionConfig>
+        </mPreconditions>
+        <mPosX>920</mPosX>
+        <mPosY>489</mPosY>
         <mDisable>false</mDisable>
       </BTEditorNodeConfig>
       <BTEditorNodeConfig>

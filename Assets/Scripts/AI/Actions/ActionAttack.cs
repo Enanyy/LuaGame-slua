@@ -4,7 +4,8 @@ using BTree;
 public class ActionAttack : BTAction
 {
     public ActionAttack():base() { }
-    public ActionAttack(BTNode _parent) : base(_parent) { }
+    public ActionAttack(BTNode _parent)
+            : base(_parent) { }
 
     protected override BTResult OnExecute(ref BTInput _input)
     {
@@ -16,7 +17,8 @@ public class ActionAttack : BTAction
         var player = input.player;
         if (player.data.changeType != PlayerAnimationType.none)
         {
-            player.PlayAnimation(player.data.changeType, false);
+            player.LookAtTarget();
+            player.PlayAnimation(player.data.changeType,  UnityEngine.WrapMode.Default);
             player.data.changeType = PlayerAnimationType.none;
             player.Stop();
         }

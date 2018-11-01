@@ -60,9 +60,15 @@ public class PlayerEntity : EntityBase<PlayerData>
         }
         mRoot.Tick(ref mInput);
 
-        if (data.animationTime >= 0)
+        if (data.animationTime > 0)
         {
             data.animationTime -= deltaTime;
+            if (data.animationTime < 0) data.animationTime = 0;
+            float time = PlayerAnimations.GetAnimationLength(data.model, data.animationType);
+            if(time >0)
+            {
+                OnAnimation(1- data.animationTime / time);
+            }
         }
     }
 
@@ -72,8 +78,7 @@ public class PlayerEntity : EntityBase<PlayerData>
         if (NavMesh.SamplePosition(destination, out hit, 5, NavMesh.AllAreas))
         {
             data.destination = hit.position;
-            data.changeType = PlayerAnimationType.none;
-            
+            data.changeType = PlayerAnimationType.none;        
         }
     }
 
@@ -84,7 +89,7 @@ public class PlayerEntity : EntityBase<PlayerData>
     }
 
     private float mFadeBeginTime;
-    public void PlayAnimation(PlayerAnimationType animation,bool loop)
+    public void PlayAnimation(PlayerAnimationType animation, WrapMode mode)
     {
         bool transition = false;
         if (data.animationType != animation)
@@ -98,8 +103,19 @@ public class PlayerEntity : EntityBase<PlayerData>
             if (mAnimation.IsPlaying(animation.ToString()) == false)
             {
                 mAnimation.CrossFade(animation.ToString(),0.2f);
-                mAnimation.wrapMode = loop ? WrapMode.Loop : WrapMode.Default;
+                mAnimation.wrapMode = mode;
                 data.animationTime = PlayerAnimations.GetAnimationLength(data.model,animation);
+            }
+        }
+    }
+    private void OnAnimation(float factor)
+    {
+        if (factor == 1 && IsSkill(data.animationType))
+        {
+            var target= PlayerManager.GetSingleton().GetPlayer(data.target);
+            if(target)
+            {
+                target.data.hp -= 1;
             }
         }
     }
@@ -107,16 +123,23 @@ public class PlayerEntity : EntityBase<PlayerData>
     public void ReleaseSkill(PlayerAnimationType animation)
     {
         data.changeType = animation;
-        
+        data.target = 2;
+    }
+
+    public bool IsSkill(PlayerAnimationType type)
+    {
+        return type == PlayerAnimationType.attack1
+            || type == PlayerAnimationType.attack2
+            || type == PlayerAnimationType.spell1
+            || type == PlayerAnimationType.spell2
+            || type == PlayerAnimationType.spell3
+            || type == PlayerAnimationType.spell4;
     }
 
     public bool IsReleaseSkill()
     {
         var animationClip = data.animationType;
-        if (animationClip == PlayerAnimationType.attack1
-            || animationClip == PlayerAnimationType.attack2
-            || animationClip == PlayerAnimationType.spell1
-            || animationClip == PlayerAnimationType.spell3)
+        if (IsSkill(animationClip))
         {
             if (data.animationTime > 0)
             {
@@ -154,6 +177,55 @@ public class PlayerEntity : EntityBase<PlayerData>
     public bool HasTarget()
     {
         return data.target > 0;
+    }
+
+    public bool IsDead()
+    {
+        return data.hp <= 0;
+    }
+
+
+    public void FindTarget()
+    {
+        var players = PlayerManager.GetSingleton().players;
+        float minDistance = float.MaxValue;
+        int minTarget = -1;
+        for (int i = 0; i < players.Count; ++i)
+        {
+            if (players[i].data.camp != data.camp)
+            {
+                if (minTarget == -1)
+                {
+                    minTarget = players[i].data.id;
+                    minDistance = Vector3.Distance(players[i].transform.position, transform.position);
+                }
+                else
+                {
+                    float distance = Vector3.Distance(players[i].transform.position, transform.position);
+                    if (distance < minDistance)
+                    {
+                        minTarget = players[i].data.id;
+                        minDistance = distance;
+                    }
+                }
+            }
+        }
+        if (minTarget != -1)
+        {
+            data.target = minTarget;
+        }
+    }
+
+    public void LookAtTarget()
+    {
+        if(data.target >0)
+        {
+            var target = PlayerManager.GetSingleton().GetPlayer(data.target);
+            if(target)
+            {
+                transform.LookAt(target.transform);
+            }
+        }
     }
 
     public void Stop()

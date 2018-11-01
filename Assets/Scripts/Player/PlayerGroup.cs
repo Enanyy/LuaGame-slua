@@ -28,6 +28,7 @@ public class PlayerGroup : EntityBase<PlayerGroupData>
 
             playerData.config = "AI_Akali";
             playerData.model = data.model;
+            playerData.hp = data.hp;
           
             int column = i / data.columns;
             int row = i % data.columns;

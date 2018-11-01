@@ -30,7 +30,7 @@ public class PlayerData
     public string config;
     public Vector3 destination;
     public PlayerAnimationType animationType = PlayerAnimationType.idle;//当前播放的动作
-    public PlayerAnimationType changeType = PlayerAnimationType.none;//下个的动作
+    public PlayerAnimationType changeType = PlayerAnimationType.none;//准备要播放的动作
     public float animationTime;
     public const float DEFAULT_STOPDISTANCE = 0.01f;
     public float stopDistance = DEFAULT_STOPDISTANCE;
@@ -38,5 +38,6 @@ public class PlayerData
     /// 攻击距离
     /// </summary>
     public float attackDistance = 1.5f;
+    public float hp;
 }
 
