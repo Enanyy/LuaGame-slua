@@ -4,123 +4,27 @@ using System;
 
 public static class LuaHelper
 {
-    private static Dictionary<int, GameObject> mObjectDic = new Dictionary<int, GameObject>();
-    private static List<int> mRemoveObjectList = new List<int>();
-    private static int mObjectID = 0;
-    public const int INVALID_GAMEOBJECT_ID = -1;
-
-    private static Dictionary<int, Type> mComponentsDic = new Dictionary<int, Type> {
-        {0,typeof(GameObject) },
-        {1,typeof(Transform) },
-        {2,typeof(Camera) },
-        {3,typeof(Animation) },
-        {4,typeof(BoxCollider) },
-
-        //NGUI
-        {100,typeof(UIRoot) },
-        {101,typeof(UICamera) },
-        {102,typeof(UIPanel) },
-        {103,typeof(UIWidget) },
-        {104,typeof(UIButton) },
-        {105,typeof(UISprite) },
-        {106,typeof(UITable) },
-        {107,typeof(UIGrid) },
-        {108,typeof(UIScrollView) },
-
-        //Custom
-        {200,typeof(BlurEffect) },
-
-    };
-
-    
-    private static int Add(GameObject go)
-    {
-        //找到一个没用的ID
-        while (true)
-        {
-            mObjectID++;
-            if (mObjectID == int.MaxValue)
-            {
-                mObjectID = 0;
-            }
-            else
-            {
-                if (mObjectDic.ContainsKey(mObjectID) == false)
-                {
-                    break;
-                }
-            }
-        }
-        mObjectDic.Add(mObjectID, go);
-        
-        return mObjectID;
-    }
-    private static void Remove(int id)
-    {
-        if(mObjectDic.ContainsKey(id))
-        {
-            mObjectDic.Remove(id);
-        }
-
-        mRemoveObjectList.Clear();
-        var it = mObjectDic.GetEnumerator();
-        while(it.MoveNext())
-        {
-            if(it.Current.Value ==null)
-            {
-                mRemoveObjectList.Add(it.Current.Key);
-            }
-        }
-        it.Dispose();
-        for(int i =0; i <mRemoveObjectList.Count;++i)
-        {
-            if (mObjectDic.ContainsKey(mRemoveObjectList[i]))
-            {
-                mObjectDic.Remove(mRemoveObjectList[i]);
-            }
-        }
-        mRemoveObjectList.Clear();
-
-    }
-
-    private static GameObject Get(int id)
-    {
-        if(mObjectDic.ContainsKey(id))
-        {
-            return mObjectDic[id];
-        }
-        return null;
-    }
-    private static Type GetComponentType(int type)
-    {
-        if(mComponentsDic.ContainsKey(type))
-        {
-            return mComponentsDic[type];
-        }
-        return typeof(Transform);
-    }
-
     #region GameObject
 
     public static int GameObject(string name)
     {
         var go = new GameObject(name);
-        return Add(go);
+        return LuaReference.Add(go);
     }
 
     public static int Instantiate(int id)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
-            return Add(UnityEngine.Object.Instantiate(go));
+            return LuaReference.Add(UnityEngine.Object.Instantiate(go));
         }
-        return INVALID_GAMEOBJECT_ID;
+        return LuaReference.INVALID_GAMEOBJECT_ID;
     }
 
     public static void DontDestroyOnLoad(int id)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             UnityEngine.Object.DontDestroyOnLoad(go);
@@ -128,29 +32,29 @@ public static class LuaHelper
     }
     public static void Destroy(int id)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             UnityEngine.Object.Destroy(go);
-            Remove(id);
+            LuaReference.Remove(id);
         }
     }
     public static void DestroyImmediate(int id)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             UnityEngine.Object.DestroyImmediate(go);
-            Remove(id);
+            LuaReference.Remove(id);
         }
 
     }
     public static void DestroyComponent(int id,int type)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
-            var componet = go.GetComponent(GetComponentType(type));
+            var componet = go.GetComponent(LuaReference.GetComponentType(type));
 
             if (componet)
             {
@@ -163,7 +67,7 @@ public static class LuaHelper
     #region Position
     public static void SetPosition(int id, float x, float y, float z)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if(go)
         {
             Vector3 position = go.transform.position;
@@ -176,7 +80,7 @@ public static class LuaHelper
 
     public static void SetLocalPosition(int id, float x, float y, float z)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             Vector3 position = go.transform.localPosition;
@@ -189,7 +93,7 @@ public static class LuaHelper
 
     public static void GetPosition(int id, out float x, out float y, out float z)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
        
         x = y = z = 0;
 
@@ -203,7 +107,7 @@ public static class LuaHelper
 
     public static void GetLocalPosition(int id, out float x, out float y, out float z)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         x = y = z = 0;
 
@@ -217,7 +121,7 @@ public static class LuaHelper
 
     public static void SetForward(int id, float x, float y, float z)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             Vector3 forward = go.transform.forward;
@@ -230,7 +134,7 @@ public static class LuaHelper
 
     public static void GetForward(int id, out float x, out float y, out float z)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         x = y = z = 0;
         if (go)
         {
@@ -244,7 +148,7 @@ public static class LuaHelper
     #region Scale
     public static void SetScale(int id ,float x, float y, float z)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             Vector3 scale = go.transform.localScale;
@@ -257,7 +161,7 @@ public static class LuaHelper
 
     public static void GetScale(int id, out float x, out float y, out float z)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         x = y = z = 0;
 
         if (go)
@@ -271,7 +175,7 @@ public static class LuaHelper
     #region Rotation
     public static void SetLocalEuler(int id, float x, float y, float z)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             go.transform.localRotation = Quaternion.Euler(x, y, z);
@@ -279,7 +183,7 @@ public static class LuaHelper
     }
     public static void GetLocalEuler(int id, out float x, out float y, out float z)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         x = y = z = 0;
         if (go)
         {
@@ -291,7 +195,7 @@ public static class LuaHelper
 
     public static void SetLocalRotation(int id, float x, float y, float z, float w)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             Quaternion q =  go.transform.localRotation;
@@ -302,7 +206,7 @@ public static class LuaHelper
 
     public static void SetEuler(int id, float x, float y, float z)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             go.transform.rotation = Quaternion.Euler(x, y, z);
@@ -310,7 +214,7 @@ public static class LuaHelper
     }
     public static void GetEuler(int id, float x, float y, float z)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         x = y = z = 0;
         if (go)
         {
@@ -322,7 +226,7 @@ public static class LuaHelper
 
     public static void SetRotation(int id, float x, float y, float z, float w)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             Quaternion q = go.transform.rotation;
@@ -333,7 +237,7 @@ public static class LuaHelper
 
     public static void GetRotation(int id, out float x, out float y, out float z, out float w)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         x = y = z = w =0;
 
         if (go)
@@ -347,7 +251,7 @@ public static class LuaHelper
 
     public static void GetLocalRotation(int id, out float x, out float y, out float z, out float w)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         x = y = z = w = 0;
 
@@ -366,35 +270,35 @@ public static class LuaHelper
 
     public static int AddComponent(int id, int type)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
-            go.AddComponent(GetComponentType(type));
+            go.AddComponent(LuaReference.GetComponentType(type));
             return id;
         }
-        return INVALID_GAMEOBJECT_ID;
+        return LuaReference.INVALID_GAMEOBJECT_ID;
     }
    
     public static int FindChildWithComponent(int id, int type)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
-            var component = go.GetComponentInChildren(GetComponentType(type));
+            var component = go.GetComponentInChildren(LuaReference.GetComponentType(type));
             if(component)
             {
-                return Add(component.gameObject);
+                return LuaReference.Add(component.gameObject);
             }
         }
-        return INVALID_GAMEOBJECT_ID;
+        return LuaReference.INVALID_GAMEOBJECT_ID;
     }
 
     public static int IsEnable(int id,int type)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
-            var behaviour = go.GetComponent(GetComponentType(type)) as Behaviour;
+            var behaviour = go.GetComponent(LuaReference.GetComponentType(type)) as Behaviour;
             if (behaviour)
             {
               return  behaviour.enabled ? 1:0;
@@ -405,10 +309,10 @@ public static class LuaHelper
 
     public static void SetEnable(int id, int type, int enable)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
-            var behaviour = go.GetComponent(GetComponentType(type)) as Behaviour;
+            var behaviour = go.GetComponent(LuaReference.GetComponentType(type)) as Behaviour;
             if(behaviour)
             {
                 behaviour.enabled = enable == 1;
@@ -418,7 +322,7 @@ public static class LuaHelper
 
     private static T GetComponent<T>(int id, string path) where T: Component
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             Transform t = go.transform.Find(path);
@@ -432,7 +336,7 @@ public static class LuaHelper
 
     private static T FindChildWithComponent<T>(int id) where T : Component
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             return go.GetComponentInChildren<T>();
@@ -444,7 +348,7 @@ public static class LuaHelper
 
     public static int GetChildCount(int id)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             return go.transform.childCount;
@@ -454,54 +358,54 @@ public static class LuaHelper
 
     public static int GetChild(int id, int index)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             if (index < go.transform.childCount )
             {
-                return Add(go.transform.GetChild(index).gameObject);
+                return LuaReference.Add(go.transform.GetChild(index).gameObject);
             }
         }
-        return INVALID_GAMEOBJECT_ID;
+        return LuaReference.INVALID_GAMEOBJECT_ID;
     }
 
     public static int FindChild(int id, string path)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             var child = go.transform.Find(path);
             if(child)
             {
-                return Add(child.gameObject);
+                return LuaReference.Add(child.gameObject);
             }
         }
-        return INVALID_GAMEOBJECT_ID;
+        return LuaReference.INVALID_GAMEOBJECT_ID;
     }
 
     public static void SetParent(int id, int parent)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
-            var p = Get(parent);
+            var p = LuaReference.Get(parent);
 
             go.transform.SetParent(p!=null?p.transform:null);
         }
     }
     public static int GetParent(int id)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go && go.transform.parent)
         {
-            return Add(go.transform.parent.gameObject);
+            return LuaReference.Add(go.transform.parent.gameObject);
         }
-        return INVALID_GAMEOBJECT_ID;
+        return LuaReference.INVALID_GAMEOBJECT_ID;
     }
 
     public static void SetActive(int id, int active)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         if (go)
         {
@@ -510,7 +414,7 @@ public static class LuaHelper
     }
     public static int IsActive(int id)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         if (go)
         {
@@ -521,7 +425,7 @@ public static class LuaHelper
 
     public static void SetLayer(int id, int layer)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         if (go)
         {
@@ -530,7 +434,7 @@ public static class LuaHelper
     }
     public static void SetAsFirstSibling(int id)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         if (go)
         {
@@ -539,7 +443,7 @@ public static class LuaHelper
     }
     public static void SetAsLastSibling(int id)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         if (go)
         {
@@ -548,7 +452,7 @@ public static class LuaHelper
     }
     public static void SetSiblingIndex(int id, int index)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         if (go)
         {
@@ -557,7 +461,7 @@ public static class LuaHelper
     }
     public static int GetSiblingIndex(int id)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         if (go)
         {
@@ -567,7 +471,7 @@ public static class LuaHelper
     }
     public static void InverseTransformDirection(int id, float x, float y, float z, out float ox, out float oy, out float oz)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         ox = oy = oz = 0;
 
@@ -582,7 +486,7 @@ public static class LuaHelper
 
     public static void InverseTransformPoint(int id, float x, float y, float z, out float ox, out float oy, out float oz)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         ox = oy = oz = 0;
 
@@ -597,7 +501,7 @@ public static class LuaHelper
 
     public static void InverseTransformVector(int id, float x, float y, float z, out float ox, out float oy, out float oz)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         ox = oy = oz = 0;
 
@@ -612,7 +516,7 @@ public static class LuaHelper
 
     public static void TransformDirection(int id, float x, float y, float z, out float ox, out float oy, out float oz)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         ox = oy = oz = 0;
 
@@ -626,7 +530,7 @@ public static class LuaHelper
     }
     public static void TransformPoint(int id, float x, float y, float z, out float ox, out float oy, out float oz)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         ox = oy = oz = 0;
 
@@ -640,7 +544,7 @@ public static class LuaHelper
     }
     public static void TransformVector(int id, float x, float y, float z, out float ox, out float oy, out float oz)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         ox = oy = oz = 0;
 
@@ -655,7 +559,7 @@ public static class LuaHelper
 
     public static void LookAt(int id, float x, float y, float z)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             go.transform.LookAt(new Vector3(x, y, z));
@@ -664,7 +568,7 @@ public static class LuaHelper
 
     public static void Rotate(int id, float x, float y, float z)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             go.transform.Rotate(x, y, z);
@@ -672,7 +576,7 @@ public static class LuaHelper
     }
     public static void Translate(int id, float x, float y, float z)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             go.transform.Translate(x, y, z);
@@ -685,7 +589,7 @@ public static class LuaHelper
 
     public static void SetCameraCullingMask(int id, int mask)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         if (go)
         {
@@ -699,7 +603,7 @@ public static class LuaHelper
 
     public static void SetCameraDepth(int id, int depth)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         if (go)
         {
@@ -743,11 +647,11 @@ public static class LuaHelper
             uiRoot.fitHeight = true;
         }
 
-        return Add(p.gameObject);
+        return LuaReference.Add(p.gameObject);
     }
     public static void SetUITouchable(int id, int touchable)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         if (go)
         {
@@ -763,7 +667,7 @@ public static class LuaHelper
    
     public static void AddClick(int id, SLua.LuaFunction function)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
 
         if (go == null)
         {
@@ -818,7 +722,7 @@ public static class LuaHelper
     }
     public static void SetText(int id, string text)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             SetText(go.transform, text);
@@ -864,7 +768,7 @@ public static class LuaHelper
     }
     public static void SetSprite(int id, string spriteName, bool native)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             SetSprite(go.transform, spriteName, native);
@@ -877,7 +781,7 @@ public static class LuaHelper
 
     public static void SetPanelAlpha(int id, float alpha)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             UIPanel panel = go.GetComponent<UIPanel>();
@@ -889,7 +793,7 @@ public static class LuaHelper
     }
     public static float GetPanelAlpha(int id)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             UIPanel panel = go.GetComponent<UIPanel>();
@@ -902,7 +806,7 @@ public static class LuaHelper
     }
     public static int GetPanelDepth(int id)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             UIPanel panel = go.GetComponent<UIPanel>();
@@ -915,7 +819,7 @@ public static class LuaHelper
     }
     public static void SetPanelDepth(int id,int depth)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             UIPanel panel = go.GetComponent<UIPanel>();
@@ -930,7 +834,7 @@ public static class LuaHelper
     #region UIWidget
     public static int GetWidgetDepth(int id)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             UIWidget widget = go.GetComponent<UIWidget>();
@@ -943,7 +847,7 @@ public static class LuaHelper
     }
     public static void SetWidgetDepth(int id, int depth)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             UIWidget widget = go.GetComponent<UIWidget>();
@@ -957,7 +861,7 @@ public static class LuaHelper
 
     public static void ResizeCollider(int id)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             UIWidget widget = go.GetComponent<UIWidget>();
@@ -970,8 +874,8 @@ public static class LuaHelper
 
     public static void SetAnchor(int id, int anchor, int left, int bottom, int right, int top)
     {
-        var go = Get(id);
-        var to = Get(anchor);
+        var go = LuaReference.Get(id);
+        var to = LuaReference.Get(anchor);
         if (go && to)
         {
             UIWidget widget = go.GetComponent<UIWidget>();
@@ -984,7 +888,7 @@ public static class LuaHelper
 
     public static void SetWidgetSize(int id, int width, int height)
     {
-        var go = Get(id);
+        var go = LuaReference.Get(id);
         if (go)
         {
             UIWidget widget = go.GetComponent<UIWidget>();
@@ -1008,9 +912,9 @@ public static class LuaHelper
         if(asset)
         {
             var go = UnityEngine.Object.Instantiate(asset) as GameObject;
-            return Add(go);
+            return LuaReference.Add(go);
         }
-        return INVALID_GAMEOBJECT_ID;
+        return LuaReference.INVALID_GAMEOBJECT_ID;
 #else
         return INVALID_GAMEOBJECT_ID;
 #endif
