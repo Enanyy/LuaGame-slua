@@ -24,10 +24,10 @@ public class ActionRandomSkill : BTAction
                 int value = mRandom.Next(0, 4);
                 switch (value)
                 {
-                    case 0: player.data.changeType = PlayerAnimationType.attack1; break;
+                    case 0: player.data.changeType = PlayerAnimationType.attack; break;
                     case 1: player.data.changeType = PlayerAnimationType.attack2; break;
-                    case 2: player.data.changeType = PlayerAnimationType.spell1; break;
-                    case 3: player.data.changeType = PlayerAnimationType.spell3; break;
+                    case 2: player.data.changeType = PlayerAnimationType.skill; break;
+                    case 3: player.data.changeType = PlayerAnimationType.skill2; break;
 
                 }
             }

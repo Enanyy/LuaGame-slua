@@ -136,12 +136,11 @@ public class PlayerEntity : EntityBase<PlayerData>
 
     public bool IsSkill(PlayerAnimationType type)
     {
-        return type == PlayerAnimationType.attack1
+        return type == PlayerAnimationType.attack
             || type == PlayerAnimationType.attack2
-            || type == PlayerAnimationType.spell1
-            || type == PlayerAnimationType.spell2
-            || type == PlayerAnimationType.spell3
-            || type == PlayerAnimationType.spell4;
+            || type == PlayerAnimationType.skill
+            || type == PlayerAnimationType.skill2;
+
     }
 
     public bool IsReleaseSkill()
@@ -163,7 +162,7 @@ public class PlayerEntity : EntityBase<PlayerData>
     {
         var animationClip = data.animationType;
 
-        return animationClip == PlayerAnimationType.run;
+        return animationClip == PlayerAnimationType.walk;
     }
 
     public bool IsArrivedDestination()

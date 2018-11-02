@@ -18,7 +18,7 @@ public class ActionDie : BTAction
         }
         var player = input.player;
 
-        player.PlayAnimation(PlayerAnimationType.die, UnityEngine.WrapMode.ClampForever);
+        player.PlayAnimation(PlayerAnimationType.death, UnityEngine.WrapMode.ClampForever);
         player.data.target = 0;
         player.Stop();
         player.navMeshAgent.enabled = false;

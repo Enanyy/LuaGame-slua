@@ -4,17 +4,14 @@ using System.Collections.Generic;
 public enum PlayerAnimationType
 {
     none,
+    free,
     idle,
-    run,
-    attack1,
+    walk,
+    attack,
     attack2,
-    spell1,
-    spell2,
-    spell3,
-    spell4,
-    dance,
-    die,
-    sneak   
+    skill,
+    skill2,
+    death   
 }
 public class PlayerData
 {

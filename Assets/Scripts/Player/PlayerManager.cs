@@ -47,8 +47,8 @@ public class PlayerManager : MonoBehaviour
         data.x = 2;
         data.z = 2;
         data.hp = 10;
-        data.model = "Akali";
-        data.config = "Akali";
+        data.model = "ai_ge_001_ty";
+        data.config = "AI_Player";
         data.destination = new Vector3(2f, 0, 8);
       
         mControledPlayer =  CreatePlayer(data);
@@ -59,9 +59,9 @@ public class PlayerManager : MonoBehaviour
         data1.x = 2;
         data1.z = 2;
         data1.hp = 5;
-        data1.model = "Akali";
+        data1.model = "bian_fu_001_ty";
 
-        data1.config = "AI_Akali";
+        data1.config = "AI_Monster";
         data1.destination = new Vector3(1f, 0, 4);
       
 
@@ -86,8 +86,8 @@ public class PlayerManager : MonoBehaviour
         attackData.spaceColumn = -2;
         attackData.spaceRow = 2;
         attackData.count = 10;
-        attackData.model = "Akali";
-        attackData.config = "AI_Akali";
+        attackData.model = "ai_ge_001_ty";
+        attackData.config = "AI_Monster";
         attackData.hp = 10; 
 
          GameObject attackGo = new GameObject("Attack Group");
@@ -108,12 +108,12 @@ public class PlayerManager : MonoBehaviour
         defenseData.spaceColumn = 2;
         defenseData.spaceRow = 2;
         defenseData.count = 10;
-        defenseData.model = "Akali";
-        defenseData.config = "AI_Akali";
+        defenseData.model = "bian_fu_001_ty";
+        defenseData.config = "AI_Monster";
         defenseData.hp = 8;
 
 
-        GameObject defenseGo = new GameObject("Attack Group");
+        GameObject defenseGo = new GameObject("Defense Group");
         defenseGo.transform.SetParent(transform);
         defenseGroup = defenseGo.AddComponent<PlayerGroup>();
         defenseGroup.SetData(defenseData);
@@ -121,7 +121,7 @@ public class PlayerManager : MonoBehaviour
 
     public PlayerEntity CreatePlayer(PlayerData data)
     {
-        var obj = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Object>("Assets/R/Charactor/Akali/Prefab/Akali.prefab");
+        var obj = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(string.Format("Assets/R/Charactor/Prefab/{0}.prefab",data.model));
         var go = Instantiate(obj) as GameObject;
         go.transform.SetParent(transform);
         
@@ -182,7 +182,7 @@ public class PlayerManager : MonoBehaviour
         {
             if(mControledPlayer)
             {
-                mControledPlayer.ReleaseSkill(PlayerAnimationType.attack1);
+                mControledPlayer.ReleaseSkill(PlayerAnimationType.attack);
             }
         }
         if (Input.GetKeyDown(KeyCode.Q))
@@ -196,14 +196,14 @@ public class PlayerManager : MonoBehaviour
         {
             if (mControledPlayer)
             {
-                mControledPlayer.ReleaseSkill(PlayerAnimationType.spell1);
+                mControledPlayer.ReleaseSkill(PlayerAnimationType.skill);
             }
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (mControledPlayer)
             {
-                mControledPlayer.ReleaseSkill(PlayerAnimationType.spell3);
+                mControledPlayer.ReleaseSkill(PlayerAnimationType.skill2);
             }
         }
     }

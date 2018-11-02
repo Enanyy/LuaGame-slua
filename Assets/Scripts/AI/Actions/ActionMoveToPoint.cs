@@ -23,7 +23,7 @@ public class ActionMoveToPoint : BTAction
                 player.navMeshAgent.SetDestination(player.data.destination);
             }
         }
-        player.PlayAnimation(PlayerAnimationType.run,  WrapMode.Loop);
+        player.PlayAnimation(PlayerAnimationType.walk,  WrapMode.Loop);
         player.Resume();
 
         return base.OnExecute(ref _input);

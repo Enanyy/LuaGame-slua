@@ -3,16 +3,31 @@ using System.Collections.Generic;
 public static class PlayerAnimations
 {
     static Dictionary<string, Dictionary<PlayerAnimationType, float>> mAnimations = new Dictionary<string, Dictionary<PlayerAnimationType, float>> {
-        {"Akali",new Dictionary<PlayerAnimationType, float>{
-            { PlayerAnimationType.attack1,1.250f },
-            { PlayerAnimationType.attack2,1.250f },
-            { PlayerAnimationType.dance,8.875f },
-            { PlayerAnimationType.die,1.750f },
-            { PlayerAnimationType.idle,1.250f },
-            { PlayerAnimationType.run,0.833f },
-            { PlayerAnimationType.sneak,0.583f },
-            { PlayerAnimationType.spell1,1.250f },
-            { PlayerAnimationType.spell3,1.250f }
+        {"ai_ge_001_ty",new Dictionary<PlayerAnimationType, float>{
+            { PlayerAnimationType.attack,1.40f },
+            { PlayerAnimationType.attack2,1.4f },
+           
+            { PlayerAnimationType.death,1.50f },
+            { PlayerAnimationType.free,1.333f },
+            { PlayerAnimationType.idle,5.0f },
+            { PlayerAnimationType.walk,0.867f },
+        
+            { PlayerAnimationType.skill,0.733f },
+            { PlayerAnimationType.skill2,0.733f }
+            }
+        },
+
+         {"bian_fu_001_ty",new Dictionary<PlayerAnimationType, float>{
+            { PlayerAnimationType.attack,1.40f },
+            { PlayerAnimationType.attack2,1.4f },
+
+            { PlayerAnimationType.death,1.333f },
+            { PlayerAnimationType.free,0.80f },
+            { PlayerAnimationType.idle,3.667f },
+            { PlayerAnimationType.walk,0.60f },
+
+            { PlayerAnimationType.skill,1.433f },
+            { PlayerAnimationType.skill2,0.8f }
             }
         }
     };
