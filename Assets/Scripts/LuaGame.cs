@@ -5,7 +5,7 @@ using UnityEngine;
 using SLua;
 using UnityEngine.SceneManagement;
 
-public partial class LuaGame : TimerBehaviour
+public partial class LuaGame : MonoBehaviour
 {
     LuaSvr l;
     int progress = 0;
@@ -13,13 +13,7 @@ public partial class LuaGame : TimerBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
-
-        MonoTimer.Init();
-        MonoTimer.AddFrame(this, (dt) => {
-            Debug.Log(dt);
-        });
-       
+        DontDestroyOnLoad(gameObject); 
     }
 
     // Use this for initialization

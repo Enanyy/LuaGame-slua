@@ -5,15 +5,15 @@ namespace BTree
     {
         public BTNode mTreeRoot { get; private set; }
 
-        public void InitXML(string name)
+        public void InitXML(byte[] data)
         {
-            var _config = BTSerialization.ReadXML(name);
+            var _config = BTSerialization.ReadXML(data);
             mTreeRoot = BTFactory.CreateBTreeRootFromConfig(_config);
         }
 
-        public void InitBinary(string name)
+        public void InitBinary(byte[] data)
         {
-            var _config = BTSerialization.ReadBinary(name);
+            var _config = BTSerialization.ReadBinary(data);
 
             mTreeRoot = BTFactory.CreateBTreeRootFromConfig(_config);
         }

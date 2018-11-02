@@ -22,7 +22,7 @@ public class PlayerGroup : EntityBase<PlayerGroupData>
         playerList = new List<PlayerEntity>();
         mInput = new PlayerInputData();
         mRoot = new BTRoot();
-        mRoot.InitXML(data.config);
+        mRoot.InitXML(PlayerConfig.ReadXML(data.config));
 
         for (int i = 0; i < data.count; ++i)
         {

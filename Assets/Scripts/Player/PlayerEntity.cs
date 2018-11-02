@@ -51,7 +51,7 @@ public class PlayerEntity : EntityBase<PlayerData>
         {
             mRoot = new BTRoot();
 
-            mRoot.InitXML(data.config);
+            mRoot.InitXML(PlayerConfig.ReadXML( data.config));
         }
     }
 	

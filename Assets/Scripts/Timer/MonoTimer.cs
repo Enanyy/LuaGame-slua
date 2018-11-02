@@ -151,7 +151,7 @@ public sealed class TimerImplement
         Clock,
     }
 
-    public TimerBehaviour m_NeatlyBehaviour;
+    public TimerBehaviour m_Behaviour;
     public GameObject m_GameObject;
     private SaveMode m_SaveMode;
     public Action<float> m_Function;
@@ -165,13 +165,13 @@ public sealed class TimerImplement
     private float m_IntervalClock;
     private float m_DeltaTime;
 
-    public TimerBehaviour behaviour { get { return m_NeatlyBehaviour; } }
+    public TimerBehaviour behaviour { get { return m_Behaviour; } }
     public GameObject gameObject { get { return m_GameObject; } }
     public Action<float> function { get { return m_Function; } }
 
     public void Clear()
     {
-        m_NeatlyBehaviour = null;
+        m_Behaviour = null;
         m_GameObject = null;
         m_Function = null;
         IsDestroy = false;
@@ -183,8 +183,8 @@ public sealed class TimerImplement
 
     public void Init(TimerBehaviour bh, Action<float> action)
     {
-        m_NeatlyBehaviour = bh;
-        if (m_NeatlyBehaviour == null)
+        m_Behaviour = bh;
+        if (m_Behaviour == null)
         {
             Debugger.LogError("严重错误初始化空...");
         }
@@ -259,12 +259,12 @@ public sealed class TimerImplement
         switch (m_SaveMode)
         {
             case SaveMode.Behaviour:
-                if (m_NeatlyBehaviour.IsDestroy)
+                if (m_Behaviour.IsDestroy)
                 {
                     SetDestroy();
                     return;
                 }
-                IsEnabled = m_Once || m_NeatlyBehaviour.IsEnable;
+                IsEnabled = m_Once || m_Behaviour.IsEnable;
                 break;
             case SaveMode.GameObject:
                 if (m_GameObject == null)

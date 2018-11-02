@@ -14,19 +14,6 @@ namespace BTree.Editor
         {
            
         }
-        public BTEditorConfig(string xml)
-        {
-            mRootNode = new BTEditorTreeConfig(BTSerialization.ReadXML(xml));
-            mRootNode.mIsEnterNode = true;
-            mRootNode.mEditorNodes = new BTEditorNodeConfig[mRootNode.mNodes.Length];
-            for (int i = 0; i < mRootNode.mEditorNodes.Length; i++)
-            {
-                mRootNode.mEditorNodes[i] = new BTEditorNodeConfig(mRootNode.mNodes[i]);
-                mRootNode.mEditorNodes[i].mPosX = (i + 1) * 60;
-                mRootNode.mEditorNodes[i].mPosY = (i + 1) * 60;
-                mRootNode.mEditorNodes[i].mDisable = false;
-            }
-        }
     }
     [Serializable]
     public class BTEditorTreeConfig : TreeConfig
