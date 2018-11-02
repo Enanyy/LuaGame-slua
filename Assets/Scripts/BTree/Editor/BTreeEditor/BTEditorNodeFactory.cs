@@ -1,11 +1,60 @@
 ﻿
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 namespace BTree.Editor
 {
     class BTEditorNodeFactory
     {
+        public static void Init()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Assembly assembly = null;
+                try
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            assembly = Assembly.Load("Assembly-CSharp");
+                            break;
+                        case 1:
+                            assembly = Assembly.Load("Assembly-CSharp-firstpass");
+                            break;
+                        case 2:
+                            assembly = Assembly.Load("Assembly-UnityScript");
+                            break;
+                        case 3:
+                            assembly = Assembly.Load("Assembly-UnityScript-firstpass");
+                            break;
+                    }
+                }
+                catch (Exception)
+                {
+                    assembly = null;
+                }
+                if (assembly != null)
+                {
+                    Type[] types = assembly.GetTypes();
+                    for (int j = 0; j < types.Length; j++)
+                    {
+                        if (!types[j].IsAbstract)
+                        {
+                            if (types[j].IsSubclassOf(typeof(BTAction)))
+                            {
+                                BTFactory.RegisterActionType(types[j]);
+                            }
+                            else if (types[j].IsSubclassOf(typeof(BTPrecondition)))
+                            {
+                                BTFactory.RegisterPreconditionType(types[j]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
         #region 从配置生成行为树编辑器相关方法
         public static BTNodeDesigner[] CreateBTreeNodeDesignerFromConfig(BTEditorTreeConfig _config)
         {
@@ -61,7 +110,6 @@ namespace BTree.Editor
         }
         public static BTEditorNode[] CreateBTreeEditorNode(BTEditorTreeConfig _config)
         {
-            BTFactory.Init();
             BTNode[] _btreeNodes = BTFactory.CreateBTreeFromConfig(_config);
             BTEditorNode[] _editorNodes = new BTEditorNode[_btreeNodes.Length];
             for (int i = 0; i < _editorNodes.Length; i++)

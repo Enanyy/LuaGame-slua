@@ -4,12 +4,6 @@ namespace BTree
 {
     public class BTFactory
     {
-        public delegate void BTTypeRegister(Action<Type> action);
-        public static event BTTypeRegister onRegisterAction;
-        public static event BTTypeRegister onRegisterPrecondition;
-
-        private static bool mInited = false;
-
         private static Dictionary<string, Type> mPreconditionTypeDic = null;
         public static Dictionary<string, Type> PreconditionTypeDic
         {
@@ -17,7 +11,7 @@ namespace BTree
             {
                 if (mPreconditionTypeDic == null)
                 {
-                    Init();
+                    mPreconditionTypeDic = new Dictionary<string, Type>();
                 }
                 return mPreconditionTypeDic;
             }
@@ -29,75 +23,44 @@ namespace BTree
             {
                 if (mActionTypeDic == null)
                 {
-                    Init();
+                    mActionTypeDic = new Dictionary<string, Type>();
                 }
                 return mActionTypeDic;
             }
         }
-        public static void AddActionType(Type type)
+        public static void RegisterActionType(Type type)
         {
-            if (mActionTypeDic.ContainsKey(type.Name))
+            if (type.IsSubclassOf(typeof(BTAction)))
             {
-                mActionTypeDic[type.Name] = type;
-            }
-            else
-            {
-                mActionTypeDic.Add(type.Name, type);
+                if (ActionTypeDic.ContainsKey(type.Name))
+                {
+                    ActionTypeDic[type.Name] = type;
+                }
+                else
+                {
+                    ActionTypeDic.Add(type.Name, type);
+                }
             }
         }
-        public static void AddPreconditionType(Type type)
+        public static void RegisterPreconditionType(Type type)
         {
-            if (mPreconditionTypeDic.ContainsKey(type.Name))
+            if (type.IsSubclassOf(typeof(BTPrecondition)))
             {
-                mPreconditionTypeDic[type.Name] = type;
-            }
-            else
-            {
-                mPreconditionTypeDic.Add(type.Name, type);
+                if (PreconditionTypeDic.ContainsKey(type.Name))
+                {
+                    PreconditionTypeDic[type.Name] = type;
+                }
+                else
+                {
+                    PreconditionTypeDic.Add(type.Name, type);
+                }
             }
         }
-        public static void Init()
-        {
-            if (mInited)
-            {
-                return;
-            }
-            mInited = true;
 
-            mActionTypeDic = new Dictionary<string, Type>();
-            mPreconditionTypeDic = new Dictionary<string, Type>();
-
-            if (onRegisterAction != null)
-            {
-                onRegisterAction(AddActionType);
-            }
-            if (onRegisterPrecondition != null)
-            {
-                onRegisterPrecondition(AddPreconditionType);
-            }
-            
-            AddActionType(typeof(ActionIdle));
-            AddActionType(typeof(ActionMoveToPoint));
-            AddActionType(typeof(ActionAttack));
-            AddActionType(typeof(ActionFindTarget));
-            AddActionType(typeof(ActionFollowTarget));
-            AddActionType(typeof(ActionRandomSkill));
-            AddActionType(typeof(ActionDie));
-
-
-            AddPreconditionType(typeof(IsArrivedCondition));
-            AddPreconditionType(typeof(IsReleaseSkillCondition));
-            AddPreconditionType(typeof(HasChangeSkillCondition));
-            AddPreconditionType(typeof(HasTargetCondition));
-            AddPreconditionType(typeof(IsDeadCondition));
-
-
-        }
 
         #region 从配置生成行为树相关方法
         public static BTNode CreateBTreeRootFromConfig(TreeConfig _config)
         {
-            Init();
             BTNode[] _nodes = CreateBTreeFromConfig(_config);
             return _nodes[0];
         }
@@ -464,7 +427,8 @@ namespace BTree
             CreateNode(node, _parent, _nodeName);
             return node;
         }
-        public static BTRandomSelector CreateRandomSelector(BTNode _parent,string _nodeName,int _seed)
+
+        public static BTRandomSelector CreateRandomSelector(BTNode _parent, string _nodeName, int _seed)
         {
             BTRandomSelector node = new BTRandomSelector(_parent, null, _seed);
             CreateNode(node, _parent, _nodeName);

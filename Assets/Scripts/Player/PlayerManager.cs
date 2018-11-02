@@ -39,6 +39,8 @@ public class PlayerManager : MonoBehaviour
 
     public void Init()
     {
+        PlayerConfig.Init();
+
         players = new List<PlayerEntity>();
 
         PlayerData data = new PlayerData();
@@ -72,6 +74,8 @@ public class PlayerManager : MonoBehaviour
 
     public void InitBattle()
     {
+        PlayerConfig.Init();
+
         players = new List<PlayerEntity>();
 
         PlayerGroupData attackData = new PlayerGroupData();

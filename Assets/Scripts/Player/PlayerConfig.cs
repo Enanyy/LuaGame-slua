@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BTree;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -25,6 +26,23 @@ public static class PlayerConfig
             return File.ReadAllBytes(fullPath);
         }
         return null;
+    }
+
+    public static void Init()
+    {
+        BTFactory.RegisterActionType(typeof(ActionIdle));
+        BTFactory.RegisterActionType(typeof(ActionMoveToPoint));
+        BTFactory.RegisterActionType(typeof(ActionAttack));
+        BTFactory.RegisterActionType(typeof(ActionFindTarget));
+        BTFactory.RegisterActionType(typeof(ActionFollowTarget));
+        BTFactory.RegisterActionType(typeof(ActionRandomSkill));
+        BTFactory.RegisterActionType(typeof(ActionDie));
+
+        BTFactory.RegisterPreconditionType(typeof(IsArrivedCondition));
+        BTFactory.RegisterPreconditionType(typeof(IsReleaseSkillCondition));
+        BTFactory.RegisterPreconditionType(typeof(HasChangeSkillCondition));
+        BTFactory.RegisterPreconditionType(typeof(HasTargetCondition));
+        BTFactory.RegisterPreconditionType(typeof(IsDeadCondition));
     }
 }
 

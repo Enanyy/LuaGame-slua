@@ -17,6 +17,8 @@ namespace BTree.Editor
             bTreeEditorWindow.wantsMouseMove = true;
             bTreeEditorWindow.minSize = new Vector2(600f, 500f);
             DontDestroyOnLoad(bTreeEditorWindow);
+
+            BTEditorNodeFactory.Init();
         }
         private BTGraphDesigner _mGraphDesigner;
         private BTGraphDesigner mGraphDesigner
