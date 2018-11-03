@@ -1,4 +1,3 @@
-require("Class")
 require("Mathf")
 
 local clamp	= Mathf.Clamp
@@ -8,17 +7,25 @@ local max 	= Mathf.Max
 local setmetatable = setmetatable
 local rawget = rawget
 
-Vector4 = Class("Vector4")
-Vector4.__call = function(t, x, y, z, w)
+Vector4 = {}
+Vector4.__index = function(t,k)
+	local var = rawget(Vector4, k)
+	
+	if var == nil then							
+		var = rawget(get, k)
+		
+		if var ~= nil then
+			return var(t)	
+		end
+	end
+	
+	return var
+end
+
+function Vector4.new(x, y, z, w)	
 	return setmetatable({x = x or 0, y = y or 0, z = z or 0, w = w or 0}, Vector4)		
 end
 
-function Vector4:ctor(x, y, z, w)	
-	self.x = x or 0
-	self.y = y or 0	
-	self.z = z or 0
-	self.w = w or 0	
-end
 
 function Vector4:Set(x,y,z,w)
 	self.x = x or 0
@@ -175,3 +182,8 @@ Vector4.__eq = function(va,vb)
 	local delta = Vector4.SqrMagnitude(v)	
 	return delta < 1e-10
 end
+
+Vector4.zero = function() return Vector4.new(0, 0, 0, 0) end
+Vector4.one	 = function() return Vector4.new(1, 1, 1, 1) end
+
+return Vector4

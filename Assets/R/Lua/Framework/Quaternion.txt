@@ -1,4 +1,3 @@
-require("Class")
 require("Mathf")
 require("Vector3")
 
@@ -19,7 +18,7 @@ local getmetatable = getmetatable
 local rawget = rawget
 local rawset = rawset
 
-Quaternion = Class("Quaternion")
+Quaternion = {}
 Quaternion.__index = function(t, k)		
 	local var = rawget(Quaternion, k)
 	
@@ -42,14 +41,7 @@ Quaternion.__newindex = function(t, name, k)
 	end	
 end
 
-function Quaternion:ctor(x, y, z, w)	
-	self.x = x or 0
-	self.y = y or 0
-	self.z = z or 0
-	self.w = w or 0
-end
-
-Quaternion.__call = function(t, x, y, z, w)
+function Quaternion.new(x, y, z, w)	
 	local t = {x = x or 0, y = y or 0, z = z or 0, w = w or 0}
 	setmetatable(t, Quaternion)	
 	return t
@@ -590,3 +582,7 @@ end
 Quaternion.__tostring = function(self)
 	return "("..self.x..","..self.y..","..self.z..","..self.w..")"
 end
+
+Quaternion.identity = function() return Quaternion.new(0, 0, 0, 1) end
+
+return Quaternion

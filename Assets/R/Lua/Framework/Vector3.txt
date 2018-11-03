@@ -1,4 +1,3 @@
-require("Class")
 require("Mathf")
 local math  = math
 local acos	= math.acos
@@ -18,12 +17,25 @@ local type = type
 local rad2Deg = 57.295779513082
 local deg2Rad = 0.017453292519943
 
-Vector3 = Class("Vector3")
+Vector3 = {}
+Vector3.__index = function(t,k)
+	local var = rawget(Vector3, k)
+	
+	if var == nil then						
+		var = rawget(get, k)		
+		
+		if var ~= nil then
+			return var(t)				
+		end		
+	end
+	
+	return var
+end
 
-function Vector3:ctor(x, y, z)
-    self.x = x or 0				
-    self.y = y or 0				
-    self.z = z or 0				
+function Vector3.new(x, y, z)
+    local t = {x = x or 0, y = y or 0, z = z or 0}
+	setmetatable(t, Vector3)
+	return t		
 end
 
 Vector3.__call = function(t,x,y,z)
@@ -430,3 +442,14 @@ Vector3.__eq = function(a,b)
 	local delta = v:SqrMagnitude()
 	return delta < 1e-10
 end
+
+function Vector3.up() 		return Vector3.new(0,1,0) end
+function Vector3.down() 	return Vector3.new(0,-1,0) end
+function Vector3.right() 	return Vector3.new(1,0,0) end
+function Vector3.left() 	return Vector3.new(-1,0,0) end
+function Vector3.forward() 	return Vector3.new(0,0,1) end
+function Vector3.back() 	return Vector3.new(0,0,-1) end
+function Vector3.zero() 	return Vector3.new(0,0,0) end
+function Vector3.one() 		return Vector3.new(1,1,1) end
+
+return Vector3
