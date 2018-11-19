@@ -1,0 +1,53 @@
+<!-- Akali -->
+
+<?xml version="1.0" encoding="utf-8"?>
+<Hero name ="male"  bundleName="model/characters/pfb/hero_male_01" assetName="model/characters/pfb/hero_male_01" height="8"  radius = "1" >
+	<Component type ="PlayerComponent" param="PlayerComponentParam">
+		<Param speed="10" />
+	</Component>
+	<Action enum="free" length="86400">
+		<Plugin type ="HeroActionAnimationPlugin" param = "HeroActionAnimationPluginParam">
+			<Param animationClip="free"  wrapMode="Loop"/>
+		</Plugin>
+	</Action>
+	<Action enum="walk" length="86400">
+		<Plugin type ="HeroActionAnimationPlugin" param = "HeroActionAnimationPluginParam" >
+			<Param  animationClip="walk"  wrapMode="Loop" />
+		</Plugin>
+		<Plugin type ="HeroActionMoveToPointPlugin" param="ActionPluginParam" />
+    </Action>
+    <Action enum="attack" length="1">
+		<Plugin type ="HeroActionAnimationPlugin" param = "HeroActionAnimationPluginParam" >
+			<Param  animationClip="attack" wrapMode="Once" />
+		</Plugin>
+		<Effect type="TimeEffectEntity" param="TimeEffectParam" effectArise="ParentBegin" effectOn="Self" offset ="(0,1,2)" bundleName="effect/pfb/fx_male01_skill01" assetName="effect/pfb/fx_male01_skill01">
+			<Param duration="2" />
+		</Effect>
+    </Action>
+	<Action enum="skill"  length="1">
+		<Plugin type ="HeroActionAnimationPlugin" param = "HeroActionAnimationPluginParam" >
+			<Param animationClip="attack" wrapMode="Once" />
+		</Plugin>
+		<Effect type="TimeEffectEntity" param="TimeEffectParam" effectArise="ParentBegin" effectOn="Self" offset ="(0,1,2)" bundleName="effect/pfb/fx_male01_skill01" assetName="effect/pfb/fx_male01_skill01">
+				<Param duration="2" />
+		</Effect>
+	</Action>
+	<Action enum="death" length="1">
+		<Plugin type ="HeroActionAnimationPlugin" param = "HeroActionAnimationPluginParam" >
+			<Param   animationClip="free"  wrapMode="ClampForever" />
+		</Plugin>
+		<Plugin type ="HeroActionDiePlugin" param="ActionPluginParam" />
+		<Effect type="TimeEffectEntity" param="TimeEffectParam" effectArise="ParentBegin" effectOn="Self" offset ="(0,0,0)" bundleName="effect/pfb/fx_siwang" assetName="effect/pfb/fx_siwang">
+				<Param duration="2" />
+		</Effect>
+		
+	</Action>
+
+	<Skill enum="Attack" cd= "2"  action="attack" triggerAt = "0.5" needTarget="false" skillType="Automatic"/>
+	
+
+	<Skill enum="Skill" cd= "2"  action="skill" triggerAt = "0.5"  needTarget="false" skillType="Initiative"/>
+		
+
+
+</Hero>

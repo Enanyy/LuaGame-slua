@@ -1,0 +1,45 @@
+<!-- Akali -->
+
+<?xml version="1.0" encoding="utf-8"?>
+<Hero  name ="Akali"  bundleName="model/characters/pfb/akali" assetName="model/characters/pfb/akali" height="1.6"  radius = "1" >
+	<Component type ="PlayerComponent" param="PlayerComponentParam">
+		<Param speed="10" />
+	</Component>
+	<Action enum="free" length="86400">
+		<Plugin type ="HeroActionAnimationPlugin" param = "HeroActionAnimationPluginParam" >
+			<Param animationClip="free" wrapMode="Loop" />
+		</Plugin>
+	</Action>
+    <Action enum="walk"  length="86400">
+		<Plugin type ="HeroActionAnimationPlugin" param = "HeroActionAnimationPluginParam"  >
+			<Param animationClip="walk" wrapMode="Loop"/>
+		</Plugin>
+		<Plugin type ="HeroActionMoveToPointPlugin" param="ActionPluginParam" />
+    </Action>
+	<Action enum="attack"  length="1.250">
+		<Plugin type ="HeroActionAnimationPlugin" param = "HeroActionAnimationPluginParam"  >
+			<Param animationClip="attack" wrapMode="Once"/>
+		</Plugin>
+	</Action>
+	<Action enum="skill"  length="1.250">
+		<Plugin type ="HeroActionAnimationPlugin" param = "HeroActionAnimationPluginParam"  >
+			<Param animationClip="skill"  wrapMode="Once"/>
+		</Plugin>
+	</Action>
+	<Action enum="death"  length="1.750">
+		<Plugin type ="HeroActionDiePlugin" param="ActionPluginParam" />
+		<Plugin type ="HeroActionAnimationPlugin" param = "HeroActionAnimationPluginParam"  >
+			<Param animationClip="death"  wrapMode="ClampForever"/>
+		</Plugin>
+		<Effect type="TimeEffectEntity" param="TimeEffectParam" effectArise="ParentBegin" effectOn="Self" offset ="(0,0,0)" bundleName="effect/pfb/fx_siwang" assetName="effect/pfb/fx_siwang">
+				<Param duration="2" />
+		</Effect>	
+	</Action>
+
+	<Skill enum="Attack" cd= "2"  action="attack" triggerAt = "0.5" needTarget="true" skillType="Automatic">
+	
+	</Skill>
+	<Skill enum="Skill" cd= "2" action="skill" triggerAt = "0.5" needTarget="true" skillType="Initiative">
+	
+	</Skill>
+</Hero>

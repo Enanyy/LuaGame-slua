@@ -1,0 +1,49 @@
+<!-- 大炮1 -->
+
+<?xml version="1.0" encoding="utf-8"?>
+<Hero name ="Cannon"  bundleName="model/characters/pfb/pao02" assetName="model/characters/pfb/pao02" height="12" radius = "1" >
+	<Component type ="CannonComponent" param="CannonComponentParam">
+		<Param rotateSpeed="60" />
+	</Component>
+	
+	<Action enum="free" length="86400" >
+		<Plugin type ="HeroActionAnimationPlugin" param = "HeroActionAnimationPluginParam" >
+			<Param  animationClip="free"  wrapMode="Loop" />
+		</Plugin>
+	</Action>
+	<Action enum="attack"  length="0.367">
+		<Plugin type ="HeroActionAnimationPlugin" param = "HeroActionAnimationPluginParam">
+			<Param   animationClip="attack"  wrapMode="Once" />
+		</Plugin>
+		<Effect type="FollowEffectEntity" param="FollowEffectParam" effectArise="ParentBegin" effectOn="Self" offset ="(0,7,6)" bundleName="effect/pfb/fx_pao_pandan" assetName="effect/pfb/fx_pao_pandan">
+			<Param speed="50"  offsetTo="(0,1,0)" />
+			<Effect type="TimeEffectEntity" param="TimeEffectParam" effectArise="ParentTrigger" effectOn="Target" offset ="(0,1,0)" bundleName="effect/pfb/fx_pao01_hit" assetName="effect/pfb/fx_pao01_hit">
+				<Param duration="2" />
+			</Effect>
+			<Effect type="HitEffectEntity" param="HitEffectParam" effectArise="ParentTrigger" effectOn="Target" offset ="(0,1,0)" bundleName="effect/pfb/fx_none" assetName="effect/pfb/fx_none">
+				<Param duration="2" color="(1,1,1,1)" />
+			</Effect>
+		</Effect>
+
+		<Effect type="TimeEffectEntity" param="TimeEffectParam" effectArise="ParentBegin" effectOn="Self" offset ="(0,5,6)" bundleName="effect/pfb/fx_pao01_attack" assetName="effect/pfb/fx_pao01_attack">
+				<Param duration="2" />
+		</Effect>
+		
+		
+	</Action>
+	<Action enum="death" length="1">
+		<Plugin type ="HeroActionAnimationPlugin" param = "HeroActionAnimationPluginParam" >
+			<Param animationClip="death"  wrapMode="ClampForever" />
+		</Plugin>
+		<Plugin type ="HeroActionDiePlugin" param="ActionPluginParam" />
+		<Effect type="TimeEffectEntity" param="TimeEffectParam" effectArise="ParentBegin" effectOn="Self" offset ="(0,0,0)" bundleName="effect/pfb/fx_siwang" assetName="effect/pfb/fx_siwang">
+				<Param duration="2" />
+		</Effect>
+
+	</Action>
+	
+	
+	<Skill enum="Attack" cd= "2" action = "attack" triggerAt = "-1" needTarget="true" skillType="Automatic"/>
+		
+		
+</Hero>
