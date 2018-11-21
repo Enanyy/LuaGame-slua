@@ -48,7 +48,6 @@ public class STSceneEntityInspector : Editor
         {
             string assetName = System.IO.Path.GetFileNameWithoutExtension(mTarget.path);
             mTarget.name = mTarget.GetType().Name + "+" + assetName;
-            mTarget.SetAttribute();
         }
 
         if (mTarget.mGo != null)

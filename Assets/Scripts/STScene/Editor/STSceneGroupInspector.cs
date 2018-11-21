@@ -59,10 +59,10 @@ public class STSceneGroupInspector : Editor
         }
     }
    
-
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
+     
         if (mTarget == null)
         {
             return;
@@ -92,16 +92,16 @@ public class STSceneGroupInspector : Editor
     }
 
 
-    public T AddSTComponentToGroup<T>(STSceneGroup group) where T : STComponent
+    public static T AddSTComponentToGroup<T>(STSceneGroup group) where T : STComponent
     {
         return AddSTComponentToGroup(group,typeof(T)) as T;
     }
 
-    public STComponent AddSTComponentToGroup(STSceneGroup group, Type type)
+    public static STComponent AddSTComponentToGroup(STSceneGroup group, Type type)
     {
         GameObject go = new GameObject(type.ToString());
 
-        go.transform.SetParent(mTarget.transform);
+        go.transform.SetParent(group.transform);
         go.transform.localPosition = Vector3.zero;
         go.transform.localRotation = Quaternion.identity;
         go.transform.localScale = Vector3.one;
@@ -111,5 +111,89 @@ public class STSceneGroupInspector : Editor
         group.AddSTComponent(component);
 
         return component;
+    }
+
+    [InitializeOnLoadMethod]
+    static void Init()
+    {
+        //SceneView.onSceneGUIDelegate += OnSceneGUI;
+
+        //EditorApplication.hierarchyWindowItemOnGUI += OnHierarchyWindowItemOnGUI;
+        EditorApplication.hierarchyChanged += OnHierarchyChanged;
+    }
+    /*
+       private static void OnHierarchyWindowItemOnGUI(int instanceID, Rect selectionRect)
+       {
+           Event e = Event.current;
+           if (e.type == EventType.DragExited)
+           {
+               Debug.Log(e.type);
+               DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
+
+               DragAndDrop.AcceptDrag();
+               for (int i = 0; i < DragAndDrop.objectReferences.Length; i++)
+               {
+                   UnityEngine.Object handleObj = DragAndDrop.objectReferences[i];
+                   if (handleObj != null)
+                   {
+
+                       string path = UnityEditor.AssetDatabase.GetAssetPath(handleObj);
+                       GameObject go = handleObj as GameObject;
+
+                       Debug.Log(path);
+                   }
+               }
+
+           }
+
+       }
+       */
+    /*
+    private static void OnSceneGUI(SceneView sceneView)
+    {
+        Event e = Event.current;
+        if (e.type == EventType.DragUpdated || e.type == EventType.DragPerform)
+        {
+            DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
+            if (e.type == EventType.DragPerform)
+            {
+                DragAndDrop.AcceptDrag();
+                for (int i = 0; i < DragAndDrop.objectReferences.Length; i++)
+                {
+                    UnityEngine.Object handleObj = DragAndDrop.objectReferences[i];
+                    if (handleObj != null)
+                    {
+                       
+                       string path = UnityEditor.AssetDatabase.GetAssetPath(handleObj);
+                        Debug.Log(path);
+                    }
+                }
+            }
+            
+        }
+    }
+    */
+
+    static void OnHierarchyChanged()
+    {
+        STSceneGroup[] groups = FindObjectsOfType<STSceneGroup>();
+
+        for(int i = 0; i <groups.Length; ++i)
+        {
+            for(int j = 0; j < groups[i].transform.childCount; ++j)
+            {
+                Transform child = groups[i].transform.GetChild(j);
+                STComponent component = child.GetComponent<STComponent>();
+                if(component==null)
+                {
+                    var targetPrefab = UnityEditor.PrefabUtility.GetCorrespondingObjectFromSource(child.gameObject) as GameObject;
+                    string path = UnityEditor.AssetDatabase.GetAssetPath(targetPrefab);
+                    STSceneEntity entity = AddSTComponentToGroup<STSceneEntity>(groups[i]);
+                    child.SetParent(entity.transform);
+                    entity.path = path;
+                }
+            }
+        }
+
     }
 }
