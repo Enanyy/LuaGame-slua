@@ -63,7 +63,7 @@ public class BattleManager :Singleton<BattleManager>
     public HeroTopShow topShow { get; private set; }
     public BattleShow show { get; private set; }
 
-    private ObjectInstance assetPoint;
+   /// private ObjectInstance assetPoint;
     private BattlePoints mPoints;
 
     public void Start()
@@ -76,12 +76,12 @@ public class BattleManager :Singleton<BattleManager>
         logic = new HeroLogic();
       
         status = BattleStatus.Prepare;
-        GameMain.lateUpdate += LateUpdate;
+       
 
 
         string assetBundleName = "assets/assetbundle/model/scene_models/battlescene/points.prefab";
 
-
+        /*
         AssetCache.LoadAssetAsync<GameObject>(assetBundleName, assetBundleName, (asset) =>
         {
             assetPoint = ObjectInstancePool.instance.GetObjectInstance(asset);
@@ -125,6 +125,7 @@ public class BattleManager :Singleton<BattleManager>
                 }
             }     
         });
+        */
     }
 
     public void Init(BattleData data)
@@ -186,21 +187,7 @@ public class BattleManager :Singleton<BattleManager>
         {
             return;
         }
-        var hero =   ClientDataManager.instance.GetHeroById(data.IID);
-        if(hero!=null)
-        {
-            data.profession = hero.IProfession;
-            data.ai = hero.SAI.ToLower();
-            data.config = hero.SConfig.ToLower();
-            data.attack = hero.IAttack;
-            data.defense = hero.IDefense;
-            data.maxhp = hero.IHP;
-            data.hp = hero.IHP;
-            data.name = hero.SName;
-            data.speed = hero.FSpeed;
-            data.attackDistance = hero.FAttackDistance;
-            data.searchDistance = hero.FSearchDistance;
-        }
+       
     }
 
  
@@ -213,7 +200,7 @@ public class BattleManager :Singleton<BattleManager>
             return null;
         }
 
-        HeroEntity entity = ObjectPool.GetInstance<HeroEntity>();
+        HeroEntity entity =  new HeroEntity();
        
         if(entity == null)
         {
@@ -814,11 +801,11 @@ public class BattleManager :Singleton<BattleManager>
 
     public void Destroy()
     {
-        GameMain.lateUpdate -= LateUpdate;
-        if (assetPoint != null)
-        {
-            UnityEngine.Object.Destroy(assetPoint.m_gameObject);
-        }
+       
+        //if (assetPoint != null)
+        //{
+        //    UnityEngine.Object.Destroy(assetPoint.m_gameObject);
+        //}
         if (topShow != null)
             topShow.Destroy();
         if (show != null)
@@ -826,17 +813,7 @@ public class BattleManager :Singleton<BattleManager>
         if (logic != null)
             logic.Destroy();
 
-        ObjectPool.Clear(typeof(HeroEntity));
-        ObjectPool.Clear(typeof(AIInputComponent));
-        ObjectPool.Clear(typeof(CannonComponent));
-        ObjectPool.Clear(typeof(PlayerComponent));
-        ObjectPool.Clear(typeof(FollowEffectEntity));
-        ObjectPool.Clear(typeof(TimeEffectEntity));
-        ObjectPool.Clear(typeof(HitEffectEntity));
-        ObjectPool.Clear(typeof(HeroAction));
-        ObjectPool.Clear(typeof(HeroSkill));
-        ObjectPool.Clear(typeof(HeroActionDiePlugin));
-        ObjectPool.Clear(typeof(HeroData));
+      
     }
    
 }

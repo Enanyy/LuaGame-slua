@@ -29,7 +29,7 @@ public static class AIConfig
 
     public static  void ReadXML(string name,BTRoot root)
     {
-        string assetBundleName = string.Format("assets/assetbundle/config/character/ai/{0}.xml", name.ToLower());
+        /*string assetBundleName = string.Format("assets/assetbundle/config/character/ai/{0}.xml", name.ToLower());
         AssetCache.LoadAssetAsync<TextAsset>(assetBundleName, assetBundleName, (asset) =>
         {
             if (asset != null)
@@ -43,13 +43,13 @@ public static class AIConfig
                 }
             }
         });
-            
+            */
     }
 
     public static void  ReadBinary(string name,BTRoot root)
     {
         string assetBundleName = string.Format("assets/assetbundle/config/character/ai/{0}.bytes", name.ToLower());
-
+        /*
         AssetCache.LoadAssetAsync<TextAsset>(assetBundleName, assetBundleName, (asset) =>
         {
             if (asset != null)
@@ -63,6 +63,7 @@ public static class AIConfig
                 }
             }
         });
+        */
     }
 }
 

@@ -17,6 +17,7 @@ public class HeroTopShow
     private GameObject mItem;
     public HeroTopShow()
     {
+        /*
         string assetBundleName = "assets/assetBundle/ui/ui_widget/ui_topshow.prefab";
         UIManager.LoadUIAsset(assetBundleName, assetBundleName, (GameObject go) => {
 
@@ -31,7 +32,7 @@ public class HeroTopShow
             mItem = gameObject.transform.Find("Item").gameObject;
             mItem.SetActive(false);
         });
-      
+      */
     }
 
 
@@ -88,7 +89,7 @@ public class HeroTopShow
 
     public void Destroy()
     {
-        UIManager.DeleteUI("ui/ui_topshow", "ui_topshow");
+        //UIManager.DeleteUI("ui/ui_topshow", "ui_topshow");
         mTopShowDic.Clear();
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeroSkill : IPoolObject
+public class HeroSkill : IPool
 {
     public bool isPool { get; set; }
 
@@ -78,14 +78,16 @@ public class HeroSkill : IPoolObject
 
     }
 
-    public void OnReturn()
-    {
-
-    }
+   
 
     public void OnDestroy()
     {
 
+    }
+
+    public void OnRecycle()
+    {
+        
     }
 }
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class EntityData : IPoolObject
+public class EntityData : IPool
 {
     public bool isPool { get; set; }
 
@@ -14,7 +14,7 @@ public class EntityData : IPoolObject
         
     }
 
-    public void OnReturn()
+    public void OnRecycle()
     {
         
     }

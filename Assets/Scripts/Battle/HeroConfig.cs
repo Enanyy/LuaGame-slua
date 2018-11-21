@@ -110,6 +110,7 @@ public static class HeroConfig
     private static void LoadConfig(string name, Action<HeroParam> callback)
     {
         string assetBundleName = string.Format("assets/assetbundle/config/character/hero/{0}.xml", name.ToLower());
+        /*
         AssetCache.LoadAssetAsync<TextAsset>(assetBundleName, assetBundleName, (asset) =>
         {
             if (asset != null)
@@ -146,6 +147,7 @@ public static class HeroConfig
                 }
             }
         });
+        */
     }
 
     private static void ParseConfig(ref HeroParam param, SecurityElement element)

@@ -7,6 +7,7 @@ public class BattleShow
     public GameObject gameObject { get; private set; }
     public BattleShow()
     {
+        /*
         string assetBundleName = "assets/assetBundle/ui/ui_widget/ui_fight.prefab";
         UIManager.LoadUIAsset(assetBundleName, assetBundleName, (GameObject go) =>
         {
@@ -20,10 +21,11 @@ public class BattleShow
             gameObject.transform.localRotation = Quaternion.identity;
          
         });
+        */
     }
     public void Destroy()
     {
-        UIManager.DeleteUI("ui/ui_topshow", "ui_topshow");
+        //UIManager.DeleteUI("ui/ui_topshow", "ui_topshow");
 
     }
 }

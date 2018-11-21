@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class HeroActionMachine : StateMachine,IPoolObject
+public class HeroActionMachine : StateMachine,IPool
 {
     public bool isPool { get; set; }
 
@@ -90,12 +90,12 @@ public class HeroActionMachine : StateMachine,IPoolObject
        
     }
 
-    public void OnReturn()
+    public void OnRecycle()
     {
         var it = mActions.GetEnumerator();
         while(it.MoveNext())
         {
-            ObjectPool.ReturnInstance(it.Current.Value);
+            ObjectPool.RecycleInstance(it.Current.Value);
         }
         mActions.Clear();
     }

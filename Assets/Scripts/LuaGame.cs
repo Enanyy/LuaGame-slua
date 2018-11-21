@@ -70,7 +70,7 @@ public partial class LuaGame : MonoBehaviour
 
         if(GUI.Button(new Rect(20,20,100,40),sceneName))
         {
-            PlayerManager.Destroy();
+           
             SceneManager.LoadScene(sceneName);
         }
 
@@ -88,17 +88,7 @@ public partial class LuaGame : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Example")
-        {
-            PlayerManager.GetSingleton().Init();
-            sceneName = "Battle";
-        }
-        else if (scene.name == "Battle")
-        {
-            PlayerManager.GetSingleton().InitBattle();
-            sceneName = "Example";
-
-        }
+       
     }
 
 }

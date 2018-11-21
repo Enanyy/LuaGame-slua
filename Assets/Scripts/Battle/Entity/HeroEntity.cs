@@ -115,20 +115,20 @@ public sealed class HeroEntity : AssetEntity
         var it = skills.GetEnumerator();
         while(it.MoveNext())
         {
-            ObjectPool.ReturnInstance(it.Current.Value);
+            ObjectPool.RecycleInstance(it.Current.Value);
         }
         skills.Clear();
-        ObjectPool.ReturnInstance(data);
+        ObjectPool.RecycleInstance(data);
 
         base.Recycle();
        
         machine.Clear();
-        ObjectPool.ReturnInstance(machine);
+        ObjectPool.RecycleInstance(machine);
         mAnimation = null;
 
         for(int i = 0; i < components.Count; ++ i)
         {
-            ObjectPool.ReturnInstance(components[i], components[i].GetType());
+            ObjectPool.RecycleInstance(components[i], components[i].GetType());
         }
         components.Clear();
     }

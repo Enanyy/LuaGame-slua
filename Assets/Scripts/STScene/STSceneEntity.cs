@@ -62,6 +62,7 @@ public class STSceneEntity: STComponent
             }
             else
             {
+                /*
                 AssetCache.LoadAssetAsync<GameObject>(path, path, (asset) =>
                 {
                     if (asset == null || asset.IsLoadError())
@@ -74,7 +75,7 @@ public class STSceneEntity: STComponent
                         CreateEntity(asset.GetAsset());               
                     }
                 });
-
+                */
             }
 
             

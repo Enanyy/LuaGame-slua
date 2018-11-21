@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class HeroActionPlugin : State,IPoolObject
+public class HeroActionPlugin : State,IPool
 {
     public bool isPool { get; set; }
 
@@ -23,7 +23,7 @@ public class HeroActionPlugin : State,IPoolObject
        
     }
 
-    public virtual void OnReturn()
+    public virtual void OnRecycle()
     {
        
     }

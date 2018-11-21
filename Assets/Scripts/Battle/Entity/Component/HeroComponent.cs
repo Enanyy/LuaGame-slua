@@ -1,6 +1,6 @@
 ﻿using System;
 
-public abstract class HeroComponent:IPoolObject
+public abstract class HeroComponent:IPool
 {
     public HeroEntity entity { get; private set; }
     public ComponentParam param { get; private set; }
@@ -26,7 +26,7 @@ public abstract class HeroComponent:IPoolObject
         
     }
 
-    public void OnReturn()
+    public void OnRecycle()
     {
         
     }

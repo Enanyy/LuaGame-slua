@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeroAction : State,IPoolObject
+public class HeroAction : State,IPool
 {
     public bool isPool { get; set; }
 
@@ -155,7 +155,7 @@ public class HeroAction : State,IPoolObject
        
     }
 
-    public void OnReturn()
+    public void OnRecycle()
     {
         mAnimationTime = 0;
         crossFaded = false;
@@ -165,7 +165,7 @@ public class HeroAction : State,IPoolObject
         {
             for(int i = 0; i < plugins.Count;++i)
             {
-                ObjectPool.ReturnInstance(plugins[i], plugins[i].GetType());
+                ObjectPool.RecycleInstance(plugins[i], plugins[i].GetType());
             }
             plugins.Clear();
         }
