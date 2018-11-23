@@ -763,10 +763,7 @@ public class BattleManager :Singleton<BattleManager>
     public void Destroy()
     {
        
-        //if (assetPoint != null)
-        //{
-        //    UnityEngine.Object.Destroy(assetPoint.m_gameObject);
-        //}
+      
         if (topShow != null)
             topShow.Destroy();
         if (show != null)

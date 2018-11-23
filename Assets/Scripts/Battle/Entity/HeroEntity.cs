@@ -29,10 +29,7 @@ public sealed class HeroEntity : AssetEntity
             return mAnimation;
         }
     }
-    public Vector3 position { get { return gameObject.transform.position; } set { SetPosition(value); } }
-    public Quaternion rotation { get { return gameObject.transform.rotation; } set { gameObject.transform.rotation = value; } }
-    public Vector3 forward { get { return gameObject.transform.forward; } set { gameObject.transform.forward = value; } }
-    public Vector3 right { get { return gameObject.transform.right; } set { gameObject.transform.right = value; } }
+   
     public HeroEntity()
     {
         skills = new Dictionary<SkillEnum, HeroSkill>();
@@ -322,16 +319,10 @@ public sealed class HeroEntity : AssetEntity
     {
         gameObject.transform.position = position;
     }
-    public void SetForword(Vector3 forward)
+
+    public void SetRotation(Vector3 euler)
     {
-        if (forward != Vector3.zero)
-        {
-            gameObject.transform.forward = forward;
-        }
-    }
-    public void SetRotation(Vector3 rotation)
-    {
-        gameObject.transform.rotation = Quaternion.Euler(rotation);
+        rotation = Quaternion.Euler(euler);
     }
     public  bool FindTarget()
     {
