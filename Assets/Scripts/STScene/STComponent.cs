@@ -23,6 +23,7 @@ public abstract class STComponent:MonoBehaviour
 
         attributes.Add("position", transform.position.ToString());
         attributes.Add("rotation", transform.rotation.eulerAngles.ToString());
+        attributes.Add("scale", transform.localScale.ToString());
 
 
         return CreateXmlNode(parent, GetType().ToString(), attributes);
@@ -67,6 +68,7 @@ public abstract class STComponent:MonoBehaviour
         {
             transform.position = node.Attribute("position").ToVector3Ex();
             transform.rotation = Quaternion.Euler(node.Attribute("rotation").ToVector3Ex());
+            transform.localScale = node.Attribute("position").ToVector3Ex();
         }
     }
 

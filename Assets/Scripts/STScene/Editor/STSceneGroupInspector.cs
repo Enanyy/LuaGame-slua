@@ -178,22 +178,31 @@ public class STSceneGroupInspector : Editor
     {
         STSceneGroup[] groups = FindObjectsOfType<STSceneGroup>();
 
-        for(int i = 0; i <groups.Length; ++i)
+        for (int i = 0; i < groups.Length; ++i)
         {
-            for(int j = 0; j < groups[i].transform.childCount; ++j)
+            for (int j = 0; j < groups[i].transform.childCount; ++j)
             {
                 Transform child = groups[i].transform.GetChild(j);
                 STComponent component = child.GetComponent<STComponent>();
-                if(component==null)
+                if (component == null)
                 {
-                    var targetPrefab = UnityEditor.PrefabUtility.GetCorrespondingObjectFromSource(child.gameObject) as GameObject;
-                    string path = UnityEditor.AssetDatabase.GetAssetPath(targetPrefab);
-                    STSceneEntity entity = AddSTComponentToGroup<STSceneEntity>(groups[i]);
-                    child.SetParent(entity.transform);
-                    entity.path = path;
+                    var targetPrefab = PrefabUtility.GetCorrespondingObjectFromSource(child.gameObject) as GameObject;
+                    if (targetPrefab)
+                    {
+                        string path = AssetDatabase.GetAssetPath(targetPrefab);
+                        STSceneEntity entity = AddSTComponentToGroup<STSceneEntity>(groups[i]);
+                        entity.transform.position = child.position;
+                        entity.transform.localRotation = child.localRotation;
+                        entity.transform.localScale = child.localScale;
+                        child.SetParent(entity.transform);
+                        entity.path = path;
+                        child.localPosition = Vector3.zero;
+                        child.localRotation = Quaternion.identity;
+                        child.localScale = Vector3.one;
+
+                    }
                 }
             }
         }
-
     }
 }

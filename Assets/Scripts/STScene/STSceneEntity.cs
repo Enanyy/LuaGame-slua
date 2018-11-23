@@ -12,9 +12,7 @@ public class STSceneEntity: STComponent
 {
     [HideInInspector] public string path = "";
    
-    [HideInInspector] public Vector3 localPosition;
-    [HideInInspector] public Vector3 localRotation;
-    [HideInInspector] public Vector3 localScale= Vector3.one;
+   
     [HideInInspector] public GameObject mGo;
 
 
@@ -26,9 +24,7 @@ public class STSceneEntity: STComponent
             attributes = new Dictionary<string, string>();
         }
        
-        attributes.Add("localPosition", localPosition.ToString());
-        attributes.Add("localRotation", localRotation.ToString());
-        attributes.Add("localScale", localScale.ToString());
+     
         attributes.Add("path", path);
 
 
@@ -88,9 +84,9 @@ public class STSceneEntity: STComponent
         {
             mGo = Instantiate(obj) as GameObject;
             mGo.transform.SetParent(transform);
-            mGo.transform.localPosition = localPosition;
-            mGo.transform.localRotation = Quaternion.Euler(localRotation);
-            mGo.transform.localScale = localScale;
+            mGo.transform.localPosition = Vector3.zero;
+            mGo.transform.localRotation = Quaternion.identity;
+            mGo.transform.localScale = Vector3.one;
         }
     }
 
@@ -105,10 +101,6 @@ public class STSceneEntity: STComponent
 
         if (IsTypeOrSubClass(node.Tag, typeof(STSceneEntity)))
         {
-            localPosition = node.Attribute("localPosition").ToVector3Ex();
-            localRotation = node.Attribute("localRotation").ToVector3Ex();
-            localScale = node.Attribute("localScale").ToVector3Ex();
-           
             path = node.Attribute("path");
         }
 

@@ -13,7 +13,7 @@ public interface IPool
 public static class ObjectPool 
 {
     static Dictionary<Type, Queue<IPool>> mPoolDic = new Dictionary<Type, Queue<IPool>>(); 
-    public static T GetInstance<T>(Type type = null, params object[] args) where T: IPool
+    public static T GetInstance<T>(Type type = null) where T: IPool
     {
         if(type== null)
         {
@@ -30,10 +30,9 @@ public static class ObjectPool
         }
         else
         {
-            o = (IPool)Activator.CreateInstance(type,args);
-            o.OnCreate();
+            o = (IPool)Activator.CreateInstance(type);       
         }
-
+        o.OnCreate();
         o.isPool = false;
         
         return (T)o;
@@ -53,6 +52,7 @@ public static class ObjectPool
         if (mPoolDic[type].Contains(o) == false)
         {
             o.isPool = true;
+            o.OnRecycle();
             mPoolDic[type].Enqueue(o);
         }
     }

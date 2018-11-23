@@ -20,16 +20,7 @@ public class STSceneEntityInspector : Editor
             return;
         }
 
-        mTarget.localPosition = EditorGUILayout.Vector3Field("LocalPosition", mTarget.localPosition);
-        mTarget.localRotation = EditorGUILayout.Vector3Field("LocalRotation", mTarget.localRotation);
-        mTarget.localScale = EditorGUILayout.Vector3Field("LocalScale", mTarget.localScale);
-        if (mTarget.mGo)
-        {
-            mTarget.mGo.transform.localPosition = mTarget.localPosition;
-            mTarget.mGo.transform.localRotation = Quaternion.Euler(mTarget.localRotation);
-            mTarget.mGo.transform.localScale = mTarget.localScale;
-        }
-
+      
         GUILayout.BeginHorizontal();
         mTarget.path = EditorGUILayout.TextField("Asset Path", mTarget.path, GUILayout.MinWidth(20f));
         if (GUILayout.Button("Edit", GUILayout.Width(40f)))
