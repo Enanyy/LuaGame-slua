@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<STScene name="STscene" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(1.0, 1.0, 1.0)">
+  <STSceneGroup name="STGroup" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(1.0, 1.0, 1.0)">
+    <STSceneEntity path="Assets/R/charactor/prefab/bian_fu_001_ty.prefab" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(1.0, 1.0, 1.0)" />
+    <STSceneEntity path="Assets/R/charactor/prefab/hun_mo_001_ty.prefab" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(1.0, 1.0, 1.0)" />
+  </STSceneGroup>
+  <STSceneEntity path="Assets/R/charactor/prefab/ai_ge_001_ty.prefab" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(1.0, 1.0, 1.0)" />
+</STScene>

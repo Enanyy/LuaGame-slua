@@ -43,6 +43,10 @@ public static class ObjectPool
 
     public static void RecycleInstance(IPool o, Type type )
     {
+        if(o==null)
+        {
+            return;
+        }
         if (mPoolDic.ContainsKey(type) == false)
         {
             mPoolDic.Add(type, new Queue<IPool>());

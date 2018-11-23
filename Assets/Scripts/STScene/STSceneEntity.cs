@@ -53,7 +53,17 @@ public class STSceneEntity: STComponent
 
                 var  obj = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);
 
-                CreateEntity(obj);
+                
+                if (obj)
+                {
+                    //还原出其预设
+                    mGo = UnityEditor.PrefabUtility.InstantiatePrefab(obj) as GameObject;
+  
+                    mGo.transform.SetParent(transform);
+                    mGo.transform.localPosition = Vector3.zero;
+                    mGo.transform.localRotation = Quaternion.identity;
+                    mGo.transform.localScale = Vector3.one;
+                }
 #endif
             }
             else
