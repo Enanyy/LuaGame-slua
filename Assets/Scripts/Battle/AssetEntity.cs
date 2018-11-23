@@ -11,7 +11,7 @@ public class AssetEntity :IPool
         gameObject = new GameObject(GetType().Name);
     }
 
-    public void LoadAsset(string assetBundleName,string assetName)
+    public void LoadAsset(string assetBundleName,string assetName,System.Action<GameObject> callback= null)
     {
         var o= UnityEditor.AssetDatabase.LoadAssetAtPath<Object>(assetName);
         if(o)
@@ -23,6 +23,10 @@ public class AssetEntity :IPool
             go.transform.localScale = Vector3.one;
             go.SetActive(true);
             OnLoadAsset(go);
+            if(callback!=null)
+            {
+                callback(go);
+            }
         }
     }
     protected virtual void OnLoadAsset(GameObject go)

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class BattleManager :Singleton<BattleManager>
 {
     private List<HeroEntity> mEntityList = new List<HeroEntity>();
-    private List<int> mRemoveList = new List<int>();
+   
     public List<HeroEntity> entities { get {
             
             for(int i = mEntityList.Count -1; i >=0; --i)
@@ -63,8 +63,7 @@ public class BattleManager :Singleton<BattleManager>
     public HeroTopShow topShow { get; private set; }
     public BattleShow show { get; private set; }
 
-   /// private ObjectInstance assetPoint;
-    private BattlePoints mPoints;
+  
 
     public void Start()
     {
@@ -74,58 +73,39 @@ public class BattleManager :Singleton<BattleManager>
         show = new BattleShow();
 
         logic = new HeroLogic();
-      
+
         status = BattleStatus.Prepare;
-       
 
 
-        string assetBundleName = "assets/assetbundle/model/scene_models/battlescene/points.prefab";
-
-        /*
-        AssetCache.LoadAssetAsync<GameObject>(assetBundleName, assetBundleName, (asset) =>
+        if (battleData == null)
         {
-            assetPoint = ObjectInstancePool.instance.GetObjectInstance(asset);
-            if (assetPoint.m_gameObject != null)
-            {
-                assetPoint.m_gameObject.SetActive(true);
-                assetPoint.m_gameObject.transform.SetParent(null);
-                assetPoint.m_gameObject.transform.localPosition = Vector3.zero;
-                assetPoint.m_gameObject.transform.localScale = Vector3.one;
-                assetPoint.m_gameObject.transform.localRotation = Quaternion.identity;
+           
+            InitBattleTest();
+        }
+        for (int i = 0; i < battleData.attackList.Count; ++i)
+        {
+            var heroData = battleData.attackList[i];
 
-                mPoints = assetPoint.m_gameObject.GetComponent<BattlePoints>();
+            heroData.x = 1;
+            heroData.y = 0;
+            heroData.z = 1;
 
-                if (battleData == null)
-                {
-                    TRACE.Log("BattleManager TestData");
-                     InitBattleTest();
-                }
-                for (int i = 0; i < battleData.attackList.Count; ++i)
-                {
-                    var heroData = battleData.attackList[i];
-
-                    heroData.x = mPoints.HeroPoints[0].position.x;
-                    heroData.y = 0;
-                    heroData.z = mPoints.HeroPoints[0].position.z;
-
-                    GetHeroConfig(ref heroData);
+            GetHeroConfig(ref heroData);
 
 
-                    mCreateQueue.Enqueue(heroData);
-                }
+            mCreateQueue.Enqueue(heroData);
+        }
 
-                for (int i = 0; i < battleData.defenseList.Count; ++i)
-                {
-                    var heroData = battleData.defenseList[i];
-                    heroData.x = mPoints.CannonPoints[i].position.x;
-                    heroData.y = 0;
-                    heroData.z = mPoints.CannonPoints[i].position.z;
-                    GetHeroConfig(ref heroData);
-                    mCreateQueue.Enqueue(heroData);
-                }
-            }     
-        });
-        */
+        for (int i = 0; i < battleData.defenseList.Count; ++i)
+        {
+            var heroData = battleData.defenseList[i];
+            heroData.x = 2;
+            heroData.y = 0;
+            heroData.z = 2;
+            GetHeroConfig(ref heroData);
+            mCreateQueue.Enqueue(heroData);
+        }
+
     }
 
     public void Init(BattleData data)
@@ -248,8 +228,15 @@ public class BattleManager :Singleton<BattleManager>
 
     public void RemoveEntity(int id)
     {
-        mRemoveList.Add(id);
-         
+        for(int i = 0; i < mEntityList.Count; ++i)
+        {
+            if(mEntityList[i]!=null && mEntityList[i].data.id == id)
+            {
+                mEntityList[i].Recycle();
+                mEntityList[i] = null;
+            }
+        }
+        topShow.Remove(id);
     }
 
     public int GetEntityCount(HeroCamp camp)
@@ -281,29 +268,7 @@ public class BattleManager :Singleton<BattleManager>
 
     public void Update(float deltaTime)
     {
-        while(mRemoveList.Count>0)
-        {
-            int id = mRemoveList[0];
-            mRemoveList.RemoveAt(0);
-            for (int i = mEntityList.Count - 1; i >= 0; --i)
-            {
-                var entity = mEntityList[i];
-                if (entity == null)
-                {
-                    mEntityList.RemoveAt(i);
-                }
-                else
-                {
-                    if (entity.data.id == id)
-                    {
-                        entity.Recycle();
-                        mEntityList.RemoveAt(i);
-                    }
-                }
-            }
-            topShow.Remove(id);
-        }
-
+       
         if (status == BattleStatus.None)
         {
             return;
@@ -335,15 +300,11 @@ public class BattleManager :Singleton<BattleManager>
         for (int i = entities.Count - 1; i >= 0; --i)
         {
             var player = entities[i];
-            /*
-            if (status == BattleStatus.Fighting && logic != null)
+
+            if (player != null)
             {
-                var input = player as BTree.BTInput;
-                logic.Tick(player.data.ai, ref input);
-            }*/
-
-            player.OnUpdate(deltaTime);
-
+                player.OnUpdate(deltaTime);
+            }
         }
 
         for (int i = mEffects.Count - 1; i >= 0; --i)
@@ -420,10 +381,10 @@ public class BattleManager :Singleton<BattleManager>
                 data.camp = HeroCamp.Defense;
 
                 data.rotation = 90;
-                int i = UnityEngine.Random.Range(0, mPoints.CannonPoints.Length);
-                data.x = mPoints.CannonPoints[i].position.x;
+               
+                data.x = 3;
                 data.y = 0;
-                data.z = mPoints.CannonPoints[i].position.z;
+                data.z = 3;
                 GetHeroConfig(ref data);
 
                 battleData.defenseList.Add(data);
@@ -469,10 +430,10 @@ public class BattleManager :Singleton<BattleManager>
                 data1.id = BitConverter.ToInt32( Guid.NewGuid().ToByteArray(),0);
                 data1.camp = HeroCamp.Attack;
                 data1.IID =  (int)Time.time % 4 + 1;
-                int i = UnityEngine.Random.Range(0, mPoints.HeroPoints.Length);
-                data1.x = mPoints.HeroPoints[i].position.x;
+              
+                data1.x = 4;
                 data1.y = 0;
-                data1.z = mPoints.HeroPoints[i].position.z;
+                data1.z = 4;
                 data1.scale = 1;
                 GetHeroConfig(ref data1);
                 battleData.attackList.Add(data1);

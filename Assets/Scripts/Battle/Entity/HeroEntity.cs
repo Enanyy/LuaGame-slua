@@ -99,8 +99,8 @@ public sealed class HeroEntity : AssetEntity
         machine = ObjectPool.GetInstance<HeroActionMachine>();
         machine.Init(this);
 
-        string assetBundleName = string.Format("assets/assetBundle/{0}.prefab", param.assetBundleName);
-        string assetName = string.Format("assets/assetBundle/{0}.prefab", param.assetName);
+        string assetBundleName = string.Format("assets/r/{0}.prefab", param.assetBundleName);
+        string assetName = string.Format("assets/r/{0}.prefab", param.assetName);
 
         LoadAsset(assetBundleName, assetName);
 
