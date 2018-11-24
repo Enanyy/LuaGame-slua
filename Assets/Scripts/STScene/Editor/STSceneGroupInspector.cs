@@ -67,9 +67,9 @@ public class STSceneGroupInspector : Editor
         {
             return;
         }
-        mTarget.name = EditorGUILayout.TextField("GroupName", mTarget.name);
+        mTarget.groupName = EditorGUILayout.TextField("GroupName", mTarget.name);
         GUILayout.BeginHorizontal();
-        mTarget.SetAttribute();
+
 
         for (int i = 0; i < mEntityTypeList.Count; ++i)
         {
@@ -88,7 +88,7 @@ public class STSceneGroupInspector : Editor
             }
         }
         GUILayout.EndHorizontal();
-        mTarget.UpdateAttribute();
+
     }
 
 
@@ -200,6 +200,8 @@ public class STSceneGroupInspector : Editor
                         child.localRotation = Quaternion.identity;
                         child.localScale = Vector3.one;
 
+                        string assetName = System.IO.Path.GetFileNameWithoutExtension(path);
+                        entity.name = typeof(STSceneEntity).Name + "+" + assetName;
                     }
                 }
             }

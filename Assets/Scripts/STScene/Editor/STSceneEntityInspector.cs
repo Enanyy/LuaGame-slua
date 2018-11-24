@@ -54,7 +54,7 @@ public class STSceneEntityInspector : Editor
         }
 
         GUILayout.EndHorizontal();
-        mTarget.UpdateAttribute();
+
     }
 }
 

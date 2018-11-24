@@ -22,7 +22,7 @@ public class STSceneCameraInspector : Editor
         mTarget.depth = camera.depth;
         mTarget.fieldOfView = camera.fieldOfView;
 
-        mTarget.UpdateAttribute();
+
     }
 
 }

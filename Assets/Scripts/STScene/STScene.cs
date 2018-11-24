@@ -10,16 +10,20 @@ using Mono.Xml;
 
 public class STScene : STSceneGroup
 {
-    public override void UpdateAttribute()
-    {
-        base.UpdateAttribute();
-    }
+    private Action<int,int> mCallback;
 
-    public override void SetAttribute()
+    protected override void OnLoadFinish()
     {
-        base.SetAttribute();
-    }
+        int count = 0;
+        int finishCount = 0;
 
+        CheckFinish(out count, out finishCount);
+
+        if (mCallback != null)
+        {
+            mCallback(count, finishCount);
+        }
+    }
 
     public override void ParseXml(SecurityElement node)
     {
@@ -27,20 +31,17 @@ public class STScene : STSceneGroup
         {
             return;
         }
-        base.ParseXml(node);
-        
-        SetAttribute();
-
+        base.ParseXml(node);    
     }
 
-    public void LoadXml(string text)
+    public void LoadXml(string text, Action<int,int> callback= null)
     {
         if(string.IsNullOrEmpty(text))
         {
             return;
 
         }
-
+        mCallback = callback;
         SecurityParser sp = new SecurityParser();
 
         sp.LoadXml(text);
@@ -49,6 +50,8 @@ public class STScene : STSceneGroup
         SecurityElement se = sp.ToXml();
 
         ParseXml(se);
+
+        SetAttribute();
     }
 
 

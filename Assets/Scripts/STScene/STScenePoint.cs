@@ -22,10 +22,7 @@ public class STScenePoint : STSceneEntity
         }
     }
 
-    public override void SetAttribute()
-    {
-        
-    }
+   
 #if UNITY_EDITOR
     public override XmlElement ToXml(XmlNode parent, Dictionary<string, string> attributes = null)
     {
@@ -39,9 +36,6 @@ public class STScenePoint : STSceneEntity
         return base.ToXml(parent, attributes);
     }
 #endif
-    public override void UpdateAttribute()
-    {
-        
-    }
+   
 }
 

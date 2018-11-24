@@ -10,8 +10,25 @@ using UnityEngine;
 
 public abstract class STComponent:MonoBehaviour
 {
-    public abstract void UpdateAttribute();
-    public abstract void SetAttribute();
+    public virtual void SetAttribute() { }
+
+    public virtual void CheckFinish(out int count,out int finishCount)
+    {
+        finishCount = 1;
+        count = 1;
+    }
+
+    protected virtual void OnLoadFinish()
+    {
+        if(transform.parent!=null)
+        {
+            STComponent parent = transform.parent.GetComponent<STComponent>();
+            if(parent)
+            { 
+                parent.OnLoadFinish();
+            }
+        }
+    }
 
 #if UNITY_EDITOR
     public virtual XmlElement ToXml(XmlNode parent, Dictionary<string, string> attributes = null)

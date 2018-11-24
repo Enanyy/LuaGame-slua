@@ -7,8 +7,22 @@ using System.Xml;
 using UnityEngine;
 public class STSceneGroup : STComponent
 {  
-    [HideInInspector]public string name;
+    [HideInInspector]public string groupName { get {return gameObject.name; } set { gameObject.name = value; } }
     [HideInInspector]public List<STComponent> components = new List<STComponent>();
+
+    public override void CheckFinish(out int count, out int finishCount)
+    {
+        count = 0;
+        finishCount = 0;
+        for (int i = 0; i <components.Count; ++i)
+        {
+            int f = 0;
+            int c = 0;
+            components[i].CheckFinish(out c, out f);
+            finishCount += f;
+            count += c;
+        }
+    }
 
     public override void ParseXml(SecurityElement node)
     {
@@ -19,7 +33,7 @@ public class STSceneGroup : STComponent
         base.ParseXml(node);
         if (IsTypeOrSubClass(node.Tag, typeof(STSceneGroup)))
         {
-            name = node.Attribute("name");
+            groupName = node.Attribute("name");
 
             if (node.Children != null)
             {
@@ -53,9 +67,16 @@ public class STSceneGroup : STComponent
                 }
             }
         }
-
-        SetAttribute();
     }
+
+    public override void SetAttribute()
+    {
+        for(int i = 0; i < components.Count;++i)
+        {
+            components[i].SetAttribute();
+        }
+    }
+
 #if UNITY_EDITOR
     public override XmlElement ToXml(XmlNode parent, Dictionary<string, string> attributes=null)
     {
@@ -63,7 +84,7 @@ public class STSceneGroup : STComponent
         {
             attributes = new Dictionary<string, string>();
         }
-        attributes.Add("name", name);
+        attributes.Add("name", groupName);
 
         XmlElement node = base.ToXml(parent,attributes);
         for (int i = 0; i < components.Count; ++i)
@@ -77,15 +98,9 @@ public class STSceneGroup : STComponent
         return node;
     }
 #endif
-    public override void SetAttribute()
-    {
-        gameObject.name = name;
-    }
+    
 
-    public override void UpdateAttribute()
-    {
-        
-    }
+   
     public void AddSTComponent(STComponent component)
     {
         if (components.Contains(component) == false)

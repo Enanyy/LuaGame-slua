@@ -20,7 +20,7 @@ public class STSceneInspector:STSceneGroupInspector
     {
         // base.OnInspectorGUI();
 
-        mTarget.name = EditorGUILayout.TextField("SceneName", mTarget.name);
+        mTarget.groupName = EditorGUILayout.TextField("SceneName", mTarget.groupName);
 
 
         GUILayout.BeginHorizontal();
@@ -71,7 +71,7 @@ public class STSceneInspector:STSceneGroupInspector
                 SaveXml();
             }
         }
-        mTarget.UpdateAttribute();
+
     }
 
     private void ClearEntity()
@@ -144,7 +144,7 @@ public class STSceneInspector:STSceneGroupInspector
         }
         scene.components.Clear();
 
-        scene.LoadXml(text);
+        scene.LoadXml(text,(count,finishCount)=> { Debug.Log("count = " + count + ",finishCount=" + finishCount); });
     }
 
     [MenuItem("STScene/Create")]

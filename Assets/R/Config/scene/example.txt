@@ -1,8 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<STScene name="STscene" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(1.0, 1.0, 1.0)">
-  <STSceneGroup name="STGroup" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(1.0, 1.0, 1.0)">
-    <STSceneEntity path="Assets/R/charactor/prefab/bian_fu_001_ty.prefab" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(1.0, 1.0, 1.0)" />
-    <STSceneEntity path="Assets/R/charactor/prefab/hun_mo_001_ty.prefab" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(1.0, 1.0, 1.0)" />
+<STScene name="STscene" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(0.0, 0.0, 0.0)">
+  <STSceneGroup name="STGroup" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(0.0, 0.0, 0.0)">
+    <STSceneEntity path="Assets/R/charactor/prefab/bian_fu_001_ty.prefab" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(0.0, 0.0, 0.0)" />
+    <STSceneEntity path="Assets/R/charactor/prefab/hun_mo_001_ty.prefab" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(0.0, 0.0, 0.0)" />
   </STSceneGroup>
-  <STSceneEntity path="Assets/R/charactor/prefab/ai_ge_001_ty.prefab" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(1.0, 1.0, 1.0)" />
+  <STSceneGroup name="STSceneGroup" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(0.0, 0.0, 0.0)">
+    <STSceneEntity path="Assets/R/charactor/prefab/fei_long_001_ty.prefab" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(0.0, 0.0, 0.0)" />
+    <STSceneEntity path="Assets/R/charactor/prefab/hei_mo_lv_001_ty.prefab" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(0.0, 0.0, 0.0)" />
+    <STSceneEntity path="Assets/R/charactor/prefab/jia_long_001_ty.prefab" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(0.0, 0.0, 0.0)" />
+    <STSceneEntity path="Assets/R/charactor/prefab/ju_du_zhu_001_ty.prefab" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(0.0, 0.0, 0.0)" />
+  </STSceneGroup>
+  <STSceneCamera fieldOfView="60" nearClipPlane="0.3" farClipPlane="1000" depth="0" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(1.0, 1.0, 1.0)" />
 </STScene>

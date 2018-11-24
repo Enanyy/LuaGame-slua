@@ -7,7 +7,6 @@ using System.Xml;
 using UnityEngine;
 public class STSceneCamera : STComponent
 {
-  
     [HideInInspector] public float fieldOfView = 60;
     [HideInInspector] public float nearClipPlane = 0.3f;
     [HideInInspector] public float farClipPlane = 600f;
@@ -29,14 +28,11 @@ public class STSceneCamera : STComponent
             farClipPlane = node.Attribute("farClipPlane").ToFloatEx();
             depth = node.Attribute("depth").ToFloatEx();
         }
-
-        SetAttribute();
     }
 
     public override void SetAttribute()
     {
-      
-        if (Application.isPlaying==false)
+        if (Application.isPlaying == false)
         {
             Camera camera = GetComponent<Camera>();
             if (camera == null) camera = gameObject.AddComponent<Camera>();
@@ -46,6 +42,7 @@ public class STSceneCamera : STComponent
             camera.depth = depth;
         }
     }
+
 #if UNITY_EDITOR
     public override XmlElement ToXml(XmlNode parent, Dictionary<string, string> attributes)
     {
@@ -62,10 +59,7 @@ public class STSceneCamera : STComponent
         return base.ToXml(parent,attributes);
     }
 
-    public override void UpdateAttribute()
-    {
-        
-    }
+   
 #endif
 
 }

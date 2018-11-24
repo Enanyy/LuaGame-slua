@@ -15,6 +15,11 @@ public class STSceneEntity: STComponent
    
     [HideInInspector] public GameObject mGo;
 
+    public override void CheckFinish(out int count, out int finishCount)
+    {
+        finishCount = mGo != null ? 1 : 0;
+        count = 1;
+    }
 
 #if UNITY_EDITOR
     public override XmlElement ToXml(XmlNode parent, Dictionary<string, string> attributes=null)
@@ -31,14 +36,10 @@ public class STSceneEntity: STComponent
         return base.ToXml(parent, attributes);
     }
 #endif
-    public override void UpdateAttribute()
-    {
-      
-    }
+
 
     public override void SetAttribute()
-    {
-       
+    {    
         if (mGo)
         {
             DestroyImmediate(mGo);
@@ -63,6 +64,8 @@ public class STSceneEntity: STComponent
                     mGo.transform.localPosition = Vector3.zero;
                     mGo.transform.localRotation = Quaternion.identity;
                     mGo.transform.localScale = Vector3.one;
+
+                    OnLoadFinish();
                 }
 #endif
             }
@@ -113,8 +116,6 @@ public class STSceneEntity: STComponent
         {
             path = node.Attribute("path");
         }
-
-        SetAttribute();
     }
 }
 
