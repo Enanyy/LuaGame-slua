@@ -6,12 +6,24 @@ namespace Network
 {
     public class NetPacket
     {
+        public const int DEFAULT_POWER = 5; //2^5 = 32
         static void ReAlloc(ref byte[] ba, int pos, int size)
         {
-            if (ba.Length < (pos + size))
+            if(ba == null)
             {
-                Array.Resize<byte>(ref ba, (int)(ba.Length + size + 1024));
+                ba = new byte[ReAllocSize(size)];
             }
+            else if (ba.Length < (pos + size))
+            {
+                Array.Resize<byte>(ref ba, (int)(ReAllocSize(ba.Length + size)));
+            }
+        }
+        static int ReAllocSize(int size)
+        {
+            int resize = 2;
+            int i = DEFAULT_POWER;
+            while ((resize = (int)Math.Pow(2, i)) < size) i++;
+            return resize;
         }
 
         private byte[] mData;
@@ -26,17 +38,21 @@ namespace Network
                 return mData.Length;
             }
         }
-
+        public NetPacket()
+        {
+            readPosition = 0;
+            writePosition = 0;
+        }
         public NetPacket(byte[] data)
         {
             SetData(data);
         }
 
-        public void SetData(byte[] data)
+        public void SetData(byte[] _data)
         {
-            mData = data;
-            writePosition = 0;
             readPosition = 0;
+            writePosition = 0;
+            WriteBytes(_data);
         }
         public int ReadInt()
         {
@@ -133,13 +149,13 @@ namespace Network
             int oldPos = readPosition;
             readPosition += len;
             byte[] bytes = new byte[len];
-            for (int i = 0; i < len; ++i)
-            {
-                bytes[i] = mData[oldPos + i];
-            }
+            Array.Copy(mData, oldPos, bytes, 0, len);
             return bytes;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="v"></param>
         public void WriteBytes(byte[] v)
         {
             int len = v.Length;
