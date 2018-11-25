@@ -10,7 +10,7 @@ public class STSceneInspector:STSceneGroupInspector
 {
     private void Awake()
     {
-        mTarget = target as STSceneGroup;
+        mTarget = target as STScene;
         if (string.IsNullOrEmpty(mTarget.name))
         {
             mTarget.name = "STscene";
@@ -20,25 +20,29 @@ public class STSceneInspector:STSceneGroupInspector
     {
         // base.OnInspectorGUI();
 
-        mTarget.groupName = EditorGUILayout.TextField("SceneName", mTarget.groupName);
+        var scene = mTarget as STScene;
 
+        scene.groupName = EditorGUILayout.TextField("SceneName", scene.groupName);
+        scene.startPoint = EditorGUILayout.Vector2Field("StartPoint", scene.startPoint);
+        scene.width = EditorGUILayout.IntField("Width", scene.width);
+        scene.height = EditorGUILayout.IntField("Height", scene.height);
 
         GUILayout.BeginHorizontal();
        
         if (GUILayout.Button("Add Group"))
         {
-            AddSTComponentToGroup<STSceneGroup>(mTarget);
+            AddSTComponentToGroup<STSceneGroup>(scene);
 
         }
         bool existCamera = false;
 
-        for(int i = mTarget.components.Count-1; i >=0;--i)
+        for(int i = scene.components.Count-1; i >=0;--i)
         {
-            if(mTarget.components[i] == null)
+            if(scene.components[i] == null)
             {
-                mTarget.components.RemoveAt(i);continue;
+                scene.components.RemoveAt(i);continue;
             }
-            if(mTarget.components[i].GetType() == typeof(STSceneCamera))
+            if(scene.components[i].GetType() == typeof(STSceneCamera))
             {
                 existCamera = true;break;
             }
@@ -47,12 +51,12 @@ public class STSceneInspector:STSceneGroupInspector
         {
             if (GUILayout.Button("Add Camera"))
             {
-                AddSTComponentToGroup<STSceneCamera>(mTarget);  
+                AddSTComponentToGroup<STSceneCamera>(scene);  
             }
         }
         
         GUILayout.EndHorizontal();
-        if (mTarget.transform.childCount == 0)
+        if (scene.transform.childCount == 0)
         {
             if (GUILayout.Button("Load Xml"))
             {
@@ -60,7 +64,7 @@ public class STSceneInspector:STSceneGroupInspector
             }
         }
 
-        if (mTarget.transform.childCount > 0)
+        if (scene.transform.childCount > 0)
         {
             if (GUILayout.Button("Clear"))
             {

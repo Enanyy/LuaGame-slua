@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<STScene name="STscene" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(0.0, 0.0, 0.0)">
+<STScene startPoint="(-52.9, -42.7)" width="100" height="100" name="STscene" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(0.0, 0.0, 0.0)">
   <STSceneGroup name="STGroup" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(0.0, 0.0, 0.0)">
     <STSceneEntity path="Assets/R/charactor/prefab/bian_fu_001_ty.prefab" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(0.0, 0.0, 0.0)" />
     <STSceneEntity path="Assets/R/charactor/prefab/hun_mo_001_ty.prefab" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(0.0, 0.0, 0.0)" />
@@ -10,5 +10,5 @@
     <STSceneEntity path="Assets/R/charactor/prefab/jia_long_001_ty.prefab" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(0.0, 0.0, 0.0)" />
     <STSceneEntity path="Assets/R/charactor/prefab/ju_du_zhu_001_ty.prefab" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(0.0, 0.0, 0.0)" />
   </STSceneGroup>
-  <STSceneCamera fieldOfView="60" nearClipPlane="0.3" farClipPlane="1000" depth="0" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(1.0, 1.0, 1.0)" />
+  <STSceneCamera fieldOfView="60" nearClipPlane="0.3" farClipPlane="1000" depth="0" position="(0.0, 0.0, 0.0)" rotation="(0.0, 0.0, 0.0)" scale="(0.0, 0.0, 0.0)" />
 </STScene>
