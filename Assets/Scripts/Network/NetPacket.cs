@@ -7,6 +7,7 @@ namespace Network
     public class NetPacket
     {
         private byte[] mData;
+        public byte[] data { get { return mData; } }
         public NetPacket(byte[] data)
         {
             mData = data;

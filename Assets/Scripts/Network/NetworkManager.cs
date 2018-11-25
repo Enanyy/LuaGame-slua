@@ -107,7 +107,7 @@ namespace Network
                 return;
             }
 
-            byte[] bytes = packet.GetBuffer(); // ProtoTransfer.SerializeProtoBuf<T>(data);
+            byte[] bytes = packet.data; // ProtoTransfer.SerializeProtoBuf<T>(data);
 
             client.Send(bytes, (ushort)bytes.Length);
         }
