@@ -85,7 +85,7 @@ public abstract class STComponent:MonoBehaviour
         {
             transform.position = node.Attribute("position").ToVector3Ex();
             transform.rotation = Quaternion.Euler(node.Attribute("rotation").ToVector3Ex());
-            transform.localScale = node.Attribute("position").ToVector3Ex();
+            transform.localScale = node.Attribute("scale").ToVector3Ex();
         }
     }
 
