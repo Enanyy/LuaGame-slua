@@ -14,7 +14,7 @@ public class STSceneGroup : STComponent
     {
         count = 0;
         finishCount = 0;
-        for (int i = 0; i <components.Count; ++i)
+        for (int i = 0; i < components.Count; ++i)
         {
             int f = 0;
             int c = 0;
@@ -77,6 +77,7 @@ public class STSceneGroup : STComponent
         }
     }
 
+
 #if UNITY_EDITOR
     public override XmlElement ToXml(XmlNode parent, Dictionary<string, string> attributes=null)
     {
@@ -87,6 +88,17 @@ public class STSceneGroup : STComponent
         attributes.Add("name", groupName);
 
         XmlElement node = base.ToXml(parent,attributes);
+
+        components.Clear();
+        for(int i = 0; i < transform.childCount;++i)
+        {
+            STComponent component = transform.GetChild(i).GetComponent<STComponent>();
+            if(component)
+            {
+                components.Add(component);
+            }
+        }
+
         for (int i = 0; i < components.Count; ++i)
         {
             if (components[i] != null)

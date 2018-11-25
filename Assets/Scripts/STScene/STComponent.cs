@@ -10,7 +10,7 @@ using UnityEngine;
 
 public abstract class STComponent:MonoBehaviour
 {
-    public virtual void SetAttribute() { }
+    public virtual void SetAttribute() {  }
 
     public virtual void CheckFinish(out int count,out int finishCount)
     {

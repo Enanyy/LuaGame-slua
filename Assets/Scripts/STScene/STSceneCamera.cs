@@ -41,6 +41,7 @@ public class STSceneCamera : STComponent
             camera.farClipPlane = farClipPlane;
             camera.depth = depth;
         }
+        OnLoadFinish();
     }
 
 #if UNITY_EDITOR
