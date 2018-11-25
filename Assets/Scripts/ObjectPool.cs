@@ -59,23 +59,47 @@ public static class ObjectPool
         }
     }
 
-    public static void Clear(Type type)
+    public static void Clear(Type type, bool includeSubClass = false)
     {
-        if(mPoolDic.ContainsKey(type))
+        if (includeSubClass)
+        {
+            var it = mPoolDic.GetEnumerator();
+            List<Type> list = new List<Type>();
+            while (it.MoveNext())
+            {
+                if (it.Current.Key.IsSubclassOf(type))
+                {
+                    list.Add(type);
+                    var queue = it.Current.Value;
+                    while(queue.Count >0)
+                    {
+                        IPool o = queue.Dequeue();
+                        o.OnDestroy();
+                    }
+                }
+            }
+            for(int i = 0; i < list.Count;++i)
+            {
+                mPoolDic.Remove(list[i]);
+            }
+        }
+
+        if (mPoolDic.ContainsKey(type))
         {
             var queue = mPoolDic[type];
-            while(queue.Count >0)
+            while (queue.Count > 0)
             {
                 IPool o = queue.Dequeue();
                 o.OnDestroy();
             }
             mPoolDic.Remove(type);
         }
+
     }
 
-    public static void Clear<T>()
+    public static void Clear<T>(bool includeSubClass = false)
     {
-        Clear(typeof(T));
+        Clear(typeof(T), includeSubClass);
     }
 
     public static void Clear()
@@ -87,6 +111,7 @@ public static class ObjectPool
             while (queue.Count > 0)
             {
                 IPool o = queue.Dequeue();
+                o.isPool = false;
                 o.OnDestroy();
             }
         }
