@@ -1,7 +1,7 @@
 require("Window")
 
 --UI_Main继承于Window
-UI_Main = Class("UI_Main",Window)
+UI_Main = class("UI_Main",Window)
 
 local this = UI_Main
 

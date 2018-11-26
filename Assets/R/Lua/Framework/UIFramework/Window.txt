@@ -1,8 +1,7 @@
 require("LuaBehaviour")
-require("UnityClass")
 require("WindowType")
 
-Window = Class("Window",LuaBehaviour)
+Window = class("Window",LuaBehaviour)
 
 function Window:ctor(path)
   
@@ -36,18 +35,18 @@ end
 
 function Window:CreateMask()
 
-    self.mask = GameObject.new("Mask")
+    self.mask = GameObject:new("Mask")
 
     self.mask:SetParent( self.gameObject)
-    self.mask:SetLocalPosition(Vector3.new())
-    self.mask:SetScale(Vector3.new(1,1,1))
-    self.mask:SetLocalRotation(Quaternion.new(0,0,0,1))
+    self.mask:SetLocalPosition(Vector3:new())
+    self.mask:SetScale(Vector3:new(1,1,1))
+    self.mask:SetLocalRotation(Quaternion:new(0,0,0,1))
   
     self.mask:SetAsFirstSibling()
   
-    self.mask:AddComponent(UnityClass.BoxCollider)
+    self.mask:AddComponent(UnityEngine.BoxCollider)
    
-    self.mask:AddComponent(UnityClass.UIWidget)
+    self.mask:AddComponent(UnityEngine.UIWidget)
 
     LuaHelper.SetWidgetDepth(self.mask.id,-1)
     

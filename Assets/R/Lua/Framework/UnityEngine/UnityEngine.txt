@@ -8,7 +8,7 @@ require("Utility")
 require("Stack")
 require("Queue")
 --应用System、Unity的类
-UnityClass = {
+UnityEngine = {
 
     GameObject      = 0,
     Transform       = 1,

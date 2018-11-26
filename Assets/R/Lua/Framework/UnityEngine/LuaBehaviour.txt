@@ -1,9 +1,9 @@
-require("Class")
+--require("Class")
 ---基类
 ---需要控制gameObject对象的都从LuaBehaviour派生
 ---
 ---创建一个基类
-LuaBehaviour = Class( "LuaBehaviour")
+LuaBehaviour = class( "LuaBehaviour")
 
 
 ---构造函数 Class函数构造调用

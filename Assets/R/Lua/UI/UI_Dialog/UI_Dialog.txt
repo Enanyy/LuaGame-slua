@@ -2,7 +2,7 @@
 require("Window")
 
 --UI_Dialog继承于BaseWindow
-UI_Dialog = Class("UI_Dialog",Window)
+UI_Dialog = class("UI_Dialog",Window)
 
 
 local this = UI_Dialog

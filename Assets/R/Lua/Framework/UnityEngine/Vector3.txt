@@ -32,7 +32,7 @@ Vector3.__index = function(t,k)
 	return var
 end
 
-function Vector3.new(x, y, z)
+function Vector3:new(x, y, z)
     local t = {x = x or 0, y = y or 0, z = z or 0}
 	setmetatable(t, Vector3)
 	return t		
@@ -68,7 +68,7 @@ end
 
 function Vector3.Lerp(from, to, t)	
 	t = clamp(t, 0, 1)
-	return Vector3.new(from.x + (to.x - from.x) * t, from.y + (to.y - from.y) * t, from.z + (to.z - from.z) * t)
+	return Vector3:new(from.x + (to.x - from.x) * t, from.y + (to.y - from.y) * t, from.z + (to.z - from.z) * t)
 end
 
 function Vector3:Magnitude()
@@ -76,11 +76,11 @@ function Vector3:Magnitude()
 end
 
 function Vector3.Max(lhs, rhs)
-	return Vector3.new(max(lhs.x, rhs.x), max(lhs.y, rhs.y), max(lhs.z, rhs.z))
+	return Vector3:new(max(lhs.x, rhs.x), max(lhs.y, rhs.y), max(lhs.z, rhs.z))
 end
 
 function Vector3.Min(lhs, rhs)
-	return Vector3.new(min(lhs.x, rhs.x), min(lhs.y, rhs.y), min(lhs.z, rhs.z))
+	return Vector3:new(min(lhs.x, rhs.x), min(lhs.y, rhs.y), min(lhs.z, rhs.z))
 end
 
 function Vector3.Normalize(v)
@@ -176,7 +176,7 @@ end
 local overSqrt2 = 0.7071067811865475244008443621048490
 
 local function OrthoNormalVector(vec)
-	local res = Vector3.new()
+	local res = Vector3:new()
 	
 	if abs(vec.z) > overSqrt2 then			
 		local a = vec.y * vec.y + vec.z * vec.z
@@ -256,14 +256,14 @@ function Vector3.Scale(a, b)
 	local x = a.x * b.x
 	local y = a.y * b.y
 	local z = a.z * b.z	
-	return Vector3.new(x, y, z)
+	return Vector3:new(x, y, z)
 end
 	
 function Vector3.Cross(lhs, rhs)
 	local x = lhs.y * rhs.z - lhs.z * rhs.y
 	local y = lhs.z * rhs.x - lhs.x * rhs.z
 	local z = lhs.x * rhs.y - lhs.y * rhs.x
-	return Vector3.new(x,y,z)	
+	return Vector3:new(x,y,z)	
 end
 	
 function Vector3:Equals(other)
@@ -282,7 +282,7 @@ function Vector3.Project(vector, onNormal)
 	local num = onNormal:SqrMagnitude()
 	
 	if num < 1.175494e-38 then	
-		return Vector3.new(0,0,0)
+		return Vector3:new(0,0,0)
 	end
 	
 	local num2 = Vector3.Dot(vector, onNormal)
@@ -412,12 +412,12 @@ Vector3.__tostring = function(self)
 end
 
 Vector3.__div = function(va, d)
-	return Vector3.new(va.x / d, va.y / d, va.z / d)
+	return Vector3:new(va.x / d, va.y / d, va.z / d)
 end
 
 Vector3.__mul = function(va, d)
 	if type(d) == "number" then
-		return Vector3.new(va.x * d, va.y * d, va.z * d)
+		return Vector3:new(va.x * d, va.y * d, va.z * d)
 	else
 		local vec = va:Clone()
 		vec:MulQuat(d)
@@ -426,15 +426,15 @@ Vector3.__mul = function(va, d)
 end
 
 Vector3.__add = function(va, vb)
-	return Vector3.new(va.x + vb.x, va.y + vb.y, va.z + vb.z)
+	return Vector3:new(va.x + vb.x, va.y + vb.y, va.z + vb.z)
 end
 
 Vector3.__sub = function(va, vb)
-	return Vector3.new(va.x - vb.x, va.y - vb.y, va.z - vb.z)
+	return Vector3:new(va.x - vb.x, va.y - vb.y, va.z - vb.z)
 end
 
 Vector3.__unm = function(va)
-	return Vector3.new(-va.x, -va.y, -va.z)
+	return Vector3:new(-va.x, -va.y, -va.z)
 end
 
 Vector3.__eq = function(a,b)
@@ -443,13 +443,13 @@ Vector3.__eq = function(a,b)
 	return delta < 1e-10
 end
 
-function Vector3.up() 		return Vector3.new(0,1,0) end
-function Vector3.down() 	return Vector3.new(0,-1,0) end
-function Vector3.right() 	return Vector3.new(1,0,0) end
-function Vector3.left() 	return Vector3.new(-1,0,0) end
-function Vector3.forward() 	return Vector3.new(0,0,1) end
-function Vector3.back() 	return Vector3.new(0,0,-1) end
-function Vector3.zero() 	return Vector3.new(0,0,0) end
-function Vector3.one() 		return Vector3.new(1,1,1) end
+function Vector3.up() 		return Vector3:new(0,1,0) end
+function Vector3.down() 	return Vector3:new(0,-1,0) end
+function Vector3.right() 	return Vector3:new(1,0,0) end
+function Vector3.left() 	return Vector3:new(-1,0,0) end
+function Vector3.forward() 	return Vector3:new(0,0,1) end
+function Vector3.back() 	return Vector3:new(0,0,-1) end
+function Vector3.zero() 	return Vector3:new(0,0,0) end
+function Vector3.one() 		return Vector3:new(1,1,1) end
 
 return Vector3

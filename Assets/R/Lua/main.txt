@@ -1,4 +1,5 @@
-require "UnityClass"
+class = require("middleclass")
+require "UnityEngine"
 require "WindowManager"
 require "protobuf"
 
@@ -6,7 +7,7 @@ function main()
 	
 	TestPBC()
 
-	TestOverWrite()
+	--TestOverWrite()
 
 	WindowManager:Initialize()
 	WindowManager:Open(UI_Main)
@@ -140,7 +141,7 @@ end
 --]]
 
 --测试继承和重写
-A = Class("A")
+A = class("A")
 function A:print()
 	print("A:print")
 end
@@ -148,7 +149,7 @@ function A:init(a)
 	print("Class A a =" ..a)
 end
 
-B = Class("B",A)
+B = class("B",A)
 
 function B:ctor()
 	
@@ -161,7 +162,7 @@ function B:init(b)
 
 end
 
-C = Class("C",B)
+C = class("C",B)
 function C:ctor()
 
 end
@@ -175,14 +176,14 @@ end
 
 function TestOverWrite()
 
-	local a = A.new()
+	local a = A:new()
 	a:print()
 
 	--没有重写 调用A的print
-	local b = B.new()
+	local b = B:new()
 	b:init(111)
 
-	local c = C.new()
+	local c = C:new()
 	c:init(222)
 
 end

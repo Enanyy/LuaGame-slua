@@ -1,6 +1,6 @@
 
-require("Class")
-Queue = Class("Queue")
+--require("Class")
+Queue = class("Queue")
 
 function Queue:ctor(...)
     self.items = {...}

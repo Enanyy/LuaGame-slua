@@ -1,7 +1,7 @@
 require("Window")
 
 --UI_ScaleWindow继承于BaseWindow
-UI_ScaleWindow = Class("UI_ScaleWindow",Window)
+UI_ScaleWindow = class("UI_ScaleWindow",Window)
 
 local this = UI_ScaleWindow
 

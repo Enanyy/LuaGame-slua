@@ -41,7 +41,7 @@ Quaternion.__newindex = function(t, name, k)
 	end	
 end
 
-function Quaternion.new(x, y, z, w)	
+function Quaternion:new(x, y, z, w)	
 	local t = {x = x or 0, y = y or 0, z = z or 0, w = w or 0}
 	setmetatable(t, Quaternion)	
 	return t
@@ -55,7 +55,7 @@ function Quaternion:Set(x,y,z,w)
 end
 
 function Quaternion:Clone()
-	return Quaternion.new(self.x, self.y, self.z, self.w)
+	return Quaternion:new(self.x, self.y, self.z, self.w)
 end
 
 function Quaternion:Get()
@@ -82,7 +82,7 @@ function Quaternion.AngleAxis(angle, axis)
     local y = normAxis.y * s
     local z = normAxis.z * s
 	
-	return Quaternion.new(x,y,z,w)
+	return Quaternion:new(x,y,z,w)
 end
 
 function Quaternion.Equals(a, b)
@@ -152,7 +152,7 @@ end
 
 --产生一个新的从from到to的四元数
 function Quaternion.FromToRotation(from, to)
-	local quat = Quaternion.New()
+	local quat = Quaternion:new()
 	quat:SetFromToRotation(from, to)
 	return quat
 end
@@ -169,7 +169,7 @@ function Quaternion:SetFromToRotation1(from, to)
 		local c = Vector3.Cross(v0, v1) * invs
 		self:Set(c.x, c.y, c.z, s * 0.5)	
 	elseif d > 1 - 1e-6 then
-		return Quaternion.new(0, 0, 0, 1)
+		return Quaternion:new(0, 0, 0, 1)
 	else
 		local axis = Vector3.Cross(Vector3.right, v0)
 		
@@ -304,7 +304,7 @@ function Quaternion:SetFromToRotation(from, to)
 end
 
 function Quaternion:Inverse()
-	local quat = Quaternion.New()
+	local quat = Quaternion:new()
 		
 	quat.x = -self.x
 	quat.y = -self.y
@@ -350,7 +350,7 @@ function Quaternion.LookRotation(forward, up)
     up = Vector3.Cross(forward, right)
     right = Vector3.Cross(up, forward)	
 	
---[[	local quat = Quaternion.new(0,0,0,1)
+--[[	local quat = Quaternion:new(0,0,0,1)
 	local rot = 
 	{ 					
 		{right.x, up.x, forward.x},
@@ -372,7 +372,7 @@ function Quaternion.LookRotation(forward, up)
 		y = (forward.x - right.z) * s
 		z = (right.y - up.x) * s
 		
-		local ret = Quaternion.new(x, y, z, w)	
+		local ret = Quaternion:new(x, y, z, w)	
 		ret:SetNormalize()
 		return ret
 	else
@@ -404,7 +404,7 @@ function Quaternion.LookRotation(forward, up)
 		q[j] = (rot[j][i] + rot[i][j]) * s
 		q[k] = (rot[k][i] + rot[i][k]) * s
 		
-		local ret = Quaternion.new(q[1], q[2], q[3], w)			
+		local ret = Quaternion:new(q[1], q[2], q[3], w)			
 		ret:SetNormalize()
 		return ret
 	end
@@ -471,11 +471,11 @@ function Quaternion:ToAngleAxis()
 	local angle = 2 * acos(self.w)
 	
 	if Approximately(angle, 0) then
-		return angle * 57.29578, Vector3.New(1, 0, 0)
+		return angle * 57.29578, Vector3:new(1, 0, 0)
 	end
 	
 	local div = 1 / sqrt(1 - sqrt(self.w))
-	return angle * 57.29578, Vector3.New(self.x * div, self.y * div, self.z * div)
+	return angle * 57.29578, Vector3:new(self.x * div, self.y * div, self.z * div)
 end
 
 local pi = Mathf.PI
@@ -516,20 +516,20 @@ function Quaternion:ToEulerAngles()
 	
 	if check < 0.999 then
 		if check > -0.999 then
-			local v = Vector3.New( -asin(check), 
+			local v = Vector3:new( -asin(check), 
 						atan2(2 * (x * z + w * y), 1 - 2 * (x * x + y * y)), 
 						atan2(2 * (x * y + w * z), 1 - 2 * (x * x + z * z)))
 			SanitizeEuler(v)
 			v:Mul(rad2Deg)
 			return v
 		else
-			local v = Vector3.New(half_pi, atan2(2 * (x * y - w * z), 1 - 2 * (y * y + z * z)), 0)
+			local v = Vector3:new(half_pi, atan2(2 * (x * y - w * z), 1 - 2 * (y * y + z * z)), 0)
 			SanitizeEuler(v)
 			v:Mul(rad2Deg)
 			return v
 		end
 	else
-		local v = Vector3.New(-half_pi, atan2(-2 * (x * y - w * z), 1 - 2 * (y * y + z * z)), 0)
+		local v = Vector3:new(-half_pi, atan2(-2 * (x * y - w * z), 1 - 2 * (y * y + z * z)), 0)
 		SanitizeEuler(v)
 		v:Mul(rad2Deg)
 		return v		
@@ -541,7 +541,7 @@ function Quaternion:Forward()
 end
 
 function Quaternion.MulVec3(self, point)
-	local vec = Vector3.New()
+	local vec = Vector3:new()
     
 	local num 	= self.x * 2
 	local num2 	= self.y * 2
@@ -565,14 +565,14 @@ end
 
 Quaternion.__mul = function(lhs, rhs)
 	if Quaternion == getmetatable(rhs) then
-		return Quaternion.New((((lhs.w * rhs.x) + (lhs.x * rhs.w)) + (lhs.y * rhs.z)) - (lhs.z * rhs.y), (((lhs.w * rhs.y) + (lhs.y * rhs.w)) + (lhs.z * rhs.x)) - (lhs.x * rhs.z), (((lhs.w * rhs.z) + (lhs.z * rhs.w)) + (lhs.x * rhs.y)) - (lhs.y * rhs.x), (((lhs.w * rhs.w) - (lhs.x * rhs.x)) - (lhs.y * rhs.y)) - (lhs.z * rhs.z))	
+		return Quaternion:new((((lhs.w * rhs.x) + (lhs.x * rhs.w)) + (lhs.y * rhs.z)) - (lhs.z * rhs.y), (((lhs.w * rhs.y) + (lhs.y * rhs.w)) + (lhs.z * rhs.x)) - (lhs.x * rhs.z), (((lhs.w * rhs.z) + (lhs.z * rhs.w)) + (lhs.x * rhs.y)) - (lhs.y * rhs.x), (((lhs.w * rhs.w) - (lhs.x * rhs.x)) - (lhs.y * rhs.y)) - (lhs.z * rhs.z))	
 	elseif Vector3 == getmetatable(rhs) then
 		return lhs:MulVec3(rhs)
 	end
 end
 
 Quaternion.__unm = function(q)
-	return Quaternion.New(-q.x, -q.y, -q.z, -q.w)
+	return Quaternion:new(-q.x, -q.y, -q.z, -q.w)
 end
 
 Quaternion.__eq = function(lhs,rhs)
@@ -583,6 +583,6 @@ Quaternion.__tostring = function(self)
 	return "("..self.x..","..self.y..","..self.z..","..self.w..")"
 end
 
-Quaternion.identity = function() return Quaternion.new(0, 0, 0, 1) end
+Quaternion.identity = function() return Quaternion:new(0, 0, 0, 1) end
 
 return Quaternion

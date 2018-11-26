@@ -3,7 +3,7 @@ require("Window")
 require("UI_WidgetBase")
 
 --UI_Widget继承于Window
-UI_Widget = Class("UI_Widget",Window)
+UI_Widget = class("UI_Widget",Window)
 
 
 

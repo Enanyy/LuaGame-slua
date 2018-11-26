@@ -2,11 +2,11 @@ require("Window")
 require("WindowPath")
 require("WindowType")
 require("WindowDepth")
-require("UnityClass")
+require("UnityEngine")
 require("UnityLayer")
 
 --全局的WindowManager对象，继承于LuaBehaviour
-WindowManager = Class("WindowManager",LuaBehaviour).new()
+WindowManager = class("WindowManager",LuaBehaviour):new()
 
 --初始化函数
 function  WindowManager:Initialize()
@@ -18,16 +18,16 @@ function  WindowManager:Initialize()
         self.uiLayer = UnityLayer.UI              --UI显示层
         self.blurLayer = UnityLayer.Blur          --背景模糊层 Unity没有该层的话请创建
 
-        local go = GameObject.new('WindowManager')  
+        local go = GameObject:new('WindowManager')  
         self:_init(go)   
         DontDestroyOnLoad(go)
 
         self.width = 1280
         self.height = 720
         
-        self.uiRoot = GameObject.new(LuaHelper.CreateUI(self.width, self.height))
+        self.uiRoot = GameObject:new(LuaHelper.CreateUI(self.width, self.height))
         self.uiRoot:SetParent(go)
-        self.uiCamera = self.uiRoot:FindChildWithComponent(UnityClass.UICamera)
+        self.uiCamera = self.uiRoot:FindChildWithComponent(UnityEngine.UICamera)
         self.uiCamera:SetLayer(self.uiLayer)
 
         LuaHelper.SetCameraCullingMask(self.uiCamera.id,UnityLayer.MakeMask(self.uiLayer))
@@ -36,16 +36,16 @@ function  WindowManager:Initialize()
 
         self.blurCamera = Instantiate(self.uiCamera)
         self.blurCamera:SetParent(self.uiRoot)
-        self.blurCamera:SetScale(Vector3.new(1,1,1))
-        self.blurCamera:AddComponent(UnityClass.BlurEffect)
-        self.blurCamera:SetEnable( UnityClass.Camera, false)
-        self.blurCamera:SetEnable( UnityClass.BlurEffect, false)
+        self.blurCamera:SetScale(Vector3:new(1,1,1))
+        self.blurCamera:AddComponent(UnityEngine.BlurEffect)
+        self.blurCamera:SetEnable( UnityEngine.Camera, false)
+        self.blurCamera:SetEnable( UnityEngine.BlurEffect, false)
         self.blurCamera:SetLayer(self.blurLayer)
         LuaHelper.SetCameraCullingMask(self.blurCamera.id,UnityLayer.MakeMask(self.blurLayer))
         LuaHelper.SetCameraDepth(self.blurCamera.id,1)
 
         --Window栈容器
-        self.mWindowStack = Stack.new()             --窗口
+        self.mWindowStack = Stack:new()             --窗口
         self.mWidgetList = {}                       --小组件
     end
 
@@ -65,7 +65,7 @@ function WindowManager:Open(class, callback)
 
     self:SetTouchable(false)
 
-    local name = class.GetType()
+    local name = class.name
 
     local t = self:Get(name)
 
@@ -79,7 +79,7 @@ function WindowManager:Open(class, callback)
 
         else
 
-            local stack = Stack.new()
+            local stack = Stack:new()
 
             while (self.mWindowStack:Count() > 0)
             do
@@ -113,19 +113,19 @@ function WindowManager:Open(class, callback)
            
             if id ~= -1 then
                 
-                local ui = GameObject.new(LuaHelper.FindChild(id,name))
+                local ui = GameObject:new(LuaHelper.FindChild(id,name))
                
                 LuaHelper.Destroy(id)
 
                 ui:SetLayer(self.uiLayer)
                 ui:SetParent(self.uiRoot)
-                ui:SetLocalPosition(Vector3.new())
-                ui:SetLocalRotation(Quaternion.new(0,0,0,1))
-                ui:SetScale(Vector3.new(1,1,1))
+                ui:SetLocalPosition(Vector3:new())
+                ui:SetLocalRotation(Quaternion:new(0,0,0,1))
+                ui:SetScale(Vector3:new(1,1,1))
                 ui:SetActive(true)
-                ui:SetEnable(UnityClass.UIPanel,true)
+                ui:SetEnable(UnityEngine.UIPanel,true)
 
-                t = class.new(path)
+                t = class:new(path)
                 t:_init(ui)
 
               
@@ -147,9 +147,9 @@ function WindowManager:Open(class, callback)
 
                 t.path = path
 
-                t:OnEnter()
-
                 self:Push(t, callback)
+
+                t:OnEnter()
             else
                 self:SetTouchable(true)
             end
@@ -226,14 +226,20 @@ function WindowManager:Push(t, callback)
 
         self:SetDepth(t)
 
+        if callback ~= nil then
+            callback(t)
+        end
+
         t:OnResume()
+    else
+        if callback ~= nil then
+            callback(nil)
+        end
     end
 
     self:SetTouchable(true)
 
-    if callback ~= nil then
-        callback(t)
-    end
+  
 end
 
 ---
@@ -422,7 +428,7 @@ function WindowManager:Show()
             --弹出类型
             if window.windowType == WindowType.Pop then
 
-                local stack = Stack.new()
+                local stack = Stack:new()
 
                 while ( self.mWindowStack:Count() > 0)
                 do
@@ -502,6 +508,6 @@ function WindowManager:SetBlur()
         self.mWindowStack:Push(w)
     end
     local enable = self.mWindowStack:Count() > 1
-    self.blurCamera:SetEnable(UnityClass.BlurEffect,enable)
-    self.blurCamera:SetEnable(UnityClass.Camera,enable)
+    self.blurCamera:SetEnable(UnityEngine.BlurEffect,enable)
+    self.blurCamera:SetEnable(UnityEngine.Camera,enable)
 end

@@ -1,5 +1,5 @@
-require("Class")
-Stack = Class("Stack")
+--require("Class")
+Stack = class("Stack")
 
 function Stack:ctor(...)
     self.items = {...}

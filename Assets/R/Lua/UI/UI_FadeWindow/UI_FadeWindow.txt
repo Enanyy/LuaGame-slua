@@ -2,7 +2,7 @@
 require("Window")
 
 --UI_FadeWindow继承于BaseWindow
-UI_FadeWindow = Class("UI_FadeWindow",Window)
+UI_FadeWindow = class("UI_FadeWindow",Window)
 
 local this = UI_FadeWindow
 

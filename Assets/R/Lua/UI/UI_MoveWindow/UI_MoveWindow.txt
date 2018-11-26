@@ -1,7 +1,7 @@
 require("Window")
 
 --UI_MoveWindow继承于BaseWindow
-UI_MoveWindow = Class("UI_MoveWindow",Window)
+UI_MoveWindow = class("UI_MoveWindow",Window)
 
 local this = UI_MoveWindow
 

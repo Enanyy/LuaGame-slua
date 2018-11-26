@@ -22,7 +22,7 @@ Vector4.__index = function(t,k)
 	return var
 end
 
-function Vector4.new(x, y, z, w)	
+function Vector4:new(x, y, z, w)	
 	return setmetatable({x = x or 0, y = y or 0, z = z or 0, w = w or 0}, Vector4)		
 end
 
@@ -40,7 +40,7 @@ end
 
 function Vector4.Lerp(from, to, t)    
     t = clamp(t, 0, 1)
-    return Vector4.new(from.x + ((to.x - from.x) * t), from.y + ((to.y - from.y) * t), from.z + ((to.z - from.z) * t), from.w + ((to.w - from.w) * t))
+    return Vector4:new(from.x + ((to.x - from.x) * t), from.y + ((to.y - from.y) * t), from.z + ((to.z - from.z) * t), from.w + ((to.w - from.w) * t))
 end    
 
 function Vector4.MoveTowards(current, target, maxDistanceDelta)    
@@ -58,7 +58,7 @@ function Vector4.MoveTowards(current, target, maxDistanceDelta)
 end    
 
 function Vector4.Scale(a, b)    
-    return Vector4.new(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w)
+    return Vector4:new(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w)
 end    
 
 function Vector4:SetScale(scale)
@@ -69,7 +69,7 @@ function Vector4:SetScale(scale)
 end
 
 function Vector4:Normalize()
-	local v = vector4.new(self.x, self.y, self.z, self.w)
+	local v = vector4:new(self.x, self.y, self.z, self.w)
 	return v:SetNormalize()
 end
 
@@ -146,11 +146,11 @@ function Vector4.SqrMagnitude(a)
 end
 
 function Vector4.Min(lhs, rhs)
-	return Vector4.new(max(lhs.x, rhs.x), max(lhs.y, rhs.y), max(lhs.z, rhs.z), max(lhs.w, rhs.w))
+	return Vector4:new(max(lhs.x, rhs.x), max(lhs.y, rhs.y), max(lhs.z, rhs.z), max(lhs.w, rhs.w))
 end
 
 function Vector4.Max(lhs, rhs)
-	return Vector4.new(min(lhs.x, rhs.x), min(lhs.y, rhs.y), min(lhs.z, rhs.z), min(lhs.w, rhs.w))
+	return Vector4:new(min(lhs.x, rhs.x), min(lhs.y, rhs.y), min(lhs.z, rhs.z), min(lhs.w, rhs.w))
 end
 
 Vector4.__tostring = function(self)
@@ -158,23 +158,23 @@ Vector4.__tostring = function(self)
 end
 
 Vector4.__div = function(va, d)
-	return Vector4.new(va.x / d, va.y / d, va.z / d, va.w / d)
+	return Vector4:new(va.x / d, va.y / d, va.z / d, va.w / d)
 end
 
 Vector4.__mul = function(va, d)
-	return Vector4.new(va.x * d, va.y * d, va.z * d, va.w * d)
+	return Vector4:new(va.x * d, va.y * d, va.z * d, va.w * d)
 end
 
 Vector4.__add = function(va, vb)
-	return Vector4.new(va.x + vb.x, va.y + vb.y, va.z + vb.z, va.w + vb.w)
+	return Vector4:new(va.x + vb.x, va.y + vb.y, va.z + vb.z, va.w + vb.w)
 end
 
 Vector4.__sub = function(va, vb)
-	return Vector4.new(va.x - vb.x, va.y - vb.y, va.z - vb.z, va.w - vb.w)
+	return Vector4:new(va.x - vb.x, va.y - vb.y, va.z - vb.z, va.w - vb.w)
 end
 
 Vector4.__unm = function(va)
-	return Vector4.new(-va.x, -va.y, -va.z, -va.w)
+	return Vector4:new(-va.x, -va.y, -va.z, -va.w)
 end
 
 Vector4.__eq = function(va,vb)
@@ -183,7 +183,7 @@ Vector4.__eq = function(va,vb)
 	return delta < 1e-10
 end
 
-Vector4.zero = function() return Vector4.new(0, 0, 0, 0) end
-Vector4.one	 = function() return Vector4.new(1, 1, 1, 1) end
+Vector4.zero = function() return Vector4:new(0, 0, 0, 0) end
+Vector4.one	 = function() return Vector4:new(1, 1, 1, 1) end
 
 return Vector4

@@ -9,13 +9,13 @@ require("UI_Widget")
 
 WindowPath = {
     paths = {
-        [UI_Main.GetType()]                         = "Assets/R/UI/UI_Main/UI_Main.prefab" , 
-        [UI_FadeWindow.GetType()]                   = "Assets/R/UI/UI_FadeWindow/UI_FadeWindow.prefab" , 
-        [UI_MoveWindow.GetType()]                   = "Assets/R/UI/UI_MoveWindow/UI_MoveWindow.prefab" , 
-        [UI_PopWindow.GetType()]                    = "Assets/R/UI/UI_PopWindow/UI_PopWindow.prefab" , 
-        [UI_ScaleWindow.GetType()]                  = "Assets/R/UI/UI_ScaleWindow/UI_ScaleWindow.prefab" , 
-        [UI_Dialog.GetType()]                       = "Assets/R/UI/UI_Dialog/UI_Dialog.prefab" , 
-        [UI_Widget.GetType()]                       = "Assets/R/UI/UI_Widget/UI_Widget.prefab" , 
+        [UI_Main.name]                         = "Assets/R/UI/UI_Main/UI_Main.prefab" , 
+        [UI_FadeWindow.name]                   = "Assets/R/UI/UI_FadeWindow/UI_FadeWindow.prefab" , 
+        [UI_MoveWindow.name]                   = "Assets/R/UI/UI_MoveWindow/UI_MoveWindow.prefab" , 
+        [UI_PopWindow.name]                    = "Assets/R/UI/UI_PopWindow/UI_PopWindow.prefab" , 
+        [UI_ScaleWindow.name]                  = "Assets/R/UI/UI_ScaleWindow/UI_ScaleWindow.prefab" , 
+        [UI_Dialog.name]                       = "Assets/R/UI/UI_Dialog/UI_Dialog.prefab" , 
+        [UI_Widget.name]                       = "Assets/R/UI/UI_Widget/UI_Widget.prefab" , 
     },
 }
 function WindowPath:Get(name)
